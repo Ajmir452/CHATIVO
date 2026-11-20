@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,576 +7,20 @@
 <meta name="theme-color" content="#11142b">
 <title>CHATIVO</title>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
 <style>
-:root{
-  --bg:#0b0e20;
-  --panel:#141832;
-  --panel2:#1b2040;
-  --line:#292f54;
-  --text:#f5f6ff;
-  --muted:#9da5c7;
-  --blue:#6385ff;
-  --purple:#9b65ff;
-  --grad:linear-gradient(120deg,#557dff,#9b5cff);
-}
-*{box-sizing:border-box}
-body{
-  margin:0;
-  background:radial-gradient(ellipse at 10% 0%,#24285a 0,transparent 38%),var(--bg);
-  color:var(--text);
-  font-family:Inter,system-ui,-apple-system,Segoe UI,Arial,sans-serif;
-}
-button,input,textarea{font:inherit}
-button{cursor:pointer}
-.hidden{display:none!important}
-.auth{
-  min-height:100dvh;
-  display:grid;
-  place-items:center;
-  padding:24px;
-}
-.auth-card{
-  width:min(100%,430px);
-  padding:30px 25px;
-  border:1px solid #ffffff18;
-  border-radius:28px;
-  background:linear-gradient(145deg,#1c2144ed,#11152df2);
-  box-shadow:0 18px 50px #0005;
-}
-.brand{
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  gap:10px;
-  font-size:30px;
-  font-weight:900;
-  letter-spacing:1.8px;
-}
-.brand-mark{
-  width:39px;height:39px;
-  border-radius:14px;
-  background:var(--grad);
-  display:grid;
-  place-items:center;
-}
-.tagline{
-  text-align:center;
-  color:var(--muted);
-  font-size:13px;
-  margin:10px 0 30px;
-}
-.auth h2{font-size:25px;margin:0 0 7px}
-.sub{color:var(--muted);font-size:14px;margin:0 0 24px}
-.field{margin:15px 0}
-.field label{
-  display:block;
-  color:#cbd0ec;
-  font-size:12px;
-  font-weight:700;
-  margin-bottom:8px;
-}
-.field input{
-  width:100%;
-  padding:15px 14px;
-  border:1px solid var(--line);
-  border-radius:14px;
-  background:#0d1127;
-  color:white;
-  outline:none;
-}
-.field input:focus{border-color:var(--blue)}
-.primary{
-  width:100%;
-  padding:15px;
-  border:0;
-  border-radius:14px;
-  background:var(--grad);
-  color:white;
-  font-weight:800;
-}
-.primary:disabled{opacity:.6}
-.switch{
-  text-align:center;
-  color:var(--muted);
-  font-size:13px;
-  margin-top:20px;
-}
-.link{color:#a9baff;font-weight:800;cursor:pointer}
-.notice,.error{
-  font-size:12px;
-  line-height:1.5;
-  margin-top:14px;
-  text-align:center;
-}
-.notice{color:var(--muted)}
-.error{color:#ff8d9c}
-.success{color:#6fe3c0}
-
-#appScreen{min-height:100dvh;padding-bottom:85px}
-.app-header{
-  position:sticky;
-  top:0;
-  z-index:3;
-  padding:18px;
-  background:#10142bf0;
-  border-bottom:1px solid #ffffff12;
-}
-.topline{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-}
-.logo{
-  display:flex;
-  align-items:center;
-  gap:9px;
-  font-size:23px;
-  font-weight:950;
-  letter-spacing:1.2px;
-}
-.header-actions{display:flex;gap:10px}
-.icon-btn{
-  width:44px;height:44px;
-  border:1px solid #ffffff17;
-  border-radius:15px;
-  background:#ffffff08;
-  color:#e9ebff;
-  font-size:22px;
-}
-.welcome{padding:12px 0 0;color:var(--muted);font-size:13px}
-.welcome b{color:white}
-
-main{max-width:760px;margin:auto}
-.page{display:none}
-.page.active{display:block}
-.search-wrap{padding:18px}
-.search{
-  display:flex;
-  align-items:center;
-  gap:10px;
-  padding:14px 16px;
-  border:1px solid #ffffff12;
-  border-radius:16px;
-  background:#171c38;
-  color:#8e98bd;
-}
-.search input{
-  width:100%;
-  border:0;
-  outline:0;
-  background:transparent;
-  color:white;
-}
-.section-title{
-  padding:7px 19px 12px;
-  color:#8791b8;
-  font-size:11px;
-  font-weight:850;
-  letter-spacing:1.5px;
-}
-.chat{
-  display:flex;
-  align-items:center;
-  gap:13px;
-  padding:14px 18px;
-  border-bottom:1px solid #ffffff0d;
-  cursor:pointer;
-}
-.avatar{
-  width:54px;height:54px;
-  flex:none;
-  border-radius:19px;
-  display:grid;
-  place-items:center;
-  background:linear-gradient(145deg,#304a91,#593c89);
-  font-size:23px;
-  overflow:hidden;
-}
-.info{flex:1;min-width:0}
-.name{font-size:15px;font-weight:800;margin-bottom:6px}
-.message{
-  font-size:12px;
-  color:#929bbd;
-  white-space:nowrap;
-  overflow:hidden;
-  text-overflow:ellipsis;
-}
-.time{font-size:10px;color:#8791b0}
-.empty{
-  text-align:center;
-  padding:35px 20px;
-  color:var(--muted);
-  font-size:13px;
-}
-.fab{
-  position:fixed;
-  right:22px;
-  bottom:99px;
-  width:58px;height:58px;
-  border:0;
-  border-radius:20px;
-  background:var(--grad);
-  color:white;
-  font-size:30px;
-  z-index:4;
-}
-.bottom-nav{
-  position:fixed;
-  z-index:4;
-  bottom:0;left:0;right:0;
-  display:flex;
-  justify-content:space-around;
-  padding:10px 8px calc(10px + env(safe-area-inset-bottom));
-  background:#11152df2;
-  border-top:1px solid #ffffff14;
-}
-.bottom-nav button{
-  border:0;
-  background:none;
-  color:#818bad;
-  font-size:11px;
-  min-width:65px;
-}
-.bottom-nav button span{
-  display:block;
-  font-size:21px;
-  margin-bottom:4px;
-}
-.bottom-nav button.active{color:#a9a0ff;font-weight:800}
-
-.profile-card{
-  margin:20px;
-  padding:25px;
-  border:1px solid #ffffff14;
-  border-radius:22px;
-  background:linear-gradient(145deg,#20264b,#171b36);
-  text-align:center;
-}
-.profile-card .avatar{
-  width:86px;height:86px;
-  margin:0 auto 13px;
-  border-radius:28px;
-  font-size:34px;
-}
-.profile-card h3{margin:0 0 5px}
-.profile-card p{color:var(--muted);font-size:13px}
-.setting{
-  margin:0 16px;
-  padding:17px;
-  border-bottom:1px solid #ffffff10;
-  color:#e8eaff;
-  font-size:14px;
-}
-.logout{color:#ff899b;cursor:pointer}
-
-.overlay{
-  position:fixed;
-  inset:0;
-  z-index:20;
-  background:#0b0e20;
-  display:none;
-  flex-direction:column;
-}
-.overlay.open{display:flex}
-.overlay-head{
-  display:flex;
-  align-items:center;
-  gap:12px;
-  padding:16px;
-  border-bottom:1px solid #ffffff14;
-  background:#141832;
-}
-.overlay-head button{
-  border:0;
-  background:none;
-  color:white;
-  font-size:26px;
-}
-.overlay-head h2{font-size:18px;margin:0;flex:1}
-.overlay-body{overflow:auto;padding-bottom:30px}
-.friend-search{margin:16px;display:flex;gap:9px}
-.friend-search input{
-  flex:1;min-width:0;
-  padding:14px;
-  border:1px solid var(--line);
-  border-radius:14px;
-  background:#171c38;
-  color:white;
-  outline:none;
-}
-.friend-search button,.action-btn{
-  border:0;
-  border-radius:13px;
-  padding:0 15px;
-  background:var(--grad);
-  color:white;
-  font-weight:750;
-}
-.person{
-  display:flex;
-  align-items:center;
-  gap:12px;
-  padding:13px 17px;
-  border-bottom:1px solid #ffffff10;
-}
-.person .avatar{width:47px;height:47px;border-radius:16px}
-.person .info{flex:1}
-.action-btn{padding:10px 13px;font-size:12px}
-.action-btn.secondary{background:#2a3156;color:#dce1ff}
-.action-btn:disabled{opacity:.65}
-.small-note{padding:10px 18px;color:var(--muted);font-size:12px}
-
-.chat-window{
-  position:fixed;
-  inset:0;
-  z-index:30;
-  background:#0b0e20;
-  display:none;
-  flex-direction:column;
-}
-.chat-head{
-  display:flex;
-  align-items:center;
-  gap:12px;
-  padding:14px 16px;
-  background:#171c39;
-  border-bottom:1px solid #ffffff12;
-}
-.chat-head button{border:0;background:none;color:white;font-size:25px}
-.chat-head small{display:block;color:#8f9ac0;margin-top:3px}
-.chat-messages{flex:1;overflow:auto;padding:18px}
-.bubble{
-  width:fit-content;
-  max-width:82%;
-  padding:12px 15px;
-  margin:0 0 11px;
-  border:1px solid #ffffff12;
-  border-radius:17px 17px 17px 5px;
-  background:#202647;
-  color:#f4f5ff;
-  font-size:14px;
-  overflow-wrap:anywhere;
-  white-space:pre-wrap;
-}
-.bubble.mine{
-  margin-left:auto;
-  background:linear-gradient(120deg,#4d6ee8,#7653d9);
-  border:0;
-  border-radius:17px 17px 5px 17px;
-}
-.bubble-time{
-  display:block;
-  font-size:10px;
-  opacity:.7;
-  margin-top:5px;
-  text-align:right;
-}
-.chat-compose{
-  display:flex;
-  gap:9px;
-  padding:12px;
-  background:#151a34;
-  border-top:1px solid #ffffff12;
-}
-.chat-compose input{
-  flex:1;min-width:0;
-  border:1px solid #ffffff12;
-  border-radius:22px;
-  background:#0c1128;
-  color:white;
-  padding:13px 16px;
-  outline:none;
-}
-.chat-compose button{
-  width:55px;
-  border:0;
-  border-radius:16px;
-  background:var(--grad);
-  color:white;
-}
-
-.story-strip{
-  display:flex;
-  gap:14px;
-  overflow-x:auto;
-  padding:17px 18px 20px;
-  scrollbar-width:none;
-}
-.story-strip::-webkit-scrollbar{display:none}
-.story-card{flex:0 0 78px;text-align:center;cursor:pointer}
-.story-ring{
-  width:68px;height:68px;
-  margin:0 auto 8px;
-  padding:3px;
-  border-radius:50%;
-  background:var(--grad);
-  position:relative;
-}
-.story-face{
-  width:100%;height:100%;
-  border-radius:50%;
-  border:3px solid #11152d;
-  background:linear-gradient(145deg,#304a91,#593c89);
-  display:grid;
-  place-items:center;
-  overflow:hidden;
-  font-size:24px;
-}
-.story-card small{
-  display:block;
-  color:#dfe2ff;
-  font-size:11px;
-  white-space:nowrap;
-  overflow:hidden;
-  text-overflow:ellipsis;
-}
-.story-plus{
-  position:absolute;
-  right:-1px;bottom:0;
-  width:23px;height:23px;
-  border-radius:50%;
-  background:#6385ff;
-  border:2px solid #11152d;
-  color:white;
-  display:grid;
-  place-items:center;
-  font-size:17px;
-}
-.story-hint{padding:0 18px 12px;color:var(--muted);font-size:12px}
-
-.story-viewer{
-  position:fixed;
-  inset:0;
-  z-index:60;
-  background:#050713;
-  display:none;
-  align-items:center;
-  justify-content:center;
-  flex-direction:column;
-}
-.story-viewer.open{display:flex}
-.story-viewer img{
-  max-width:100%;
-  max-height:70dvh;
-  object-fit:contain;
-}
-.story-viewer-top{
-  position:absolute;
-  top:0;left:0;right:0;
-  padding:calc(14px + env(safe-area-inset-top)) 16px 14px;
-  background:linear-gradient(#0009,transparent);
-  display:flex;
-  align-items:center;
-  gap:12px;
-  z-index:2;
-}
-.story-viewer-top strong{flex:1}
-.story-viewer-top button{
-  border:0;
-  background:#ffffff20;
-  color:white;
-  border-radius:50%;
-  width:40px;height:40px;
-  font-size:22px;
-}
-.story-caption{
-  padding:12px 18px;
-  color:white;
-  text-align:center;
-  max-width:600px;
-}
-.story-progress{
-  position:absolute;
-  top:calc(8px + env(safe-area-inset-top));
-  left:14px;right:14px;
-  height:3px;
-  background:#ffffff55;
-  border-radius:9px;
-}
-.story-progress span{
-  display:block;
-  height:100%;
-  background:white;
-  width:100%;
-  border-radius:9px;
-}
-.story-composer{padding:18px}
-.story-preview{
-  width:100%;
-  max-height:42dvh;
-  object-fit:contain;
-  border-radius:16px;
-  background:#080b19;
-  display:none;
-  margin:12px 0;
-}
-.story-composer input[type=file]{
-  width:100%;
-  color:var(--muted);
-  padding:12px;
-  background:#171c38;
-  border-radius:13px;
-}
-.story-composer textarea{
-  width:100%;
-  min-height:75px;
-  padding:14px;
-  border:1px solid var(--line);
-  border-radius:14px;
-  background:#0d1127;
-  color:white;
-  margin:12px 0;
-}
-.story-status{font-size:12px;color:var(--muted);margin:10px 0}
-
-.story-reaction-bar{
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  gap:9px;
-  padding:8px 12px calc(18px + env(safe-area-inset-bottom));
-  width:100%;
-  max-width:520px;
-  z-index:2;
-}
-.story-reaction-btn{
-  min-width:48px;
-  min-height:44px;
-  padding:6px 9px;
-  border:1px solid #ffffff26;
-  border-radius:18px;
-  background:#ffffff12;
-  color:white;
-  font-size:23px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  gap:4px;
-}
-.story-reaction-btn.active{
-  background:#637fff45;
-  border-color:#9b8cff;
-}
-.story-reaction-btn small{font-size:11px;color:#e7e9ff}
-
-@media(min-width:700px){
-  #appScreen{
-    max-width:760px;
-    margin:auto;
-    border-left:1px solid #ffffff10;
-    border-right:1px solid #ffffff10;
-    min-height:100dvh;
-  }
-  .bottom-nav{
-    left:50%;right:auto;
-    transform:translateX(-50%);
-    width:min(100%,760px);
-    border-radius:18px 18px 0 0;
-  }
-}
+:root{--bg:#0b0e20;--panel:#141832;--panel2:#1b2040;--line:#292f54;--text:#f5f6ff;--muted:#9da5c7;--blue:#6385ff;--purple:#9b65ff;--grad:linear-gradient(120deg,#557dff,#9b5cff)}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at 10% 0%,#24285a 0,transparent 38%),var(--bg);color:var(--text);font-family:Inter,system-ui,-apple-system,Segoe UI,Arial,sans-serif}button,input,textarea{font:inherit}button{cursor:pointer}.hidden{display:none!important}
+.auth{min-height:100dvh;display:grid;place-items:center;padding:24px}.auth-card{width:min(100%,430px);padding:30px 25px;border:1px solid #ffffff18;border-radius:28px;background:linear-gradient(145deg,#1c2144ed,#11152df2);box-shadow:0 18px 50px #0005}.brand{display:flex;align-items:center;justify-content:center;gap:10px;font-size:30px;font-weight:900;letter-spacing:1.8px}.tagline{text-align:center;color:var(--muted);font-size:13px;margin:10px 0 30px}.auth h2{font-size:25px;margin:0 0 7px}.sub{color:var(--muted);font-size:14px;margin:0 0 24px}.field{margin:15px 0}.field label{display:block;color:#cbd0ec;font-size:12px;font-weight:700;margin-bottom:8px}.field input{width:100%;padding:15px 14px;border:1px solid var(--line);border-radius:14px;background:#0d1127;color:white;outline:none}.field input:focus{border-color:var(--blue)}.primary{width:100%;padding:15px;border:0;border-radius:14px;background:var(--grad);color:white;font-weight:800}.primary:disabled{opacity:.6}.switch{text-align:center;color:var(--muted);font-size:13px;margin-top:20px}.link{color:#a9baff;font-weight:800;cursor:pointer}.notice,.error{font-size:12px;line-height:1.5;margin-top:14px;text-align:center}.notice{color:var(--muted)}.error{color:#ff8d9c}
+#appScreen{min-height:100dvh;padding-bottom:85px}.app-header{position:sticky;top:0;z-index:3;padding:18px;background:#10142bf0;border-bottom:1px solid #ffffff12}.topline{display:flex;align-items:center;justify-content:space-between}.logo{font-size:23px;font-weight:950;letter-spacing:1.2px}.header-actions{display:flex;gap:10px}.icon-btn{width:44px;height:44px;border:1px solid #ffffff17;border-radius:15px;background:#ffffff08;color:#e9ebff;font-size:22px}.welcome{padding:12px 0;color:var(--muted);font-size:13px}.welcome b{color:white}.tabs{display:flex;gap:24px;padding-top:12px}.tab{color:#8e98bd;cursor:pointer;font-weight:700;font-size:14px}.tab.active{color:#b6b0ff}main{max-width:760px;margin:auto}.page{display:none}.page.active{display:block}.search-wrap{padding:18px}.search{display:flex;align-items:center;gap:10px;padding:14px 16px;border:1px solid #ffffff12;border-radius:16px;background:#171c38;color:#8e98bd}.search input{width:100%;border:0;outline:0;background:transparent;color:white}.section-title{padding:7px 19px 12px;color:#8791b8;font-size:11px;font-weight:850;letter-spacing:1.5px}.chat{display:flex;align-items:center;gap:13px;padding:14px 18px;border-bottom:1px solid #ffffff0d;cursor:pointer}.avatar{width:54px;height:54px;flex:none;border-radius:19px;display:grid;place-items:center;background:linear-gradient(145deg,#304a91,#593c89);font-size:23px;overflow:hidden}.info{flex:1;min-width:0}.name{font-size:15px;font-weight:800;margin-bottom:6px}.message{font-size:12px;color:#929bbd;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.empty{text-align:center;padding:35px 20px;color:var(--muted);font-size:13px}.fab{position:fixed;right:22px;bottom:99px;width:58px;height:58px;border:0;border-radius:20px;background:var(--grad);color:white;font-size:30px;z-index:4}.bottom-nav{position:fixed;z-index:4;bottom:0;left:0;right:0;display:flex;justify-content:space-around;padding:10px 8px calc(10px + env(safe-area-inset-bottom));background:#11152df2;border-top:1px solid #ffffff14}.bottom-nav button{border:0;background:none;color:#818bad;font-size:11px;min-width:65px}.bottom-nav button span{display:block;font-size:21px;margin-bottom:4px}.bottom-nav button.active{color:#a9a0ff;font-weight:800}
+.profile-card{margin:20px;padding:25px;border:1px solid #ffffff14;border-radius:22px;background:linear-gradient(145deg,#20264b,#171b36);text-align:center}.profile-card .avatar{width:86px;height:86px;margin:0 auto 13px;border-radius:28px;font-size:34px}.profile-card h3{margin:0 0 5px}.profile-card p{color:var(--muted);font-size:13px}.setting{display:flex;justify-content:space-between;margin:0 16px;padding:17px;border-bottom:1px solid #ffffff10;color:#e8eaff;font-size:14px}.logout{color:#ff899b;cursor:pointer}
+.overlay{position:fixed;inset:0;z-index:20;background:#0b0e20;display:none;flex-direction:column}.overlay.open{display:flex}.overlay-head{display:flex;align-items:center;gap:12px;padding:16px;border-bottom:1px solid #ffffff14;background:#141832}.overlay-head button{border:0;background:none;color:white;font-size:26px}.overlay-head h2{font-size:18px;margin:0;flex:1}.overlay-body{overflow:auto;padding-bottom:30px}.friend-search{margin:16px;display:flex;gap:9px}.friend-search input{flex:1;min-width:0;padding:14px;border:1px solid var(--line);border-radius:14px;background:#171c38;color:white;outline:none}.friend-search button,.action-btn{border:0;border-radius:13px;padding:0 15px;background:var(--grad);color:white;font-weight:750}.person{display:flex;align-items:center;gap:12px;padding:13px 17px;border-bottom:1px solid #ffffff10}.person .avatar{width:47px;height:47px;border-radius:16px}.person .info{flex:1}.action-btn{padding:10px 13px;font-size:12px}.action-btn.secondary{background:#2a3156;color:#dce1ff}.action-btn:disabled{opacity:.65}.small-note{padding:10px 18px;color:var(--muted);font-size:12px}
+.chat-window{position:fixed;inset:0;z-index:30;background:#0b0e20;display:none;flex-direction:column}.chat-head{display:flex;align-items:center;gap:12px;padding:14px 16px;background:#171c39;border-bottom:1px solid #ffffff12}.chat-head button{border:0;background:none;color:white;font-size:25px}.chat-head small{display:block;color:#8f9ac0;margin-top:3px}.chat-messages{flex:1;overflow:auto;padding:18px}.bubble{width:fit-content;max-width:82%;padding:12px 15px;margin:0 0 11px;border:1px solid #ffffff12;border-radius:17px 17px 17px 5px;background:#202647;color:#f4f5ff;font-size:14px;overflow-wrap:anywhere;white-space:pre-wrap}.bubble.mine{margin-left:auto;background:linear-gradient(120deg,#4d6ee8,#7653d9);border:0;border-radius:17px 17px 5px 17px}.bubble-time{display:block;font-size:10px;opacity:.7;margin-top:5px;text-align:right}.chat-compose{display:flex;gap:9px;padding:12px;background:#151a34;border-top:1px solid #ffffff12}.chat-compose input{flex:1;min-width:0;border:1px solid #ffffff12;border-radius:22px;background:#0c1128;color:white;padding:13px 16px;outline:none}.chat-compose button{width:55px;border:0;border-radius:16px;background:var(--grad);color:white}
+.story-strip{display:flex;gap:14px;overflow-x:auto;padding:17px 18px 20px;scrollbar-width:none}.story-strip::-webkit-scrollbar{display:none}.story-card{flex:0 0 78px;text-align:center;cursor:pointer}.story-ring{width:68px;height:68px;margin:0 auto 8px;padding:3px;border-radius:50%;background:var(--grad)}.story-face{width:100%;height:100%;border-radius:50%;border:3px solid #11152d;background:linear-gradient(145deg,#304a91,#593c89);display:grid;place-items:center;overflow:hidden;font-size:24px}.story-card small,.story-label{display:block;color:#dfe2ff;font-size:11px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.story-hint{padding:0 18px 12px;color:var(--muted);font-size:12px}.story-viewer{position:fixed;inset:0;z-index:60;background:#050713;display:none;align-items:center;justify-content:center;flex-direction:column}.story-viewer.open{display:flex}.story-viewer img{max-width:100%;max-height:70dvh;object-fit:contain}.story-viewer-top{position:absolute;top:0;left:0;right:0;padding:calc(14px + env(safe-area-inset-top)) 16px 14px;background:linear-gradient(#0009,transparent);display:flex;align-items:center;gap:12px;z-index:2}.story-viewer-top strong{flex:1}.story-viewer-top button{border:0;background:#ffffff20;color:white;border-radius:50%;width:40px;height:40px;font-size:22px}.story-caption{padding:12px 18px;color:white;text-align:center;max-width:600px}.story-progress{position:absolute;top:calc(8px + env(safe-area-inset-top));left:14px;right:14px;height:3px;background:#ffffff55;border-radius:9px}.story-progress span{display:block;height:100%;background:white;width:100%;border-radius:9px}.story-composer{padding:18px}.story-preview{width:100%;max-height:42dvh;object-fit:contain;border-radius:16px;background:#080b19;display:none;margin:12px 0}.story-composer input[type=file]{width:100%;color:var(--muted);padding:12px;background:#171c38;border-radius:13px}.story-composer textarea{width:100%;min-height:75px;padding:14px;border:1px solid var(--line);border-radius:14px;background:#0d1127;color:white;margin:12px 0}.story-status{font-size:12px;color:var(--muted);margin:10px 0}.story-reaction-bar{display:flex;align-items:center;justify-content:center;gap:9px;padding:8px 12px calc(18px + env(safe-area-inset-bottom));width:100%;max-width:520px;z-index:2}.story-reaction-btn{min-width:48px;min-height:44px;padding:6px 9px;border:1px solid #ffffff26;border-radius:18px;background:#ffffff12;color:white;font-size:23px;display:flex;align-items:center;justify-content:center;gap:4px}.story-reaction-btn.active{background:#637fff45;border-color:#9b8cff}.story-reaction-btn small{font-size:11px;color:#e7e9ff}
+@media(min-width:700px){#appScreen{max-width:760px;margin:auto;border-left:1px solid #ffffff10;border-right:1px solid #ffffff10;min-height:100dvh}.bottom-nav{left:50%;right:auto;transform:translateX(-50%);width:min(100%,760px);border-radius:18px 18px 0 0}}
 </style>
 </head>
+
+  
 <body>
 
 <!-- LOGIN SCREEN -->
@@ -602,7 +47,6 @@ main{max-width:760px;margin:auto}
       <span class="link" onclick="forgotPassword()">Forgot password?</span>
     </div>
     <div id="loginError" class="error"></div>
-
     <div class="switch">
       Don't have an account?
       <span class="link" onclick="showScreen('registerScreen')">Create account</span>
@@ -629,7 +73,7 @@ main{max-width:760px;margin:auto}
       </div>
       <div class="field">
         <label>Password</label>
-        <input id="regPassword" type="password" placeholder="At least 8 characters" required>
+        <input id="regPassword" type="password" placeholder="At least 6 characters" required>
       </div>
       <div class="field">
         <label>Confirm password</label>
@@ -639,7 +83,6 @@ main{max-width:760px;margin:auto}
     </form>
 
     <div id="regError" class="notice"></div>
-
     <div class="switch">
       Already registered?
       <span class="link" onclick="showScreen('loginScreen')">Sign in</span>
@@ -676,156 +119,195 @@ main{max-width:760px;margin:auto}
         <button class="icon-btn" onclick="openSettings()" aria-label="Settings">⚙</button>
       </div>
     </div>
-    <div class="welcome">Welcome, <b id="welcomeName">CHATIVO User</b></div>
 
-    <nav class="tabs">
-      <div class="tab active" onclick="switchPage('chats')">Chats</div>
-      <div class="tab" onclick="switchPage('updates')">Updates</div>
-      <div class="tab" onclick="switchPage('calls')">Calls</div>
-    </nav>
+    <div class="welcome">
+      Welcome, <b id="welcomeName">User</b>
+    </div>
+
+    <div class="tabs">
+      <div class="tab active" onclick="showPage('chatsPage',this)">Chats</div>
+      <div class="tab" onclick="showPage('friendsPage',this)">Friends</div>
+      <div class="tab" onclick="showPage('storiesPage',this)">Stories</div>
+    </div>
   </header>
 
   <main>
 
     <!-- CHATS PAGE -->
-    <section class="page active" id="chats">
+    <section class="page active" id="chatsPage">
       <div class="search-wrap">
         <div class="search">
-          <span>⌕</span>
-          <input id="search" type="search" placeholder="Search conversations..." oninput="filterChats()">
+          🔎
+          <input id="chatSearch" type="search" placeholder="Search conversations..." oninput="filterChats()">
         </div>
       </div>
 
-      <div class="section-title">YOUR CONVERSATIONS</div>
+      <div class="section-title">RECENT CHATS</div>
       <div id="chatList">
-        <div class="empty">Your conversations will appear here.</div>
+        <div class="empty">Loading chats...</div>
       </div>
     </section>
 
-    <!-- UPDATES PAGE -->
-    <section class="page" id="updates">
-      <div class="section-title">RECENT STORIES</div>
-
-      <div id="storyStrip" class="story-strip">
-        <div class="story-card story-add" onclick="openStoryComposer()">
-          <div class="story-ring">
-            <div class="story-face">＋</div>
-            <span class="story-plus">＋</span>
-          </div>
-          <small>Your story</small>
-        </div>
+    <!-- FRIENDS PAGE -->
+    <section class="page" id="friendsPage">
+      <div class="section-title">MY FRIENDS</div>
+      <div id="friendsList">
+        <div class="empty">Loading friends...</div>
       </div>
 
-      <div class="story-hint">Share a photo or see your friends' stories.</div>
+      <div class="section-title">FRIEND REQUESTS</div>
+      <div id="friendRequests">
+        <div class="empty">No requests yet.</div>
+      </div>
+    </section>
 
-      <div class="section-title">ALL STORIES</div>
+    <!-- STORIES PAGE -->
+    <section class="page" id="storiesPage">
+      <div class="section-title">YOUR STORIES & FRIENDS</div>
+
+      <div class="story-strip" id="storyStrip">
+        <div class="empty">Loading stories...</div>
+      </div>
+
+      <div class="story-hint">
+        Share photos with your friends. Stories are available for 24 hours.
+      </div>
+
+      <div class="section-title">RECENT STORIES</div>
       <div id="storyList">
         <div class="empty">No stories yet.</div>
       </div>
+
+      <button class="fab" onclick="openStoryComposer()">＋</button>
     </section>
 
-    <!-- CALLS PAGE -->
-    <section class="page" id="calls">
-      <div class="section-title">CALLS</div>
-      <div class="empty">Call feature is coming soon.</div>
-    </section>
-
-    <!-- SETTINGS PAGE -->
-    <section class="page" id="settings">
+    <!-- PROFILE PAGE -->
+    <section class="page" id="profilePage">
       <div class="profile-card">
-        <div class="avatar">✦</div>
-        <h3 id="settingsName">CHATIVO User</h3>
-        <p id="settingsEmail"></p>
-      </div>
-
-      <div class="setting">
-        <span>Account</span>
-        <span>CHATIVO</span>
-      </div>
-      <div class="setting">
-        <span>Privacy</span>
-        <span>Private</span>
-      </div>
-      <div class="setting">
-        <span class="logout" onclick="logout()">Sign out</span>
-        <span>↗</span>
+        <div class="avatar" id="profileAvatar">✦</div>
+        <h3 id="profileName">User</h3>
+        <p id="profileEmail">user@email.com</p>
+        <p id="profileBio">Welcome to CHATIVO</p>
       </div>
     </section>
 
   </main>
 
-  <button class="fab" id="fab" onclick="openFriendSearch()">＋</button>
-
+  <!-- BOTTOM NAVIGATION -->
   <nav class="bottom-nav">
-    <button class="active" onclick="switchPage('chats')">
-      <span>▣</span>Chats
+    <button class="active" onclick="showPage('chatsPage',this)">
+      <span>💬</span>Chats
     </button>
-    <button onclick="switchPage('updates')">
-      <span>◉</span>Updates
+    <button onclick="showPage('friendsPage',this)">
+      <span>👥</span>Friends
     </button>
-    <button onclick="switchPage('calls')">
-      <span>☎</span>Calls
+    <button onclick="showPage('storiesPage',this)">
+      <span>⭕</span>Stories
     </button>
-    <button onclick="openSettings()">
-      <span>⚙</span>Settings
+    <button onclick="showPage('profilePage',this)">
+      <span>👤</span>Profile
     </button>
   </nav>
 
 </section>
 
 <!-- FRIEND SEARCH OVERLAY -->
-<div class="overlay" id="friendOverlay">
+<div class="overlay" id="friendSearchOverlay">
   <div class="overlay-head">
-    <button onclick="closeFriendSearch()">←</button>
+    <button onclick="closeFriendSearch()">‹</button>
     <h2>Find Friends</h2>
   </div>
 
   <div class="overlay-body">
     <div class="friend-search">
-      <input id="friendQuery" type="search" placeholder="Search by display name">
-      <button onclick="searchPeople()">Search</button>
+      <input id="friendSearchInput" type="search" placeholder="Search by name...">
+      <button onclick="searchFriends()">Search</button>
     </div>
 
-    <div id="searchMessage" class="small-note"></div>
-    <div id="searchResults"></div>
+    <div id="friendSearchResults"></div>
+  </div>
+</div>
 
-    <div class="section-title">FRIEND REQUESTS</div>
-    <div id="requestList">
-      <div class="small-note">No requests loaded.</div>
+<!-- SETTINGS OVERLAY -->
+<div class="overlay" id="settingsOverlay">
+  <div class="overlay-head">
+    <button onclick="closeSettings()">‹</button>
+    <h2>Settings</h2>
+  </div>
+
+  <div class="overlay-body">
+    <div class="setting">
+      <span>Account</span>
+      <span>CHATIVO</span>
     </div>
 
-    <div class="section-title">MY FRIENDS</div>
-    <div id="friendList">
-      <div class="small-note">Your friends will appear here.</div>
+    <div class="setting">
+      <span>Privacy</span>
+      <span>Friends</span>
+    </div>
+
+    <div class="setting">
+      <span>Version</span>
+      <span>1.0</span>
+    </div>
+
+    <div class="setting logout" onclick="logoutUser()">
+      <span>Log out</span>
+      <span>→</span>
     </div>
   </div>
+</div>
+
+<!-- CHAT WINDOW -->
+<div class="chat-window" id="chatWindow">
+  <div class="chat-head">
+    <button onclick="closeChat()">‹</button>
+    <div class="avatar" id="chatAvatar">✦</div>
+    <div class="info">
+      <div class="name" id="chatName">Chat</div>
+      <small id="chatStatus">CHATIVO</small>
+    </div>
+  </div>
+
+  <div class="chat-messages" id="chatMessages">
+    <div class="empty">Loading messages...</div>
+  </div>
+
+  <form class="chat-compose" id="messageForm">
+    <input id="messageInput" type="text" placeholder="Type a message..." autocomplete="off">
+    <button type="submit">➤</button>
+  </form>
 </div>
 
 <!-- STORY COMPOSER -->
 <div class="overlay" id="storyComposer">
   <div class="overlay-head">
-    <button onclick="closeStoryComposer()">×</button>
+    <button onclick="closeStoryComposer()">‹</button>
     <h2>Create Story</h2>
   </div>
 
   <div class="overlay-body story-composer">
-    <input type="file" id="storyFile" accept="image/*" onchange="previewStoryImage(event)">
+    <p class="sub">Share a photo with your friends.</p>
+
+    <input id="storyFile" type="file" accept="image/*" onchange="previewStoryImage(event)">
 
     <img id="storyPreview" class="story-preview" alt="Story preview">
 
-    <textarea id="storyCaption" placeholder="Write a caption..."></textarea>
+    <textarea id="storyCaption" placeholder="Write a caption (optional)..."></textarea>
 
     <div id="storyUploadStatus" class="story-status"></div>
 
     <button class="primary" id="storyPostButton" onclick="postStory()">
-      Share story
+      Post Story
     </button>
   </div>
 </div>
 
 <!-- STORY VIEWER -->
 <div class="story-viewer" id="storyViewer">
-  <div class="story-progress"><span></span></div>
+  <div class="story-progress">
+    <span></span>
+  </div>
 
   <div class="story-viewer-top">
     <strong id="storyViewerName">Story</strong>
@@ -834,35 +316,20 @@ main{max-width:760px;margin:auto}
 
   <img id="storyViewerImage" alt="Story">
 
-  <div id="storyViewerCaption" class="story-caption"></div>
+  <div class="story-caption" id="storyViewerCaption"></div>
 
-  <div id="storyReactionBar" class="story-reaction-bar"
-       aria-label="React to this story"></div>
+  <div class="story-reaction-bar" id="storyReactionBar"></div>
 </div>
 
-<!-- CHAT WINDOW -->
-<div class="chat-window" id="chatWindow">
-
-  <div class="chat-head">
-    <button onclick="closeChat()">←</button>
-    <div class="info">
-      <strong id="chatTitle">Chat</strong>
-      <small id="chatStatus">Connecting...</small>
-    </div>
-  </div>
-
-  <div id="chatMessages" class="chat-messages">
-    <div class="empty">Opening conversation...</div>
-  </div>
-
-  <form id="messageForm" class="chat-compose">
-    <input id="messageInput" type="text" placeholder="Type a message..." autocomplete="off">
-    <button type="submit">➤</button>
-  </form>
-
-</div>
 
 <script>
+/* =====================================
+   CHATIVO — PART 3
+   Supabase, Authentication, Profile,
+   Navigation and Settings
+===================================== */
+
+// 1. SUPABASE CONNECTION
 const SUPABASE_URL = 'https://wmtbcwcaxlmznffyrtsy.supabase.co';
 const SUPABASE_PUBLISHABLE_KEY = 'sb_publishable_sUsu1vTb9ORMyut4qKzHxg_LfPMMoUc';
 
@@ -872,235 +339,167 @@ const db = createClient(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY);
 const $ = id => document.getElementById(id);
 
 let currentUser = null;
-let profile = null;
-let activeConversationId = null;
-let activeFriendId = null;
-let activeFriendName = '';
-let messageChannel = null;
-let renderedMessageIds = new Set();
-let chatLoadToken = 0;
+let currentProfile = null;
+let activePage = 'chats';
 
 
-/* =========================
-   BASIC HELPERS
-========================= */
-
-function safeText(value) {
-  return String(value ?? '');
-}
-
-function showScreen(id) {
-  document.querySelectorAll('.auth').forEach(el => {
-    el.classList.add('hidden');
-  });
-
-  const screen = $(id);
-  if (screen) screen.classList.remove('hidden');
-}
-
+// 2. COMMON HELPERS
 function showError(id, message) {
   const el = $(id);
-  if (!el) return;
+  if (el) el.textContent = message || '';
+}
 
-  el.textContent = message || '';
-  el.classList.toggle('hidden', !message);
+function setButtonLoading(button, loading, normalText) {
+  if (!button) return;
+  button.disabled = loading;
+  button.textContent = loading ? 'Please wait...' : normalText;
+}
+
+function showAuthScreen() {
+  if ($('appScreen')) $('appScreen').classList.add('hidden');
+  if ($('setupScreen')) $('setupScreen').classList.add('hidden');
+
+  const loginForm = $('loginForm');
+  const registerForm = $('registerForm');
+
+  if (loginForm) loginForm.classList.remove('hidden');
+  if (registerForm) registerForm.classList.add('hidden');
+
+  if ($('loginScreen')) $('loginScreen').classList.remove('hidden');
+}
+
+function showRegisterForm() {
+  if ($('loginForm')) $('loginForm').classList.add('hidden');
+  if ($('registerForm')) $('registerForm').classList.remove('hidden');
+
+  showError('loginError', '');
+  showError('regError', '');
+}
+
+function showLoginForm() {
+  if ($('registerForm')) $('registerForm').classList.add('hidden');
+  if ($('loginForm')) $('loginForm').classList.remove('hidden');
+
+  showError('loginError', '');
+  showError('regError', '');
 }
 
 
-/* =========================
-   AUTHENTICATION
-========================= */
-
-async function loadProfile() {
-  if (!currentUser) return null;
-
-  const { data, error } = await db
-    .from('profiles')
-    .select('*')
-    .eq('id', currentUser.id)
-    .maybeSingle();
-
-  if (error) {
-    console.error('Profile load error:', error);
-    return null;
-  }
-
-  profile = data;
-  return data;
-}
-
-async function showApp() {
-  showScreen('appScreen');
-
-  const name = profile?.display_name || currentUser?.email || 'User';
-
-  if ($('welcomeName')) $('welcomeName').textContent = name;
-  if ($('settingsName')) $('settingsName').textContent = name;
-  if ($('settingsEmail')) {
-    $('settingsEmail').textContent = currentUser?.email || '';
-  }
-
-  loadChatList();
-  loadStories();
-}
-
-async function syncSession() {
-  const { data, error } = await db.auth.getSession();
-
-  if (error) {
-    console.error(error);
-    showScreen('loginScreen');
-    return;
-  }
-
-  const session = data.session;
-
-  if (!session) {
-    currentUser = null;
-    profile = null;
-    showScreen('loginScreen');
-    return;
-  }
-
-  currentUser = session.user;
-
-  const userProfile = await loadProfile();
-
-  if (!userProfile || !userProfile.display_name) {
-    showScreen('setupScreen');
-  } else {
-    await showApp();
-  }
-}
-
-
-/* =========================
-   REGISTER
-========================= */
-
-if ($('registerForm')) {
-  $('registerForm').addEventListener('submit', async event => {
-    event.preventDefault();
-
-    showError('regError', '');
-
-    const name = $('regName').value.trim();
-    const email = $('regEmail').value.trim();
-    const password = $('regPassword').value;
-    const confirm = $('regConfirm').value;
-
-    if (!name || !email || !password) {
-      showError('regError', 'সব তথ্য পূরণ করো।');
-      return;
-    }
-
-    if (password.length < 6) {
-      showError('regError', 'পাসওয়ার্ড কমপক্ষে ৬ অক্ষরের হতে হবে।');
-      return;
-    }
-
-    if (password !== confirm) {
-      showError('regError', 'দুইটি পাসওয়ার্ড মিলছে না।');
-      return;
-    }
-
-    $('registerButton').disabled = true;
-    $('registerButton').textContent = 'Creating account...';
-
-    const { data, error } = await db.auth.signUp({
-      email,
-      password
-    });
-
-    if (error) {
-      showError('regError', error.message);
-    } else if (data.user) {
-      currentUser = data.user;
-
-      if (data.session) {
-        const { error: profileError } = await db
-          .from('profiles')
-          .upsert({
-            id: data.user.id,
-            display_name: name
-          });
-
-        if (profileError) {
-          showError('regError', profileError.message);
-        } else {
-          await loadProfile();
-          await showApp();
-        }
-      } else {
-        showError(
-          'regError',
-          'অ্যাকাউন্ট তৈরি হয়েছে। ইমেইল যাচাই করে Login করো।'
-        );
-        showScreen('loginScreen');
-      }
-    }
-
-    $('registerButton').disabled = false;
-    $('registerButton').textContent = 'Create Account';
-  });
-}
-
-
-/* =========================
-   LOGIN
-========================= */
-
+// 3. LOGIN
 if ($('loginForm')) {
-  $('loginForm').addEventListener('submit', async event => {
-    event.preventDefault();
-
-    showError('loginError', '');
+  $('loginForm').addEventListener('submit', async function(e) {
+    e.preventDefault();
 
     const email = $('loginEmail').value.trim();
     const password = $('loginPassword').value;
 
-    $('loginButton').disabled = true;
-    $('loginButton').textContent = 'Logging in...';
+    if (!email || !password) {
+      showError('loginError', 'Email এবং Password লিখো।');
+      return;
+    }
+
+    setButtonLoading($('loginButton'), true, 'Login');
 
     const { data, error } = await db.auth.signInWithPassword({
       email,
       password
     });
 
+    setButtonLoading($('loginButton'), false, 'Login');
+
     if (error) {
       showError('loginError', error.message);
-    } else {
-      currentUser = data.user;
-      await loadProfile();
-
-      if (!profile || !profile.display_name) {
-        showScreen('setupScreen');
-      } else {
-        await showApp();
-      }
+      return;
     }
 
-    $('loginButton').disabled = false;
-    $('loginButton').textContent = 'Login';
+    currentUser = data.user;
+    await startApp();
   });
 }
 
 
-/* =========================
-   PROFILE SETUP
-========================= */
+// 4. REGISTER
+if ($('registerForm')) {
+  $('registerForm').addEventListener('submit', async function(e) {
+    e.preventDefault();
 
+    const name = $('regName').value.trim();
+    const email = $('regEmail').value.trim();
+    const password = $('regPassword').value;
+    const confirm = $('regConfirm').value;
+
+    if (!name || !email || !password || !confirm) {
+      showError('regError', 'সব তথ্য পূরণ করো।');
+      return;
+    }
+
+    if (password.length < 6) {
+      showError('regError', 'Password কমপক্ষে ৬ অক্ষরের হতে হবে।');
+      return;
+    }
+
+    if (password !== confirm) {
+      showError('regError', 'দুইটি Password মিলছে না।');
+      return;
+    }
+
+    setButtonLoading($('registerButton'), true, 'Create Account');
+
+    const { data, error } = await db.auth.signUp({
+      email,
+      password,
+      options: {
+        data: {
+          display_name: name
+        }
+      }
+    });
+
+    setButtonLoading($('registerButton'), false, 'Create Account');
+
+    if (error) {
+      showError('regError', error.message);
+      return;
+    }
+
+    if (data.user && data.session) {
+      currentUser = data.user;
+
+      const { error: profileError } = await db
+        .from('profiles')
+        .upsert({
+          id: currentUser.id,
+          display_name: name
+        });
+
+      if (profileError) {
+        showError('regError', profileError.message);
+        return;
+      }
+
+      await startApp();
+    } else {
+      showError(
+        'regError',
+        'Account তৈরি হয়েছে। Email খুলে verification link-এ চাপ দাও, তারপর Login করো।'
+      );
+    }
+  });
+}
+
+
+// 5. PROFILE SETUP
 async function finishSetup() {
   if (!currentUser) return;
 
   const name = $('displayName').value.trim();
 
-  showError('setupError', '');
-
   if (!name) {
     showError('setupError', 'তোমার নাম লিখো।');
     return;
   }
+
+  showError('setupError', 'Saving...');
 
   const { error } = await db
     .from('profiles')
@@ -1119,121 +518,284 @@ async function finishSetup() {
 }
 
 
-/* =========================
-   LOGOUT
-========================= */
+// 6. LOAD PROFILE
+async function loadProfile() {
+  if (!currentUser) return;
 
-async function logout() {
-  const { error } = await db.auth.signOut();
+  const { data, error } = await db
+    .from('profiles')
+    .select('*')
+    .eq('id', currentUser.id)
+    .maybeSingle();
 
   if (error) {
-    alert(error.message);
+    console.error('Profile error:', error);
     return;
   }
 
-  currentUser = null;
-  profile = null;
-  activeConversationId = null;
-  activeFriendId = null;
+  currentProfile = data;
 
-  showScreen('loginScreen');
+  const name = data?.display_name || 'CHATIVO User';
+
+  if ($('profileName')) $('profileName').textContent = name;
+  if ($('profileEmail')) $('profileEmail').textContent = currentUser.email || '';
+  if ($('profileBio')) $('profileBio').value = data?.bio || '';
+  if ($('welcomeName')) $('welcomeName').textContent = name;
+
+  if (!data?.display_name) {
+    if ($('appScreen')) $('appScreen').classList.add('hidden');
+    if ($('setupScreen')) $('setupScreen').classList.remove('hidden');
+    return false;
+  }
+
+  return true;
 }
 
 
-/* =========================
-   PAGE NAVIGATION
-========================= */
+// 7. SHOW MAIN APP
+async function showApp() {
+  if ($('loginScreen')) $('loginScreen').classList.add('hidden');
+  if ($('setupScreen')) $('setupScreen').classList.add('hidden');
+  if ($('appScreen')) $('appScreen').classList.remove('hidden');
 
-function switchPage(pageName) {
-  document.querySelectorAll('.page').forEach(page => {
-    page.classList.add('hidden');
-  });
+  await loadProfile();
 
-  const page = $(pageName);
-  if (page) page.classList.remove('hidden');
+  if (!currentProfile?.display_name) return;
 
-  document.querySelectorAll('.tab').forEach(tab => {
-    tab.classList.toggle(
-      'active',
-      tab.dataset.page === pageName
-    );
-  });
+  showPage('chats');
 
-  document.querySelectorAll('.bottom-nav button').forEach(btn => {
-    btn.classList.toggle(
-      'active',
-      btn.dataset.page === pageName
-    );
-  });
-
-  if (pageName === 'updates') loadStories();
-  if (pageName === 'chats') loadChatList();
-}
-
-function openSettings() {
-  switchPage('settings');
-}
-
-function filterChats() {
-  const query = ($('search')?.value || '').toLowerCase();
-
-  document.querySelectorAll('#chatList .chat').forEach(item => {
-    const name = item.querySelector('.name')?.textContent || '';
-    item.style.display = name.toLowerCase().includes(query)
-      ? ''
-      : 'none';
-  });
+  if (typeof loadChatList === 'function') await loadChatList();
+  if (typeof loadFriends === 'function') await loadFriends();
+  if (typeof loadFriendRequests === 'function') await loadFriendRequests();
+  if (typeof loadStories === 'function') await loadStories();
 }
 
 
-/* =========================
-   FRIEND SEARCH
-========================= */
+// 8. START APP
+async function startApp() {
+  if (!currentUser) {
+    const { data } = await db.auth.getSession();
+    currentUser = data?.session?.user || null;
+  }
 
-function openFriendSearch() {
-  $('friendOverlay').classList.remove('hidden');
-
-  if ($('friendQuery')) $('friendQuery').value = '';
-  if ($('searchResults')) $('searchResults').innerHTML = '';
-  if ($('searchMessage')) $('searchMessage').textContent = '';
-
-  loadFriendRequests();
-  loadFriends();
-}
-
-function closeFriendSearch() {
-  $('friendOverlay').classList.add('hidden');
-}
-
-async function searchPeople() {
-  if (!currentUser) return;
-
-  const query = $('friendQuery').value.trim();
-
-  $('searchResults').innerHTML = '';
-  $('searchMessage').textContent = '';
-
-  if (query.length < 2) {
-    $('searchMessage').textContent = 'কমপক্ষে ২টি অক্ষর লিখো।';
+  if (!currentUser) {
+    showAuthScreen();
     return;
   }
 
   const { data, error } = await db
     .from('profiles')
-    .select('id,display_name,avatar_url,bio')
+    .select('*')
+    .eq('id', currentUser.id)
+    .maybeSingle();
+
+  if (error) {
+    console.error('Profile loading error:', error);
+    showAuthScreen();
+    return;
+  }
+
+  currentProfile = data;
+
+  if (!data?.display_name) {
+    if ($('appScreen')) $('appScreen').classList.add('hidden');
+    if ($('loginScreen')) $('loginScreen').classList.add('hidden');
+    if ($('setupScreen')) $('setupScreen').classList.remove('hidden');
+    return;
+  }
+
+  await showApp();
+}
+
+
+// 9. PAGE NAVIGATION
+function showPage(page, clickedButton) {
+  activePage = page;
+
+  const pages = ['chats', 'friends', 'stories', 'profile'];
+
+  pages.forEach(name => {
+    const pageElement = $(name + 'Page');
+    if (pageElement) {
+      pageElement.classList.toggle('active', name === page);
+    }
+  });
+
+  document.querySelectorAll('[data-page]').forEach(button => {
+    button.classList.toggle(
+      'active',
+      button.dataset.page === page
+    );
+  });
+
+  if (clickedButton) {
+    clickedButton.classList.add('active');
+  }
+
+  if (page === 'chats' && typeof loadChatList === 'function') {
+    loadChatList();
+  }
+
+  if (page === 'friends') {
+    if (typeof loadFriends === 'function') loadFriends();
+    if (typeof loadFriendRequests === 'function') loadFriendRequests();
+  }
+
+  if (page === 'stories' && typeof loadStories === 'function') {
+    loadStories();
+  }
+}
+
+
+// 10. CHAT SEARCH FILTER
+function filterChats() {
+  const search = ($('chatSearch')?.value || '').toLowerCase();
+
+  document.querySelectorAll('#chatList .chat').forEach(item => {
+    const name = item.querySelector('.name')?.textContent || '';
+    item.style.display = name.toLowerCase().includes(search)
+      ? 'flex'
+      : 'none';
+  });
+}
+
+
+// 11. SETTINGS
+function openSettings() {
+  if ($('settingsOverlay')) {
+    $('settingsOverlay').classList.add('open');
+  }
+}
+
+function closeSettings() {
+  if ($('settingsOverlay')) {
+    $('settingsOverlay').classList.remove('open');
+  }
+}
+
+
+// 12. LOGOUT
+async function logoutUser() {
+  const confirmed = confirm('তুমি কি Logout করতে চাও?');
+  if (!confirmed) return;
+
+  const { error } = await db.auth.signOut();
+
+  if (error) {
+    alert('Logout করা যায়নি: ' + error.message);
+    return;
+  }
+
+  currentUser = null;
+  currentProfile = null;
+
+  if ($('appScreen')) $('appScreen').classList.add('hidden');
+  if ($('setupScreen')) $('setupScreen').classList.add('hidden');
+
+  showAuthScreen();
+}
+
+
+// 13. AUTH STATE LISTENER
+db.auth.onAuthStateChange((event, session) => {
+  currentUser = session?.user || null;
+
+  if (event === 'SIGNED_OUT') {
+    currentProfile = null;
+    showAuthScreen();
+  }
+});
+
+
+// 14. START
+startApp();
+
+
+/* =====================================
+   CHATIVO — PART 4
+   Friends, Requests and Messaging
+===================================== */
+
+// 1. CHAT VARIABLES
+let activeConversationId = null;
+let activeFriendId = null;
+let chatLoadToken = 0;
+let messageChannel = null;
+let renderedMessageIds = new Set();
+
+
+// 2. OPEN / CLOSE FRIEND SEARCH
+function openFriendSearch() {
+  if ($('friendSearchOverlay')) {
+    $('friendSearchOverlay').classList.add('open');
+  }
+
+  if ($('friendSearchInput')) {
+    $('friendSearchInput').value = '';
+  }
+
+  if ($('friendSearchResults')) {
+    $('friendSearchResults').innerHTML = '';
+  }
+
+  loadFriends();
+  loadFriendRequests();
+}
+
+function closeFriendSearch() {
+  if ($('friendSearchOverlay')) {
+    $('friendSearchOverlay').classList.remove('open');
+  }
+}
+
+
+// 3. SEARCH FRIENDS
+async function searchFriends() {
+  if (!currentUser) return;
+
+  const query = $('friendSearchInput')?.value.trim();
+
+  const results = $('friendSearchResults');
+  if (!results) return;
+
+  results.innerHTML = '';
+
+  if (!query || query.length < 2) {
+    results.textContent = 'কমপক্ষে ২টি অক্ষর লিখো।';
+    return;
+  }
+
+  const { data, error } = await db
+    .from('profiles')
+    .select('id, display_name, bio')
     .ilike('display_name', `%${query}%`)
     .neq('id', currentUser.id)
     .limit(20);
 
   if (error) {
-    $('searchMessage').textContent = error.message;
+    results.textContent = error.message;
     return;
   }
 
-  if (!data || data.length === 0) {
-    $('searchMessage').textContent = 'কোনো অ্যাকাউন্ট পাওয়া যায়নি।';
+  if (!data || !data.length) {
+    results.textContent = 'কোনো Account পাওয়া যায়নি।';
     return;
   }
+
+  const { data: requests } = await db
+    .from('friend_requests')
+    .select('sender_id, receiver_id, status')
+    .or(`sender_id.eq.${currentUser.id},receiver_id.eq.${currentUser.id}`);
+
+  const requestMap = new Map();
+
+  (requests || []).forEach(request => {
+    const otherId = request.sender_id === currentUser.id
+      ? request.receiver_id
+      : request.sender_id;
+
+    requestMap.set(otherId, request);
+  });
 
   data.forEach(person => {
     const item = document.createElement('div');
@@ -1244,40 +806,57 @@ async function searchPeople() {
 
     const name = document.createElement('div');
     name.className = 'name';
-    name.textContent = person.display_name || 'User';
+    name.textContent = person.display_name || 'CHATIVO User';
 
     const bio = document.createElement('div');
     bio.className = 'message';
-    bio.textContent = person.bio || 'CHATIVO user';
+    bio.textContent = person.bio || 'CHATIVO User';
 
     info.append(name, bio);
 
     const button = document.createElement('button');
     button.className = 'action-btn';
-    button.textContent = 'Add';
-    button.onclick = () => sendFriendRequest(person.id, button);
+
+    const existing = requestMap.get(person.id);
+
+    if (existing?.status === 'accepted') {
+      button.textContent = 'Friends';
+      button.disabled = true;
+    } else if (existing?.status === 'pending') {
+      button.textContent = existing.sender_id === currentUser.id
+        ? 'Sent'
+        : 'Pending';
+      button.disabled = true;
+    } else {
+      button.textContent = 'Add Friend';
+      button.onclick = () => sendFriendRequest(person.id, button);
+    }
 
     item.append(info, button);
-    $('searchResults').appendChild(item);
+    results.append(item);
   });
 }
 
-async function sendFriendRequest(receiverId, button) {
+
+// 4. SEND FRIEND REQUEST
+async function sendFriendRequest(friendId, button) {
   if (!currentUser) return;
 
   button.disabled = true;
+  button.textContent = 'Sending...';
 
   const { error } = await db
     .from('friend_requests')
     .insert({
       sender_id: currentUser.id,
-      receiver_id: receiverId,
+      receiver_id: friendId,
       status: 'pending'
     });
 
   if (error) {
-    alert(error.message);
+    alert('Friend Request পাঠানো যায়নি: ' + error.message);
     button.disabled = false;
+    button.textContent = 'Add Friend';
     return;
   }
 
@@ -1285,107 +864,118 @@ async function sendFriendRequest(receiverId, button) {
 }
 
 
-/* =========================
-   FRIEND LIST
-========================= */
-
+// 5. GET FRIEND IDS
 async function getFriendIds() {
   if (!currentUser) return [];
 
   const { data, error } = await db
     .from('friend_requests')
-    .select('sender_id,receiver_id')
+    .select('sender_id, receiver_id')
     .eq('status', 'accepted')
     .or(
       `sender_id.eq.${currentUser.id},receiver_id.eq.${currentUser.id}`
     );
 
   if (error) {
-    console.error(error);
+    console.error('Friend IDs error:', error);
     return [];
   }
 
-  return (data || []).map(row =>
-    row.sender_id === currentUser.id
-      ? row.receiver_id
-      : row.sender_id
+  return (data || []).map(request =>
+    request.sender_id === currentUser.id
+      ? request.receiver_id
+      : request.sender_id
   );
 }
 
+
+// 6. LOAD FRIENDS
 async function loadFriends() {
   if (!currentUser) return;
 
-  $('friendList').innerHTML = '';
+  const list = $('friendsList');
+  if (!list) return;
+
+  list.innerHTML = 'Loading Friends...';
 
   const ids = await getFriendIds();
 
   if (!ids.length) {
-    $('friendList').textContent = 'এখনো কোনো Friend নেই।';
+    list.textContent = 'এখনো কোনো Friend নেই।';
     return;
   }
 
   const { data, error } = await db
     .from('profiles')
-    .select('id,display_name,avatar_url')
+    .select('id, display_name, avatar_url')
     .in('id', ids);
 
   if (error) {
-    $('friendList').textContent = error.message;
+    list.textContent = error.message;
     return;
   }
 
+  list.innerHTML = '';
+
   (data || []).forEach(friend => {
+    const name = friend.display_name || 'User';
+
     const item = document.createElement('div');
     item.className = 'person';
 
     const info = document.createElement('div');
     info.className = 'info';
 
-    const name = document.createElement('div');
-    name.className = 'name';
-    name.textContent = friend.display_name || 'User';
+    const title = document.createElement('div');
+    title.className = 'name';
+    title.textContent = name;
 
-    info.appendChild(name);
+    const subtitle = document.createElement('div');
+    subtitle.className = 'message';
+    subtitle.textContent = 'CHATIVO Friend';
+
+    info.append(title, subtitle);
 
     const button = document.createElement('button');
     button.className = 'action-btn';
     button.textContent = 'Message';
 
     button.onclick = () => {
-      closeFriendSearch();
-      startChat(friend.id, friend.display_name || 'User');
+      startChat(friend.id, name);
     };
 
     item.append(info, button);
-    $('friendList').appendChild(item);
+    list.append(item);
   });
 }
 
 
-/* =========================
-   FRIEND REQUESTS
-========================= */
-
+// 7. LOAD FRIEND REQUESTS
 async function loadFriendRequests() {
   if (!currentUser) return;
 
-  $('requestList').innerHTML = '';
+  const list = $('friendRequests');
+  if (!list) return;
+
+  list.innerHTML = 'Loading...';
 
   const { data, error } = await db
     .from('friend_requests')
-    .select('id,sender_id,receiver_id,status')
+    .select('id, sender_id')
     .eq('receiver_id', currentUser.id)
     .eq('status', 'pending');
 
   if (error) {
-    $('requestList').textContent = error.message;
+    list.textContent = error.message;
     return;
   }
 
   if (!data || !data.length) {
-    $('requestList').textContent = 'নতুন Friend Request নেই।';
+    list.textContent = 'নতুন Friend Request নেই।';
     return;
   }
+
+  list.innerHTML = '';
 
   for (const request of data) {
     const { data: person } = await db
@@ -1402,9 +992,9 @@ async function loadFriendRequests() {
 
     const name = document.createElement('div');
     name.className = 'name';
-    name.textContent = person?.display_name || 'User';
+    name.textContent = person?.display_name || 'CHATIVO User';
 
-    info.appendChild(name);
+    info.append(name);
 
     const accept = document.createElement('button');
     accept.className = 'action-btn';
@@ -1412,20 +1002,24 @@ async function loadFriendRequests() {
     accept.onclick = () => respondRequest(request.id, 'accepted');
 
     const decline = document.createElement('button');
-    decline.className = 'action-btn';
+    decline.className = 'action-btn secondary';
     decline.textContent = 'Decline';
     decline.onclick = () => respondRequest(request.id, 'declined');
 
     item.append(info, accept, decline);
-    $('requestList').appendChild(item);
+    list.append(item);
   }
 }
 
-async function respondRequest(requestId, status) {
+
+// 8. ACCEPT / DECLINE REQUEST
+async function respondRequest(id, status) {
+  if (!currentUser) return;
+
   const { error } = await db
     .from('friend_requests')
     .update({ status })
-    .eq('id', requestId)
+    .eq('id', id)
     .eq('receiver_id', currentUser.id);
 
   if (error) {
@@ -1433,68 +1027,33 @@ async function respondRequest(requestId, status) {
     return;
   }
 
-  loadFriendRequests();
-  loadFriends();
+  await loadFriendRequests();
+  await loadFriends();
 }
 
 
-/* =========================
-   MESSENGER
-========================= */
-
-function addMessageToView(message) {
-  if (!message || renderedMessageIds.has(message.id)) return;
-
-  renderedMessageIds.add(message.id);
-
-  const bubble = document.createElement('div');
-  bubble.className = 'bubble';
-
-  if (message.sender_id === currentUser.id) {
-    bubble.classList.add('mine');
-  }
-
-  const text = document.createElement('div');
-  text.textContent = message.content || '';
-
-  const time = document.createElement('div');
-  time.className = 'bubble-time';
-
-  if (message.created_at) {
-    time.textContent = new Date(message.created_at).toLocaleTimeString(
-      [],
-      { hour: '2-digit', minute: '2-digit' }
-    );
-  }
-
-  bubble.append(text, time);
-  $('chatMessages').appendChild(bubble);
-
-  $('chatMessages').scrollTop = $('chatMessages').scrollHeight;
-}
-
-
+// 9. FIND OR CREATE CHAT
 async function findOrCreateConversation(friendId) {
-  const { data: myMemberships, error: myError } = await db
+  const { data: mine, error: mineError } = await db
     .from('conversation_members')
     .select('conversation_id')
     .eq('user_id', currentUser.id);
 
-  if (myError) throw myError;
+  if (mineError) throw mineError;
 
-  const myIds = (myMemberships || []).map(row => row.conversation_id);
+  const ids = (mine || []).map(row => row.conversation_id);
 
-  if (myIds.length) {
-    const { data: friendMemberships, error: friendError } = await db
+  if (ids.length) {
+    const { data: theirs, error: theirError } = await db
       .from('conversation_members')
       .select('conversation_id')
       .eq('user_id', friendId)
-      .in('conversation_id', myIds);
+      .in('conversation_id', ids);
 
-    if (friendError) throw friendError;
+    if (theirError) throw theirError;
 
-    if (friendMemberships?.length) {
-      return friendMemberships[0].conversation_id;
+    if (theirs && theirs.length) {
+      return theirs[0].conversation_id;
     }
   }
 
@@ -1527,28 +1086,78 @@ async function findOrCreateConversation(friendId) {
 }
 
 
+// 10. DISPLAY MESSAGE
+function addMessageToView(message) {
+  if (!message || renderedMessageIds.has(message.id)) return;
+
+  renderedMessageIds.add(message.id);
+
+  const container = $('chatMessages');
+  if (!container) return;
+
+  const bubble = document.createElement('div');
+
+  bubble.className = 'bubble' +
+    (message.sender_id === currentUser.id ? ' mine' : '');
+
+  const content = document.createElement('div');
+  content.textContent = message.content || '';
+
+  const time = document.createElement('div');
+  time.className = 'bubble-time';
+
+  if (message.created_at) {
+    time.textContent = new Date(message.created_at)
+      .toLocaleTimeString([], {
+        hour: '2-digit',
+        minute: '2-digit'
+      });
+  }
+
+  bubble.append(content, time);
+  container.append(bubble);
+
+  container.scrollTop = container.scrollHeight;
+}
+
+
+// 11. OPEN CHAT
 async function startChat(friendId, friendName) {
   if (!currentUser) return;
 
-  try {
-    closeChat();
+  closeChat();
 
-    activeFriendId = friendId;
-    activeFriendName = friendName;
+  const token = ++chatLoadToken;
 
-    $('chatTitle').textContent = friendName;
+  if ($('chatName')) {
+    $('chatName').textContent = friendName;
+  }
+
+  if ($('chatAvatar')) {
+    $('chatAvatar').textContent = friendName.charAt(0).toUpperCase();
+  }
+
+  if ($('chatStatus')) {
     $('chatStatus').textContent = 'CHATIVO';
+  }
+
+  if ($('chatMessages')) {
     $('chatMessages').innerHTML = '';
+  }
 
+  if ($('chatWindow')) {
     $('chatWindow').style.display = 'flex';
+  }
 
-    const token = ++chatLoadToken;
-
-    const conversationId = await findOrCreateConversation(friendId);
+  try {
+    const conversationId =
+      await findOrCreateConversation(friendId);
 
     if (token !== chatLoadToken) return;
 
     activeConversationId = conversationId;
+    activeFriendId = friendId;
+
     renderedMessageIds.clear();
 
     const { data, error } = await db
@@ -1588,12 +1197,15 @@ async function startChat(friendId, friendName) {
 
   } catch (error) {
     console.error('Chat error:', error);
+
     alert('Could not open chat: ' + error.message);
+
     closeChat();
   }
 }
 
 
+// 12. CLOSE CHAT
 function closeChat() {
   chatLoadToken++;
 
@@ -1604,6 +1216,7 @@ function closeChat() {
 
   activeConversationId = null;
   activeFriendId = null;
+
   renderedMessageIds.clear();
 
   if ($('chatWindow')) {
@@ -1612,9 +1225,10 @@ function closeChat() {
 }
 
 
+// 13. SEND MESSAGE
 if ($('messageForm')) {
-  $('messageForm').addEventListener('submit', async event => {
-    event.preventDefault();
+  $('messageForm').addEventListener('submit', async function(e) {
+    e.preventDefault();
 
     if (!currentUser || !activeConversationId) return;
 
@@ -1630,7 +1244,7 @@ if ($('messageForm')) {
       .insert({
         conversation_id: activeConversationId,
         sender_id: currentUser.id,
-        content
+        content: content
       });
 
     if (error) {
@@ -1641,46 +1255,45 @@ if ($('messageForm')) {
 }
 
 
-/* =========================
-   CHAT LIST
-========================= */
-
+// 14. LOAD CHAT LIST
 async function loadChatList() {
-  if (!currentUser || !$('chatList')) return;
+  if (!currentUser) return;
 
-  $('chatList').innerHTML = '';
+  const list = $('chatList');
+  if (!list) return;
 
-  const { data: memberships, error } = await db
+  list.innerHTML = 'Loading Chats...';
+
+  const { data: members, error } = await db
     .from('conversation_members')
     .select('conversation_id')
     .eq('user_id', currentUser.id);
 
   if (error) {
-    console.error(error);
-    $('chatList').textContent = error.message;
+    list.textContent = error.message;
     return;
   }
 
-  const conversationIds = (memberships || []).map(
-    row => row.conversation_id
-  );
+  const ids = (members || []).map(row => row.conversation_id);
 
-  if (!conversationIds.length) {
-    $('chatList').innerHTML =
+  if (!ids.length) {
+    list.innerHTML =
       '<div class="empty">এখনো কোনো Chat নেই। Friend যোগ করে Message পাঠাও।</div>';
     return;
   }
 
-  for (const conversationId of conversationIds) {
-    const { data: members } = await db
+  list.innerHTML = '';
+
+  for (const id of ids) {
+    const { data: other, error: otherError } = await db
       .from('conversation_members')
       .select('user_id')
-      .eq('conversation_id', conversationId)
+      .eq('conversation_id', id)
       .neq('user_id', currentUser.id);
 
-    if (!members || !members.length) continue;
+    if (otherError || !other?.length) continue;
 
-    const friendId = members[0].user_id;
+    const friendId = other[0].user_id;
 
     const { data: friend } = await db
       .from('profiles')
@@ -1688,73 +1301,63 @@ async function loadChatList() {
       .eq('id', friendId)
       .maybeSingle();
 
-    const { data: lastMessages } = await db
+    const { data: lastMessage } = await db
       .from('messages')
-      .select('content,created_at')
-      .eq('conversation_id', conversationId)
+      .select('content')
+      .eq('conversation_id', id)
       .order('created_at', { ascending: false })
       .limit(1);
 
-    const friendName = friend?.display_name || 'User';
+    const name = friend?.display_name || 'CHATIVO User';
 
     const item = document.createElement('div');
     item.className = 'chat';
 
     const avatar = document.createElement('div');
     avatar.className = 'avatar';
-    avatar.textContent = friendName.charAt(0).toUpperCase();
+    avatar.textContent = name.charAt(0).toUpperCase();
 
     const info = document.createElement('div');
     info.className = 'info';
 
-    const name = document.createElement('div');
-    name.className = 'name';
-    name.textContent = friendName;
+    const title = document.createElement('div');
+    title.className = 'name';
+    title.textContent = name;
 
-    const message = document.createElement('div');
-    message.className = 'message';
-    message.textContent = lastMessages?.[0]?.content || 'Start a conversation';
+    const preview = document.createElement('div');
+    preview.className = 'message';
+    preview.textContent =
+      lastMessage?.[0]?.content || 'Start a conversation';
 
-    info.append(name, message);
+    info.append(title, preview);
     item.append(avatar, info);
 
-    item.onclick = () => startChat(friendId, friendName);
+    item.onclick = () => startChat(friendId, name);
 
-    $('chatList').appendChild(item);
+    list.append(item);
   }
 }
-/* =========================
-   STORIES
-========================= */
 
-let storyRows = [];
-let storyViewQueue = [];
-let storyViewIndex = 0;
-let activeStoryId = null;
-let storyReactionBusy = false;
+
+
+/* =====================================
+   CHATIVO — PART 5
+   Stories, Views, Reactions and Profile
+===================================== */
+
+// 1. STORY VARIABLES
+let currentStories = [];
+let activeStory = null;
 
 const STORY_REACTIONS = ['👍', '❤️', '🥰', '😭', '🤬'];
 
 
-function openStoryComposer() {
-  $('storyComposer').classList.remove('hidden');
-  $('storyPreview').classList.add('hidden');
-  $('storyUploadStatus').textContent = '';
-  $('storyCaption').value = '';
-  $('storyFile').value = '';
-  $('storyPostButton').disabled = false;
-}
-
-
-function closeStoryComposer() {
-  $('storyComposer').classList.add('hidden');
-}
-
-
+// 2. PREVIEW STORY IMAGE
 function previewStoryImage(event) {
   const file = event.target.files?.[0];
+  const preview = $('storyPreview');
 
-  if (!file) return;
+  if (!file || !preview) return;
 
   if (!file.type.startsWith('image/')) {
     alert('শুধু Image নির্বাচন করো।');
@@ -1763,47 +1366,105 @@ function previewStoryImage(event) {
   }
 
   if (file.size > 10 * 1024 * 1024) {
-    alert('ছবির সাইজ ১০ MB-এর কম হতে হবে।');
+    alert('Image সর্বোচ্চ ১০ MB হতে পারবে।');
     event.target.value = '';
     return;
   }
 
-  const preview = $('storyPreview');
-  preview.src = URL.createObjectURL(file);
-  preview.classList.remove('hidden');
+  preview.innerHTML = '';
+
+  const image = document.createElement('img');
+  image.src = URL.createObjectURL(file);
+  image.style.maxWidth = '100%';
+  image.style.maxHeight = '250px';
+  image.style.objectFit = 'cover';
+
+  preview.append(image);
 }
 
 
+// 3. OPEN STORY COMPOSER
+function openStoryComposer() {
+  const composer = $('storyComposer');
+
+  if (composer) composer.classList.add('open');
+
+  if ($('storyUploadStatus')) {
+    $('storyUploadStatus').textContent = '';
+  }
+
+  if ($('storyCaption')) {
+    $('storyCaption').value = '';
+  }
+
+  if ($('storyFile')) {
+    $('storyFile').value = '';
+  }
+
+  if ($('storyPreview')) {
+    $('storyPreview').innerHTML = '';
+  }
+}
+
+
+// 4. CLOSE STORY COMPOSER
+function closeStoryComposer() {
+  if ($('storyComposer')) {
+    $('storyComposer').classList.remove('open');
+  }
+}
+
+
+// 5. UPLOAD AND POST STORY
 async function postStory() {
   if (!currentUser) return;
 
-  const file = $('storyFile').files?.[0];
-  const caption = $('storyCaption').value.trim();
+  const file = $('storyFile')?.files?.[0];
+  const caption = $('storyCaption')?.value.trim() || '';
+  const status = $('storyUploadStatus');
+  const button = $('storyPostButton');
 
   if (!file) {
-    $('storyUploadStatus').textContent = 'একটি ছবি নির্বাচন করো।';
+    if (status) status.textContent = 'একটি Image নির্বাচন করো।';
     return;
   }
 
-  $('storyPostButton').disabled = true;
-  $('storyUploadStatus').textContent = 'Uploading...';
+  if (!file.type.startsWith('image/')) {
+    if (status) status.textContent = 'শুধু Image Upload করা যাবে।';
+    return;
+  }
+
+  if (file.size > 10 * 1024 * 1024) {
+    if (status) status.textContent = 'Image ১০ MB-এর মধ্যে হতে হবে।';
+    return;
+  }
+
+  if (button) {
+    button.disabled = true;
+    button.textContent = 'Uploading...';
+  }
+
+  if (status) status.textContent = 'Story Upload হচ্ছে...';
 
   try {
     const extension = file.name.split('.').pop() || 'jpg';
-
     const filePath =
-      currentUser.id + '/' +
-      Date.now() + '.' + extension;
+      currentUser.id + '/' + Date.now() + '.' + extension;
 
-    const { error: uploadError } = await db
-      .storage
-      .from('story-media')
+    const { error: uploadError } = await db.storage
+      .from('stories')
       .upload(filePath, file, {
-        upsert: false,
-        contentType: file.type
+        cacheControl: '3600',
+        upsert: false
       });
 
     if (uploadError) throw uploadError;
+
+    const { data: urlData } = db.storage
+      .from('stories')
+      .getPublicUrl(filePath);
+
+    const imageUrl = urlData.publicUrl;
 
     const expiresAt = new Date(
       Date.now() + 24 * 60 * 60 * 1000
@@ -1813,446 +1474,321 @@ async function postStory() {
       .from('stories')
       .insert({
         user_id: currentUser.id,
-        media_path: filePath,
+        image_url: imageUrl,
         caption: caption,
         expires_at: expiresAt
       });
 
     if (insertError) throw insertError;
 
-    $('storyUploadStatus').textContent = 'Story posted successfully!';
+    if (status) status.textContent = 'Story সফলভাবে পোস্ট হয়েছে!';
 
     closeStoryComposer();
+
     await loadStories();
 
   } catch (error) {
     console.error('Story upload error:', error);
-    $('storyUploadStatus').textContent = error.message;
-  }
 
-  $('storyPostButton').disabled = false;
+    if (status) {
+      status.textContent = 'Story Upload হয়নি: ' + error.message;
+    }
+
+  } finally {
+    if (button) {
+      button.disabled = false;
+      button.textContent = 'Post Story';
+    }
+  }
 }
 
 
-/* =========================
-   LOAD STORIES
-========================= */
-
+// 6. LOAD STORIES
 async function loadStories() {
   if (!currentUser) return;
 
-  const { data: stories, error } = await db
-    .from('stories')
-    .select('*')
-    .gt('expires_at', new Date().toISOString())
-    .order('created_at', { ascending: true });
+  const strip = $('storyStrip');
+  const list = $('storyList');
 
-  if (error) {
-    console.error('Story load error:', error);
-    return;
-  }
+  if (strip) strip.innerHTML = 'Loading Stories...';
+  if (list) list.innerHTML = '';
 
-  const friendIds = await getFriendIds();
-  const allowedIds = new Set([
-    currentUser.id,
-    ...friendIds
-  ]);
+  try {
+    const friendIds = await getFriendIds();
+    const visibleIds = [...new Set([
+      currentUser.id,
+      ...friendIds
+    ])];
 
-  storyRows = (stories || []).filter(story =>
-    allowedIds.has(story.user_id)
-  );
+    const { data, error } = await db
+      .from('stories')
+      .select('*')
+      .in('user_id', visibleIds)
+      .gt('expires_at', new Date().toISOString())
+      .order('created_at', { ascending: false });
 
-  const userIds = [...new Set(
-    storyRows.map(story => story.user_id)
-  )];
+    if (error) throw error;
 
-  let profileMap = {};
+    currentStories = data || [];
 
-  if (userIds.length) {
-    const { data: profiles } = await db
-      .from('profiles')
-      .select('id,display_name,avatar_url')
-      .in('id', userIds);
+    if (strip) strip.innerHTML = '';
+    if (list) list.innerHTML = '';
 
-    (profiles || []).forEach(person => {
-      profileMap[person.id] = person;
-    });
-  }
-
-  storyRows = storyRows.map(story => ({
-    ...story,
-    ownerName:
-      profileMap[story.user_id]?.display_name || 'User'
-  }));
-
-
-  /* STORY STRIP */
-
-  $('storyStrip').innerHTML = '';
-
-  const myStories = storyRows.filter(
-    story => story.user_id === currentUser.id
-  );
-
-  const myCard = document.createElement('div');
-  myCard.className = 'story-card';
-
-  const myFace = document.createElement('div');
-  myFace.className = 'story-face story-plus';
-  myFace.textContent = '+';
-
-  const myLabel = document.createElement('div');
-  myLabel.textContent = myStories.length
-    ? 'My Story'
-    : 'Add Story';
-
-  myCard.append(myFace, myLabel);
-  myCard.onclick = () => {
-    if (myStories.length) {
-      openStoryGroup(currentUser.id);
-    } else {
-      openStoryComposer();
-    }
-  };
-
-  $('storyStrip').appendChild(myCard);
-
-
-  const friendGroups = {};
-
-  storyRows
-    .filter(story => story.user_id !== currentUser.id)
-    .forEach(story => {
-      if (!friendGroups[story.user_id]) {
-        friendGroups[story.user_id] = [];
+    if (!currentStories.length) {
+      if (strip) {
+        strip.textContent = 'এখনো কোনো Story নেই।';
       }
 
-      friendGroups[story.user_id].push(story);
-    });
+      if (list) {
+        list.textContent = 'বন্ধুদের Story এখানে দেখা যাবে।';
+      }
 
-
-  Object.keys(friendGroups).forEach(userId => {
-    const group = friendGroups[userId];
-    const card = document.createElement('div');
-    card.className = 'story-card';
-
-    const ring = document.createElement('div');
-    ring.className = 'story-ring';
-
-    const face = document.createElement('div');
-    face.className = 'story-face';
-    face.textContent = group[0].ownerName.charAt(0).toUpperCase();
-
-    ring.appendChild(face);
-
-    const label = document.createElement('div');
-    label.textContent = group[0].ownerName;
-
-    card.append(ring, label);
-    card.onclick = () => openStoryGroup(userId);
-
-    $('storyStrip').appendChild(card);
-  });
-
-
-  /* STORY LIST */
-
-  $('storyList').innerHTML = '';
-
-  if (!storyRows.length) {
-    $('storyList').innerHTML =
-      '<div class="empty">এখনো কোনো Story নেই।</div>';
-    return;
-  }
-
-  const grouped = {};
-
-  storyRows.forEach(story => {
-    if (!grouped[story.user_id]) {
-      grouped[story.user_id] = [];
+      return;
     }
 
-    grouped[story.user_id].push(story);
-  });
+    const grouped = new Map();
 
-  Object.keys(grouped).forEach(userId => {
-    const group = grouped[userId];
+    currentStories.forEach(story => {
+      if (!grouped.has(story.user_id)) {
+        grouped.set(story.user_id, []);
+      }
 
-    const item = document.createElement('div');
-    item.className = 'person';
+      grouped.get(story.user_id).push(story);
+    });
 
-    const info = document.createElement('div');
-    info.className = 'info';
+    for (const [userId, stories] of grouped) {
+      const { data: profile } = await db
+        .from('profiles')
+        .select('display_name')
+        .eq('id', userId)
+        .maybeSingle();
 
-    const name = document.createElement('div');
-    name.className = 'name';
-    name.textContent = group[0].ownerName;
+      const name = profile?.display_name || 'CHATIVO User';
 
-    const message = document.createElement('div');
-    message.className = 'message';
-    message.textContent = group.length + ' Story';
+      const card = document.createElement('button');
+      card.className = 'story-card';
 
-    info.append(name, message);
+      const image = document.createElement('img');
+      image.src = stories[0].image_url;
+      image.alt = 'Story';
 
-    const button = document.createElement('button');
-    button.className = 'action-btn';
-    button.textContent = 'View';
-    button.onclick = () => openStoryGroup(userId);
+      const label = document.createElement('span');
+      label.textContent =
+        userId === currentUser.id ? 'Your Story' : name;
 
-    item.append(info, button);
-    $('storyList').appendChild(item);
-  });
+      card.append(image, label);
+
+      card.onclick = () => openStory(stories, 0, name);
+
+      if (strip) strip.append(card);
+
+      if (list) list.append(card.cloneNode(true));
+
+      if (list) {
+        const copiedCard = list.lastElementChild;
+        copiedCard.onclick = () => openStory(stories, 0, name);
+      }
+    }
+
+  } catch (error) {
+    console.error('Load stories error:', error);
+
+    if (strip) {
+      strip.textContent = 'Story Load হয়নি: ' + error.message;
+    }
+  }
 }
 
 
-/* =========================
-   OPEN STORY GROUP
-========================= */
+// 7. OPEN STORY VIEWER
+async function openStory(stories, index, name) {
+  if (!stories || !stories.length) return;
 
-function openStoryGroup(userId) {
-  storyViewQueue = storyRows.filter(
-    story => story.user_id === userId
-  );
+  activeStory = {
+    stories,
+    index,
+    name
+  };
 
-  storyViewIndex = 0;
+  const story = stories[index];
 
-  if (!storyViewQueue.length) return;
+  if ($('storyViewer')) {
+    $('storyViewer').classList.add('open');
+  }
 
-  showStoryAtIndex();
+  if ($('storyViewerName')) {
+    $('storyViewerName').textContent = name;
+  }
+
+  if ($('storyViewerImage')) {
+    $('storyViewerImage').src = story.image_url;
+  }
+
+  if ($('storyViewerCaption')) {
+    $('storyViewerCaption').textContent = story.caption || '';
+  }
+
+  await loadStoryReactionButtons(story);
+
+  if (story.user_id !== currentUser.id) {
+    const { error } = await db
+      .from('story_views')
+      .upsert({
+        story_id: story.id,
+        user_id: currentUser.id
+      }, {
+        onConflict: 'story_id,user_id',
+        ignoreDuplicates: true
+      });
+
+    if (error) {
+      console.error('Story view error:', error);
+    }
+  }
 }
 
 
-/* =========================
-   SHOW STORY
-========================= */
+// 8. NEXT STORY
+function nextStory() {
+  if (!activeStory) return;
 
-async function showStoryAtIndex() {
-  const story = storyViewQueue[storyViewIndex];
+  const nextIndex = activeStory.index + 1;
 
-  if (!story) {
+  if (nextIndex >= activeStory.stories.length) {
     closeStoryViewer();
     return;
   }
 
-  activeStoryId = story.id;
-
-  $('storyViewerName').textContent = story.ownerName;
-  $('storyViewerCaption').textContent = story.caption || '';
-
-  $('storyViewer').classList.remove('hidden');
-
-  $('storyViewerImage').src = '';
-
-  const { data, error } = await db
-    .storage
-    .from('story-media')
-    .createSignedUrl(story.media_path, 3600);
-
-  if (error) {
-    console.error('Story image error:', error);
-    $('storyViewerCaption').textContent =
-      'ছবিটি লোড করা যায়নি।';
-    return;
-  }
-
-  if (activeStoryId !== story.id) return;
-
-  $('storyViewerImage').src = data.signedUrl;
-
-  await loadStoryReactions(story.id);
-
-  if (story.user_id !== currentUser.id) {
-    const { error: viewError } = await db
-      .from('story_views')
-      .upsert(
-        {
-          story_id: story.id,
-          viewer_id: currentUser.id
-        },
-        {
-          onConflict: 'story_id,viewer_id',
-          ignoreDuplicates: true
-        }
-      );
-
-    if (viewError) {
-      console.warn('Story view save:', viewError.message);
-    }
-  }
+  openStory(
+    activeStory.stories,
+    nextIndex,
+    activeStory.name
+  );
 }
 
 
-/* =========================
-   STORY REACTIONS
-========================= */
+// 9. CLOSE STORY VIEWER
+function closeStoryViewer() {
+  if ($('storyViewer')) {
+    $('storyViewer').classList.remove('open');
+  }
 
-async function loadStoryReactions(storyId) {
+  if ($('storyViewerImage')) {
+    $('storyViewerImage').src = '';
+  }
+
+  if ($('storyViewerCaption')) {
+    $('storyViewerCaption').textContent = '';
+  }
+
+  activeStory = null;
+}
+
+
+// 10. STORY REACTION BUTTONS
+async function loadStoryReactionButtons(story) {
   const bar = $('storyReactionBar');
-
   if (!bar) return;
 
   bar.innerHTML = '';
-
-  const { data, error } = await db
-    .from('story_reactions')
-    .select('user_id,reaction')
-    .eq('story_id', storyId);
-
-  if (error) {
-    console.error('Reaction load error:', error);
-    return;
-  }
-
-  const counts = {};
-
-  (data || []).forEach(row => {
-    counts[row.reaction] = (counts[row.reaction] || 0) + 1;
-  });
-
-  const myReaction = (data || []).find(
-    row => row.user_id === currentUser.id
-  )?.reaction;
-
 
   STORY_REACTIONS.forEach(emoji => {
     const button = document.createElement('button');
 
     button.type = 'button';
-    button.className = 'story-reaction-btn';
-
-    if (myReaction === emoji) {
-      button.classList.add('active');
-    }
-
     button.textContent = emoji;
+    button.className = 'reaction-btn';
 
-    if (counts[emoji]) {
-      const count = document.createElement('small');
-      count.textContent = counts[emoji];
-      button.appendChild(count);
-    }
+    button.onclick = () => reactToStory(story.id, emoji);
 
-    button.onclick = () => toggleStoryReaction(emoji);
-
-    bar.appendChild(button);
+    bar.append(button);
   });
 }
 
 
-async function toggleStoryReaction(emoji) {
-  if (!currentUser || !activeStoryId || storyReactionBusy) return;
+// 11. REACT TO STORY
+async function reactToStory(storyId, reaction) {
+  if (!currentUser) return;
 
-  storyReactionBusy = true;
+  const { error } = await db
+    .from('story_reactions')
+    .upsert({
+      story_id: storyId,
+      user_id: currentUser.id,
+      reaction: reaction
+    }, {
+      onConflict: 'story_id,user_id'
+    });
 
+  if (error) {
+    console.error('Story reaction error:', error);
+    alert('Reaction দেওয়া যায়নি: ' + error.message);
+    return;
+  }
+
+  const bar = $('storyReactionBar');
+
+  if (bar) {
+    bar.querySelectorAll('button').forEach(button => {
+      button.classList.toggle(
+        'selected',
+        button.textContent === reaction
+      );
+    });
+  }
+}
+
+
+// 12. UPDATE PROFILE BIO
+async function saveProfile() {
+  if (!currentUser) return;
+
+  const bio = $('profileBio')?.value.trim() || '';
+
+  const { error } = await db
+    .from('profiles')
+    .update({
+      bio: bio
+    })
+    .eq('id', currentUser.id);
+
+  if (error) {
+    alert('Profile Update হয়নি: ' + error.message);
+    return;
+  }
+
+  if (currentProfile) {
+    currentProfile.bio = bio;
+  }
+
+  alert('Profile Update সফল হয়েছে!');
+}
+
+
+// 13. INITIAL APP START
+async function initializeChatvo() {
   try {
-    const storyId = activeStoryId;
+    const { data, error } = await db.auth.getSession();
 
-    const { data: existing, error: findError } = await db
-      .from('story_reactions')
-      .select('id,reaction')
-      .eq('story_id', storyId)
-      .eq('user_id', currentUser.id)
-      .maybeSingle();
+    if (error) throw error;
 
-    if (findError) throw findError;
+    currentUser = data.session?.user || null;
 
-    if (existing && existing.reaction === emoji) {
-      const { error } = await db
-        .from('story_reactions')
-        .delete()
-        .eq('story_id', storyId)
-        .eq('user_id', currentUser.id);
-
-      if (error) throw error;
-
+    if (currentUser) {
+      await startApp();
     } else {
-      const { error } = await db
-        .from('story_reactions')
-        .upsert(
-          {
-            story_id: storyId,
-            user_id: currentUser.id,
-            reaction: emoji
-          },
-          {
-            onConflict: 'story_id,user_id'
-          }
-        );
-
-      if (error) throw error;
-    }
-
-    if (activeStoryId === storyId) {
-      await loadStoryReactions(storyId);
+      showAuthScreen();
     }
 
   } catch (error) {
-    console.error('Reaction error:', error);
-    alert('Reaction দেওয়া যায়নি: ' + error.message);
+    console.error('App start error:', error);
+    showAuthScreen();
   }
-
-  storyReactionBusy = false;
 }
 
 
-/* =========================
-   CLOSE STORY VIEWER
-========================= */
-
-function closeStoryViewer() {
-  activeStoryId = null;
-
-  $('storyViewer').classList.add('hidden');
-  $('storyViewerImage').src = '';
-  $('storyViewerCaption').textContent = '';
-  $('storyReactionBar').innerHTML = '';
-}
-
-
-/* =========================
-   STORY NAVIGATION
-========================= */
-
-if ($('storyViewer')) {
-  $('storyViewer').addEventListener('click', event => {
-    if (
-      event.target.closest('.story-reaction-bar') ||
-      event.target.closest('.story-viewer-top') ||
-      event.target.id === 'storyViewerImage'
-    ) {
-      return;
-    }
-
-    storyViewIndex++;
-
-    if (storyViewIndex >= storyViewQueue.length) {
-      closeStoryViewer();
-    } else {
-      showStoryAtIndex();
-    }
-  });
-}
-
-
-/* =========================
-   AUTH STATE
-========================= */
-
-db.auth.onAuthStateChange((event, session) => {
-  if (event === 'SIGNED_OUT') {
-    currentUser = null;
-    profile = null;
-    closeChat();
-    showScreen('loginScreen');
-  }
-});
-
-
-/* =========================
-   START APP
-========================= */
-
-syncSession();
+// 14. START CHATIVO
+initializeChatvo();
 
 </script>
 </body>
