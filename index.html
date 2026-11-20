@@ -7,15 +7,15 @@
 <title>CHATIVO</title>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
-:root{--bg:#0b0e20;--panel:#141832;--panel2:#1b2040;--line:#292f54;--text:#f5f6ff;--muted:#9da5c7;--blue:#6385ff;--purple:#9b65ff;--cyan:#4bd7e8;--grad:linear-gradient(120deg,#557dff,#9b5cff);--shadow:0 18px 50px #0005}
+:root{--bg:#0b0e20;--panel:#141832;--panel2:#1b2040;--line:#292f54;--text:#f5f6ff;--muted:#9da5c7;--blue:#6385ff;--purple:#9b65ff;--grad:linear-gradient(120deg,#557dff,#9b5cff);--shadow:0 18px 50px #0005}
 *{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at 10% 0%,#24285a 0,transparent 38%),var(--bg);color:var(--text);font-family:Inter,system-ui,-apple-system,Segoe UI,Arial,sans-serif}button,input{font:inherit}button{cursor:pointer}.hidden{display:none!important}
 .auth{min-height:100dvh;display:grid;place-items:center;padding:24px}.auth-card{width:min(100%,430px);padding:30px 25px;border:1px solid #ffffff18;border-radius:28px;background:linear-gradient(145deg,#1c2144ed,#11152df2);box-shadow:var(--shadow);backdrop-filter:blur(18px)}
 .brand{display:flex;align-items:center;justify-content:center;gap:10px;font-size:30px;font-weight:900;letter-spacing:1.8px}.brand-mark{width:39px;height:39px;border-radius:14px;background:var(--grad);display:grid;place-items:center;box-shadow:0 8px 25px #6b71ff66}.brand-mark svg{width:23px}.tagline{text-align:center;color:var(--muted);font-size:13px;margin:10px 0 30px}.auth h2{font-size:25px;margin:0 0 7px}.sub{color:var(--muted);font-size:14px;margin:0 0 24px}.field{margin:15px 0}.field label{display:block;color:#cbd0ec;font-size:12px;font-weight:700;margin:0 0 8px}.field input{width:100%;padding:15px 14px;border:1px solid var(--line);border-radius:14px;background:#0d1127;color:white;outline:none}.field input:focus{border-color:var(--blue);box-shadow:0 0 0 3px #6385ff20}.primary{width:100%;padding:15px;border:0;border-radius:14px;background:var(--grad);color:white;font-weight:800;box-shadow:0 9px 25px #6a6eff40}.primary:disabled{opacity:.6}.switch{text-align:center;color:var(--muted);font-size:13px;margin-top:20px}.link{color:#a9baff;font-weight:800;cursor:pointer}.notice,.error{font-size:12px;line-height:1.5;margin-top:14px;text-align:center}.notice{color:var(--muted)}.error{color:#ff8d9c}.success{color:#6fe3c0}
-#appScreen{min-height:100dvh;padding-bottom:85px}.app-header{position:sticky;top:0;z-index:3;padding:18px 18px 0;background:#10142bf0;border-bottom:1px solid #ffffff12;backdrop-filter:blur(20px)}.topline{display:flex;align-items:center;justify-content:space-between;padding-bottom:17px}.logo{display:flex;align-items:center;gap:9px;font-size:23px;font-weight:950;letter-spacing:1.2px}.logo .brand-mark{width:32px;height:32px;border-radius:11px}.header-actions{display:flex;gap:10px}.icon-btn{width:40px;height:40px;border:1px solid #ffffff17;border-radius:13px;background:#ffffff08;color:#e9ebff;font-size:19px}.welcome{padding:2px 0 16px;color:var(--muted);font-size:13px}.welcome b{color:white}.tabs{display:flex;gap:25px;overflow:auto}.tab{padding:12px 4px 14px;color:#929bbd;font-weight:750;font-size:13px;letter-spacing:.5px;border-bottom:2px solid transparent;white-space:nowrap}.tab.active{color:white;border-color:#8a79ff}
-main{max-width:760px;margin:auto}.page{display:none}.page.active{display:block}.search-wrap{padding:18px}.search{display:flex;align-items:center;gap:10px;padding:14px 16px;border:1px solid #ffffff12;border-radius:16px;background:#171c38;color:#8e98bd}.search input{width:100%;border:0;outline:0;background:transparent;color:white}.section-title{padding:7px 19px 12px;color:#8791b8;font-size:11px;font-weight:850;letter-spacing:1.5px}.chat{display:flex;align-items:center;gap:13px;padding:14px 18px;border-bottom:1px solid #ffffff0d;cursor:pointer}.chat:active{background:#ffffff08}.avatar{width:54px;height:54px;flex:none;border-radius:19px;display:grid;place-items:center;background:linear-gradient(145deg,#304a91,#593c89);font-size:23px;overflow:hidden}.avatar img{width:100%;height:100%;object-fit:cover}.info{flex:1;min-width:0}.name{font-size:15px;font-weight:800;margin-bottom:6px}.message{font-size:12px;color:#929bbd;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.time{font-size:10px;color:#8791b0}.empty{text-align:center;padding:55px 20px;color:var(--muted);font-size:13px}.fab{position:fixed;right:22px;bottom:99px;width:58px;height:58px;border:0;border-radius:20px;background:var(--grad);color:white;font-size:30px;box-shadow:0 12px 30px #6765ff66;z-index:4}
+#appScreen{min-height:100dvh;padding-bottom:85px}.app-header{position:sticky;top:0;z-index:3;padding:18px 18px 0;background:#10142bf0;border-bottom:1px solid #ffffff12;backdrop-filter:blur(20px)}.topline{display:flex;align-items:center;justify-content:space-between;padding-bottom:17px}.logo{display:flex;align-items:center;gap:9px;font-size:23px;font-weight:950;letter-spacing:1.2px}.logo .brand-mark{width:32px;height:32px;border-radius:11px}.header-actions{display:flex;gap:10px}.icon-btn{width:44px;height:44px;border:1px solid #ffffff17;border-radius:15px;background:#ffffff08;color:#e9ebff;font-size:22px}.welcome{padding:2px 0 16px;color:var(--muted);font-size:13px}.welcome b{color:white}.tabs{display:flex;gap:25px;overflow:auto}.tab{padding:12px 4px 14px;color:#929bbd;font-weight:750;font-size:13px;letter-spacing:.5px;border-bottom:2px solid transparent;white-space:nowrap;cursor:pointer}.tab.active{color:white;border-color:#8a79ff}
+main{max-width:760px;margin:auto}.page{display:none}.page.active{display:block}.search-wrap{padding:18px}.search{display:flex;align-items:center;gap:10px;padding:14px 16px;border:1px solid #ffffff12;border-radius:16px;background:#171c38;color:#8e98bd}.search input{width:100%;border:0;outline:0;background:transparent;color:white}.section-title{padding:7px 19px 12px;color:#8791b8;font-size:11px;font-weight:850;letter-spacing:1.5px}.chat{display:flex;align-items:center;gap:13px;padding:14px 18px;border-bottom:1px solid #ffffff0d;cursor:pointer}.avatar{width:54px;height:54px;flex:none;border-radius:19px;display:grid;place-items:center;background:linear-gradient(145deg,#304a91,#593c89);font-size:23px;overflow:hidden}.info{flex:1;min-width:0}.name{font-size:15px;font-weight:800;margin-bottom:6px}.message{font-size:12px;color:#929bbd;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.time{font-size:10px;color:#8791b0}.empty{text-align:center;padding:45px 20px;color:var(--muted);font-size:13px}.fab{position:fixed;right:22px;bottom:99px;width:58px;height:58px;border:0;border-radius:20px;background:var(--grad);color:white;font-size:30px;box-shadow:0 12px 30px #6765ff66;z-index:4}
 .bottom-nav{position:fixed;z-index:4;bottom:0;left:0;right:0;display:flex;justify-content:space-around;padding:10px 8px calc(10px + env(safe-area-inset-bottom));background:#11152df2;border-top:1px solid #ffffff14;backdrop-filter:blur(20px)}.bottom-nav button{border:0;background:none;color:#818bad;font-size:11px;min-width:65px}.bottom-nav button span{display:block;font-size:21px;margin-bottom:4px}.bottom-nav button.active{color:#a9a0ff;font-weight:800}
-.friend-tools{padding:18px}.friend-tools input{width:100%;padding:15px;border:1px solid #ffffff18;border-radius:15px;background:#171c38;color:white;outline:none}.friend-row{display:flex;align-items:center;gap:12px;padding:13px 18px;border-bottom:1px solid #ffffff10}.friend-row .info{flex:1;min-width:0}.friend-action{border:0;border-radius:12px;padding:9px 12px;background:var(--grad);color:white;font-size:12px;font-weight:800}.friend-action.secondary{background:#252b4b;color:#dce2ff}.friend-status{font-size:11px;color:var(--muted);margin-top:4px}.profile-card{margin:20px;padding:25px;border:1px solid #ffffff14;border-radius:22px;background:linear-gradient(145deg,#20264b,#171b36);text-align:center}.profile-card .avatar{width:86px;height:86px;margin:0 auto 13px;border-radius:28px;font-size:34px}.profile-card h3{margin:0 0 5px}.profile-card p{color:var(--muted);font-size:13px}.setting{margin:0 16px;padding:17px;border-bottom:1px solid #ffffff10;color:#e8eaff;font-size:14px;display:flex;justify-content:space-between}.logout{color:#ff899b;cursor:pointer}
-.chat-window{position:fixed;inset:0;z-index:8;background:#0b0e20;display:none;flex-direction:column}.chat-head{display:flex;align-items:center;gap:12px;padding:14px 16px;background:#171c39;border-bottom:1px solid #ffffff12}.chat-head button{border:0;background:none;color:white;font-size:25px}.chat-head .avatar{width:43px;height:43px;border-radius:15px}.chat-head small{display:block;color:#8f9ac0;margin-top:3px}.chat-messages{flex:1;overflow:auto;padding:18px;background:radial-gradient(ellipse at 80% 0%,#25234b55,transparent 40%)}.bubble{width:fit-content;max-width:82%;padding:12px 15px;margin:0 0 11px;border:1px solid #ffffff12;border-radius:17px 17px 17px 5px;background:#202647;color:#f4f5ff;font-size:14px;overflow-wrap:anywhere}.bubble.mine{margin-left:auto;background:linear-gradient(120deg,#4d6ee8,#7653d9);border:0;border-radius:17px 17px 5px 17px}.chat-compose{display:flex;gap:9px;padding:12px;background:#151a34;border-top:1px solid #ffffff12}.chat-compose input{flex:1;min-width:0;border:1px solid #ffffff12;border-radius:22px;background:#0c1128;color:white;padding:13px 16px;outline:none}.chat-compose button{width:46px;border:0;border-radius:16px;background:var(--grad);color:white;font-size:19px}
+.profile-card{margin:20px;padding:25px;border:1px solid #ffffff14;border-radius:22px;background:linear-gradient(145deg,#20264b,#171b36);text-align:center}.profile-card .avatar{width:86px;height:86px;margin:0 auto 13px;border-radius:28px;font-size:34px}.profile-card h3{margin:0 0 5px}.profile-card p{color:var(--muted);font-size:13px}.setting{margin:0 16px;padding:17px;border-bottom:1px solid #ffffff10;color:#e8eaff;font-size:14px;display:flex;justify-content:space-between}.logout{color:#ff899b;cursor:pointer}
+.overlay{position:fixed;inset:0;z-index:20;background:#0b0e20;display:none;flex-direction:column}.overlay.open{display:flex}.overlay-head{display:flex;align-items:center;gap:12px;padding:16px;border-bottom:1px solid #ffffff14;background:#141832}.overlay-head button{border:0;background:none;color:white;font-size:26px}.overlay-head h2{font-size:18px;margin:0;flex:1}.overlay-body{overflow:auto;padding-bottom:30px}.friend-search{margin:16px;display:flex;gap:9px}.friend-search input{flex:1;min-width:0;padding:14px;border:1px solid var(--line);border-radius:14px;background:#171c38;color:white;outline:none}.friend-search button,.action-btn{border:0;border-radius:13px;padding:0 15px;background:var(--grad);color:white;font-weight:750}.person{display:flex;align-items:center;gap:12px;padding:13px 17px;border-bottom:1px solid #ffffff10}.person .avatar{width:47px;height:47px;border-radius:16px}.person .info{flex:1}.action-btn{padding:10px 13px;font-size:12px}.action-btn.secondary{background:#2a3156;color:#dce1ff}.action-btn:disabled{opacity:.65}.small-note{padding:10px 18px;color:var(--muted);font-size:12px}.chat-window{position:fixed;inset:0;z-index:8;background:#0b0e20;display:none;flex-direction:column}.chat-head{display:flex;align-items:center;gap:12px;padding:14px 16px;background:#171c39;border-bottom:1px solid #ffffff12}.chat-head button{border:0;background:none;color:white;font-size:25px}.chat-head .avatar{width:43px;height:43px;border-radius:15px}.chat-head small{display:block;color:#8f9ac0;margin-top:3px}.chat-messages{flex:1;overflow:auto;padding:18px}.bubble{width:fit-content;max-width:82%;padding:12px 15px;margin:0 0 11px;border:1px solid #ffffff12;border-radius:17px 17px 17px 5px;background:#202647;color:#f4f5ff;font-size:14px;overflow-wrap:anywhere}.bubble.mine{margin-left:auto;background:linear-gradient(120deg,#4d6ee8,#7653d9);border:0;border-radius:17px 17px 5px 17px}.chat-compose{display:flex;gap:9px;padding:12px;background:#151a34;border-top:1px solid #ffffff12}.chat-compose input{flex:1;min-width:0;border:1px solid #ffffff12;border-radius:22px;background:#0c1128;color:white;padding:13px 16px;outline:none}.chat-compose button{width:46px;border:0;border-radius:16px;background:var(--grad);color:white;font-size:19px}
 @media(min-width:700px){#appScreen{max-width:760px;margin:auto;border-left:1px solid #ffffff10;border-right:1px solid #ffffff10;min-height:100dvh}.app-header{border-radius:0 0 22px 22px}.bottom-nav{left:50%;right:auto;transform:translateX(-50%);width:min(100%,760px);border-radius:18px 18px 0 0}}
 </style>
 </head>
@@ -23,163 +23,96 @@ main{max-width:760px;margin:auto}.page{display:none}.page.active{display:block}.
 <div class="auth" id="loginScreen"><div class="auth-card">
  <div class="brand"><span class="brand-mark">✦</span> CHATIVO</div><div class="tagline">Your space. Your people. Your conversations.</div>
  <h2>Welcome back</h2><p class="sub">Sign in to continue chatting.</p>
- <form id="loginForm">
-  <div class="field"><label>Email address</label><input id="loginEmail" type="email" placeholder="name@example.com" autocomplete="email" required></div>
-  <div class="field"><label>Password</label><input id="loginPassword" type="password" placeholder="Enter your password" autocomplete="current-password" required></div>
-  <div class="error" id="loginError"></div><button class="primary" id="loginButton">Sign in</button>
- </form>
- <div class="switch"><span class="link" onclick="forgotPassword()">Forgot password?</span></div>
- <div class="switch">New to CHATIVO? <span class="link" onclick="showScreen('registerScreen')">Create account</span></div>
- <div class="notice">Secure account powered by Supabase</div>
+ <form id="loginForm"><div class="field"><label>Email address</label><input id="loginEmail" type="email" placeholder="name@example.com" autocomplete="email" required></div><div class="field"><label>Password</label><input id="loginPassword" type="password" placeholder="Enter your password" autocomplete="current-password" required></div><div class="error" id="loginError"></div><button class="primary" id="loginButton">Sign in</button></form>
+ <div class="switch"><span class="link" onclick="forgotPassword()">Forgot password?</span></div><div class="switch">New to CHATIVO? <span class="link" onclick="showScreen('registerScreen')">Create account</span></div><div class="notice">Secure account powered by Supabase</div>
 </div></div>
 <div class="auth hidden" id="registerScreen"><div class="auth-card">
- <div class="brand"><span class="brand-mark">✦</span> CHATIVO</div><div class="tagline">Meet your people, one message at a time.</div>
- <h2>Create your account</h2><p class="sub">Join the CHATIVO community.</p>
- <form id="registerForm">
-  <div class="field"><label>Full name</label><input id="regName" type="text" maxlength="50" placeholder="Your name" required></div>
-  <div class="field"><label>Email address</label><input id="regEmail" type="email" placeholder="name@example.com" autocomplete="email" required></div>
-  <div class="field"><label>Password</label><input id="regPassword" type="password" minlength="8" placeholder="At least 8 characters" autocomplete="new-password" required></div>
-  <div class="field"><label>Confirm password</label><input id="regConfirm" type="password" minlength="8" placeholder="Repeat password" required></div>
-  <div class="error" id="regError"></div><button class="primary" id="registerButton">Create account</button>
- </form>
+ <div class="brand"><span class="brand-mark">✦</span> CHATIVO</div><div class="tagline">Meet your people, one message at a time.</div><h2>Create your account</h2><p class="sub">Join the CHATIVO community.</p>
+ <form id="registerForm"><div class="field"><label>Full name</label><input id="regName" type="text" maxlength="50" placeholder="Your name" required></div><div class="field"><label>Email address</label><input id="regEmail" type="email" placeholder="name@example.com" autocomplete="email" required></div><div class="field"><label>Password</label><input id="regPassword" type="password" minlength="8" placeholder="At least 8 characters" autocomplete="new-password" required></div><div class="field"><label>Confirm password</label><input id="regConfirm" type="password" minlength="8" placeholder="Repeat your password" required></div><div class="error" id="regError"></div><button class="primary" id="registerButton">Create account</button></form>
  <div class="switch">Already have an account? <span class="link" onclick="showScreen('loginScreen')">Sign in</span></div>
 </div></div>
-<div class="auth hidden" id="setupScreen"><div class="auth-card">
- <div class="brand"><span class="brand-mark">✦</span> CHATIVO</div><h2 style="text-align:center;margin-top:25px">Your profile</h2><p class="sub" style="text-align:center">Choose how people see you on CHATIVO.</p>
- <div class="field"><label>Display name</label><input id="displayName" maxlength="50" placeholder="Your display name"></div>
- <div class="error" id="setupError"></div><button class="primary" onclick="finishSetup()">Continue to CHATIVO</button>
-</div></div>
+<div class="auth hidden" id="setupScreen"><div class="auth-card"><div class="brand"><span class="brand-mark">✦</span> CHATIVO</div><h2 style="text-align:center;margin-top:25px">Your profile</h2><p class="sub" style="text-align:center">Choose how people see you on CHATIVO.</p><div class="field"><label>Display name</label><input id="displayName" maxlength="50" placeholder="Your display name"></div><div class="error" id="setupError"></div><button class="primary" onclick="finishSetup()">Continue to CHATIVO</button></div></div>
 <div id="appScreen" class="hidden">
- <header class="app-header"><div class="topline"><div class="logo"><span class="brand-mark">✦</span> CHATIVO</div><div class="header-actions"><button class="icon-btn" onclick="focusSearch()" aria-label="Search">⌕</button><button class="icon-btn" onclick="openSettings()" aria-label="Settings">⚙</button></div></div><div class="welcome">Good to see you, <b id="welcomeName">there</b></div>
- <div class="tabs"><div class="tab active" onclick="switchPage('chats')">CHATS</div><div class="tab" onclick="switchPage('updates')">UPDATES</div><div class="tab" onclick="switchPage('calls')">CALLS</div></div></header>
+ <header class="app-header"><div class="topline"><div class="logo"><span class="brand-mark">✦</span> CHATIVO</div><div class="header-actions"><button class="icon-btn" onclick="openFriendSearch()" aria-label="Find friends">⌕</button><button class="icon-btn" onclick="openSettings()" aria-label="Settings">⚙</button></div></div><div class="welcome">Good to see you, <b id="welcomeName">there</b></div><div class="tabs"><div class="tab active" onclick="switchPage('chats')">CHATS</div><div class="tab" onclick="switchPage('updates')">UPDATES</div><div class="tab" onclick="switchPage('calls')">CALLS</div></div></header>
  <main>
   <section class="page active" id="chats"><div class="search-wrap"><div class="search">⌕ <input id="search" placeholder="Search conversations..." oninput="filterChats()"></div></div><div class="section-title">YOUR CONVERSATIONS</div><div id="chatList"><div class="empty">Your conversations will appear here when you connect with people.</div></div></section>
   <section class="page" id="updates"><div class="section-title" style="padding-top:22px">STORIES & STATUS</div><div class="empty">Updates from your friends will appear here.</div></section>
   <section class="page" id="calls"><div class="section-title" style="padding-top:22px">RECENT CALLS</div><div class="empty">Your recent calls will appear here.</div></section>
-  <section class="page" id="friends"><div class="section-title" style="padding-top:22px">FIND PEOPLE</div><div class="friend-tools"><input id="friendSearch" type="search" placeholder="Search by display name..." oninput="searchProfiles()"><div class="friend-status">Type at least 2 characters to search CHATIVO users.</div></div><div id="friendResults"><div class="empty">Search for people to connect with.</div></div><div class="section-title" style="padding-top:22px">FRIEND REQUESTS</div><div id="requestList"><div class="empty">Loading requests...</div></div></section>
   <section class="page" id="settings"><div class="profile-card"><div class="avatar">✦</div><h3 id="settingsName">CHATIVO User</h3><p id="settingsEmail">user@email.com</p></div><div class="setting">Account security <span>›</span></div><div class="setting">Privacy <span>›</span></div><div class="setting">Notifications <span>›</span></div><div class="setting logout" onclick="logout()">Sign out <span>↗</span></div></section>
  </main>
  <nav class="bottom-nav"><button class="active" onclick="switchPage('chats')"><span>▣</span>Chats</button><button onclick="switchPage('updates')"><span>◉</span>Updates</button><button onclick="switchPage('calls')"><span>◖</span>Calls</button></nav>
- <button class="fab" id="fab" onclick="openFriends()" aria-label="Find friends">＋</button>
+ <button class="fab" id="fab" onclick="openFriendSearch()" aria-label="Find friends">＋</button>
 </div>
+<div class="overlay" id="friendOverlay"><div class="overlay-head"><button onclick="closeFriendSearch()" aria-label="Back">‹</button><h2>Find friends</h2><button onclick="loadFriendRequests()" title="Refresh">↻</button></div><div class="overlay-body">
+ <div class="friend-search"><input id="friendQuery" placeholder="Search by display name..." autocomplete="off"><button onclick="searchPeople()">Search</button></div>
+ <div class="small-note" id="searchMessage">Enter a display name to find people on CHATIVO.</div><div id="searchResults"></div>
+ <div class="section-title" style="padding-top:22px">FRIEND REQUESTS</div><div id="requestList"><div class="empty">Loading requests...</div></div>
+</div></div>
 <div class="chat-window" id="chatWindow"><div class="chat-head"><button onclick="closeChat()">‹</button><div class="avatar">✦</div><div><b id="chatTitle">Chat</b><small>CHATIVO conversation</small></div></div><div class="chat-messages" id="chatMessages"></div><form class="chat-compose" id="messageForm"><input id="messageInput" placeholder="Write a message..." autocomplete="off"><button aria-label="Send">➤</button></form></div>
 <script>
 const SUPABASE_URL='https://wmtbcwcaxlmznffyrtsy.supabase.co';
 const SUPABASE_PUBLISHABLE_KEY='sb_publishable_sUsu1vTb9ORMyut4qKzHxg_LfPMMoUc';
-const {createClient}=window.supabase;
-const db=createClient(SUPABASE_URL,SUPABASE_PUBLISHABLE_KEY);
-const $=id=>document.getElementById(id);
-let currentUser=null,profile=null;
+const {createClient}=window.supabase;const db=createClient(SUPABASE_URL,SUPABASE_PUBLISHABLE_KEY);
+const $=id=>document.getElementById(id);let currentUser=null,profile=null;
 function showScreen(id){document.querySelectorAll('.auth').forEach(s=>s.classList.add('hidden'));$(id).classList.remove('hidden')}
 function showError(id,message,success=false){$(id).textContent=message;$(id).className=success?'notice success':'error'}
-async function loadProfile(user){
- const {data,error}=await db.from('profiles').select('display_name,avatar_url,bio').eq('id',user.id).maybeSingle();
- if(error) console.warn('Profile lookup:',error.message);
- profile=data||{display_name:user.user_metadata?.display_name||user.email?.split('@')[0]||'CHATIVO User'};
-}
-function showApp(){
- $('loginScreen').classList.add('hidden');$('registerScreen').classList.add('hidden');$('setupScreen').classList.add('hidden');$('appScreen').classList.remove('hidden');
- const name=profile?.display_name||currentUser?.user_metadata?.display_name||'CHATIVO User';
- $('welcomeName').textContent=name;$('settingsName').textContent=name;$('settingsEmail').textContent=currentUser?.email||'';
- loadFriendRequests();
-}
-async function syncSession(){
- const {data}=await db.auth.getSession();currentUser=data.session?.user||null;
- if(currentUser){await loadProfile(currentUser);showApp()}else showScreen('loginScreen');
-}
-$('registerForm').addEventListener('submit',async e=>{
- e.preventDefault();const name=$('regName').value.trim(),email=$('regEmail').value.trim().toLowerCase(),password=$('regPassword').value;
- if(password!==$('regConfirm').value){showError('regError','Passwords do not match.');return}
- if(password.length<8){showError('regError','Use at least 8 characters for your password.');return}
- const btn=$('registerButton');btn.disabled=true;btn.textContent='Creating account...';showError('regError','');
- const {data,error}=await db.auth.signUp({email,password,options:{data:{display_name:name},emailRedirectTo:location.origin+location.pathname}});
- btn.disabled=false;btn.textContent='Create account';
- if(error){showError('regError',error.message);return}
- if(data.session){currentUser=data.user;await loadProfile(currentUser);$('displayName').value=name;showScreen('setupScreen')}
- else{showError('regError','Account created. Check your email and confirm your address, then sign in.',true);$('registerForm').reset()}
-});
-$('loginForm').addEventListener('submit',async e=>{
- e.preventDefault();const btn=$('loginButton');btn.disabled=true;btn.textContent='Signing in...';showError('loginError','');
- const {data,error}=await db.auth.signInWithPassword({email:$('loginEmail').value.trim().toLowerCase(),password:$('loginPassword').value});
- btn.disabled=false;btn.textContent='Sign in';
- if(error){showError('loginError',error.message);return}
- currentUser=data.user;await loadProfile(currentUser);showApp();
-});
-async function forgotPassword(){
- const email=$('loginEmail').value.trim().toLowerCase();if(!email){showError('loginError','Enter your email address first.');return}
- const {error}=await db.auth.resetPasswordForEmail(email,{redirectTo:location.origin+location.pathname});
- showError('loginError',error?error.message:'If this email is registered, a password reset link will be sent.',!error);
-}
-async function finishSetup(){
- if(!currentUser)return;const name=$('displayName').value.trim();if(!name){showError('setupError','Please enter a display name.');return}
- const {error}=await db.from('profiles').update({display_name:name}).eq('id',currentUser.id);
- if(error){showError('setupError',error.message);return}
- profile={...profile,display_name:name};showApp();
-}
+async function loadProfile(user){const {data,error}=await db.from('profiles').select('id,display_name,avatar_url,bio').eq('id',user.id).maybeSingle();if(error)console.warn('Profile lookup:',error.message);profile=data||{id:user.id,display_name:user.user_metadata?.display_name||user.email?.split('@')[0]||'CHATIVO User'}}
+function showApp(){['loginScreen','registerScreen','setupScreen'].forEach(id=>$(id).classList.add('hidden'));$('appScreen').classList.remove('hidden');const name=profile?.display_name||currentUser?.user_metadata?.display_name||'CHATIVO User';$('welcomeName').textContent=name;$('settingsName').textContent=name;$('settingsEmail').textContent=currentUser?.email||''}
+async function syncSession(){const {data}=await db.auth.getSession();currentUser=data.session?.user||null;if(currentUser){await loadProfile(currentUser);showApp()}else showScreen('loginScreen')}
+$('registerForm').addEventListener('submit',async e=>{e.preventDefault();const name=$('regName').value.trim(),email=$('regEmail').value.trim().toLowerCase(),password=$('regPassword').value;if(password!==$('regConfirm').value){showError('regError','Passwords do not match.');return}if(password.length<8){showError('regError','Use at least 8 characters for your password.');return}const btn=$('registerButton');btn.disabled=true;btn.textContent='Creating account...';showError('regError','');const {data,error}=await db.auth.signUp({email,password,options:{data:{display_name:name},emailRedirectTo:location.origin+location.pathname}});btn.disabled=false;btn.textContent='Create account';if(error){showError('regError',error.message);return}if(data.session){currentUser=data.user;await loadProfile(currentUser);$('displayName').value=name;showScreen('setupScreen')}else{showError('regError','Account created. Check your email and confirm your address, then sign in.',true);$('registerForm').reset()}});
+$('loginForm').addEventListener('submit',async e=>{e.preventDefault();const btn=$('loginButton');btn.disabled=true;btn.textContent='Signing in...';showError('loginError','');const {data,error}=await db.auth.signInWithPassword({email:$('loginEmail').value.trim().toLowerCase(),password:$('loginPassword').value});btn.disabled=false;btn.textContent='Sign in';if(error){showError('loginError',error.message);return}currentUser=data.user;await loadProfile(currentUser);showApp()});
+async function forgotPassword(){const email=$('loginEmail').value.trim().toLowerCase();if(!email){showError('loginError','Enter your email address first.');return}const {error}=await db.auth.resetPasswordForEmail(email,{redirectTo:location.origin+location.pathname});showError('loginError',error?error.message:'If this email is registered, a password reset link will be sent.',!error)}
+async function finishSetup(){if(!currentUser)return;const name=$('displayName').value.trim();if(!name){showError('setupError','Please enter a display name.');return}const {error}=await db.from('profiles').update({display_name:name}).eq('id',currentUser.id);if(error){showError('setupError',error.message);return}profile={...profile,display_name:name};showApp()}
 async function logout(){if(!confirm('Sign out of CHATIVO?'))return;await db.auth.signOut();currentUser=null;profile=null;$('loginPassword').value='';showScreen('loginScreen')}
 function switchPage(id){document.querySelectorAll('#appScreen .page').forEach(p=>p.classList.remove('active'));$(id).classList.add('active');document.querySelectorAll('.tab').forEach((t,i)=>t.classList.toggle('active',['chats','updates','calls'][i]===id));document.querySelectorAll('.bottom-nav button').forEach((b,i)=>b.classList.toggle('active',['chats','updates','calls'][i]===id));$('fab').style.display=id==='chats'?'block':'none'}
-function openFriends(){switchPage('friends');$('friendSearch').focus();loadFriendRequests()}
 function openSettings(){switchPage('settings')}
-let friendSearchTimer=null;
-function makeFriendRow(user, actionLabel, handler, statusText=''){
- const row=document.createElement('div');row.className='friend-row';
- const avatar=document.createElement('div');avatar.className='avatar';avatar.textContent=(user.display_name||'U').trim().charAt(0).toUpperCase();
- const info=document.createElement('div');info.className='info';
- const name=document.createElement('div');name.className='name';name.textContent=user.display_name||'CHATIVO User';
- const status=document.createElement('div');status.className='friend-status';status.textContent=statusText;
- info.append(name,status);row.append(avatar,info);
- if(actionLabel){const btn=document.createElement('button');btn.className='friend-action';btn.textContent=actionLabel;btn.addEventListener('click',handler);row.append(btn)}
- return row;
-}
-function setFriendMessage(container,message){container.replaceChildren();const empty=document.createElement('div');empty.className='empty';empty.textContent=message;container.append(empty)}
-async function searchProfiles(){
- clearTimeout(friendSearchTimer);const q=$('friendSearch').value.trim();
- if(q.length<2){setFriendMessage($('friendResults'),'Type at least 2 characters to search.');return}
- friendSearchTimer=setTimeout(async()=>{
-  const box=$('friendResults');setFriendMessage(box,'Searching...');
-  const {data,error}=await db.from('profiles').select('id,display_name').ilike('display_name','%'+q.replace(/[%,()]/g,'')+'%').neq('id',currentUser.id).order('display_name').limit(20);
-  if(error){setFriendMessage(box,'Could not search users: '+error.message);return}
-  if(!data?.length){setFriendMessage(box,'No users found with that name.');return}
-  box.replaceChildren();
-  for(const user of data){
-   const {data:existing}=await db.from('friend_requests').select('id,status,sender_id,receiver_id').or(`and(sender_id.eq.${currentUser.id},receiver_id.eq.${user.id}),and(sender_id.eq.${user.id},receiver_id.eq.${currentUser.id})`).limit(1).maybeSingle();
-   let label='Add';let status='';let handler=()=>sendFriendRequest(user.id);
-   if(existing){if(existing.status==='accepted'){label='Friends';status='Connected';handler=null}else if(existing.sender_id===currentUser.id){label='Sent';status='Request pending';handler=null}else{label='Respond';status='They sent you a request';handler=()=>loadFriendRequests()}}
-   box.append(makeFriendRow(user,label,handler,status));
-  }
- },350);
+function focusSearch(){openFriendSearch()}
+function filterChats(){const q=$('search').value.toLowerCase();document.querySelectorAll('#chatList .chat').forEach(c=>c.style.display=c.textContent.toLowerCase().includes(q)?'flex':'none')}
+function closeChat(){$('chatWindow').style.display='none'}
+function safeText(value){return String(value??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+function openFriendSearch(){$('friendOverlay').classList.add('open');$('friendQuery').value='';$('searchResults').innerHTML='';$('searchMessage').textContent='Enter a display name to find people on CHATIVO.';loadFriendRequests();setTimeout(()=>$('friendQuery').focus(),100)}
+function closeFriendSearch(){$('friendOverlay').classList.remove('open')}
+async function searchPeople(){
+ const q=$('friendQuery').value.trim();$('searchResults').innerHTML='';if(q.length<2){$('searchMessage').textContent='Please enter at least 2 characters.';return}
+ $('searchMessage').textContent='Searching...';
+ const {data,error}=await db.from('profiles').select('id,display_name,avatar_url').ilike('display_name','%'+q+'%').neq('id',currentUser.id).limit(20);
+ if(error){$('searchMessage').textContent='Search error: '+error.message;return}
+ if(!data||!data.length){$('searchMessage').textContent='No users found. Make sure the other account has completed email verification and profile setup.';return}
+ const ids=data.map(p=>p.id);const {data:sent,error:sentError}=await db.from('friend_requests').select('receiver_id,status').eq('sender_id',currentUser.id).in('receiver_id',ids);
+ if(sentError){$('searchMessage').textContent='Could not check request status: '+sentError.message;return}
+ const {data:received,error:receivedError}=await db.from('friend_requests').select('sender_id,status').eq('receiver_id',currentUser.id).in('sender_id',ids);
+ if(receivedError){$('searchMessage').textContent='Could not check incoming requests: '+receivedError.message;return}
+ $('searchMessage').textContent=data.length+' user(s) found';
+ data.forEach(p=>{
+  const out=sent?.find(r=>r.receiver_id===p.id),inc=received?.find(r=>r.sender_id===p.id);
+  let action='<button class="action-btn" onclick="sendFriendRequest(\''+p.id+'\')">Add friend</button>';
+  if(out?.status==='pending')action='<button class="action-btn secondary" disabled>Request sent</button>';
+  if(out?.status==='accepted'||inc?.status==='accepted')action='<button class="action-btn secondary" disabled>Friends</button>';
+  if(inc?.status==='pending')action='<button class="action-btn" onclick="loadFriendRequests()">Respond below</button>';
+  $('searchResults').insertAdjacentHTML('beforeend','<div class="person"><div class="avatar">✦</div><div class="info"><div class="name">'+safeText(p.display_name||'CHATIVO User')+'</div><div class="message">CHATIVO member</div></div>'+action+'</div>');
+ });
 }
 async function sendFriendRequest(receiverId){
  const {error}=await db.from('friend_requests').insert({sender_id:currentUser.id,receiver_id:receiverId});
- if(error){alert(error.code==='23505'?'A request already exists.':error.message);return}
- searchProfiles();loadFriendRequests();
+ if(error){if(error.code==='23505')alert('A request already exists between these accounts.');else alert('Could not send request: '+error.message);return}
+ alert('Friend request sent!');searchPeople();loadFriendRequests();
 }
 async function loadFriendRequests(){
- if(!currentUser)return;const box=$('requestList');setFriendMessage(box,'Loading requests...');
- const {data,error}=await db.from('friend_requests').select('id,sender_id,receiver_id,status,created_at').or(`sender_id.eq.${currentUser.id},receiver_id.eq.${currentUser.id}`).order('created_at',{ascending:false}).limit(50);
- if(error){setFriendMessage(box,'Could not load requests: '+error.message);return}
- const pending=(data||[]).filter(r=>r.status==='pending');
- if(!pending.length){setFriendMessage(box,'No pending friend requests.');return}
- box.replaceChildren();
- for(const req of pending){
-  const incoming=req.receiver_id===currentUser.id;const otherId=incoming?req.sender_id:req.receiver_id;
-  const {data:user}=await db.from('profiles').select('id,display_name').eq('id',otherId).maybeSingle();
-  if(!user)continue;
-  if(incoming){
-   const row=makeFriendRow(user,'Accept',()=>respondToRequest(req.id,'accepted'),'Incoming request');
-   const reject=document.createElement('button');reject.className='friend-action secondary';reject.textContent='Decline';reject.addEventListener('click',()=>respondToRequest(req.id,'rejected'));row.append(reject);box.append(row);
-  }else box.append(makeFriendRow(user,'Sent',null,'Waiting for response'));
- }
- if(!box.children.length)setFriendMessage(box,'No pending friend requests.');
+ if(!currentUser)return;$('requestList').innerHTML='<div class="small-note">Loading requests...</div>';
+ const {data,error}=await db.from('friend_requests').select('id,sender_id,receiver_id,status,created_at').eq('receiver_id',currentUser.id).eq('status','pending').order('created_at',{ascending:false});
+ if(error){$('requestList').innerHTML='<div class="small-note">Request loading error: '+safeText(error.message)+'</div>';return}
+ if(!data?.length){$('requestList').innerHTML='<div class="empty">No pending friend requests.</div>';return}
+ const ids=data.map(r=>r.sender_id);const {data:people,error:peopleError}=await db.from('profiles').select('id,display_name').in('id',ids);
+ if(peopleError){$('requestList').innerHTML='<div class="small-note">Could not load sender profiles: '+safeText(peopleError.message)+'</div>';return}
+ $('requestList').innerHTML='';
+ data.forEach(r=>{const p=people?.find(x=>x.id===r.sender_id);$('requestList').insertAdjacentHTML('beforeend','<div class="person"><div class="avatar">✦</div><div class="info"><div class="name">'+safeText(p?.display_name||'CHATIVO User')+'</div><div class="message">Wants to connect with you</div></div><button class="action-btn" onclick="respondRequest('+r.id+',\'accepted\')">Accept</button><button class="action-btn secondary" onclick="respondRequest('+r.id+',\'rejected\')">Decline</button></div>')});
 }
-async function respondToRequest(id,status){
- const {error}=await db.from('friend_requests').update({status}).eq('id',id);
- if(error){alert(error.message);return}
- loadFriendRequests();if($('friendSearch').value.trim().length>=2)searchProfiles();
+async function respondRequest(id,status){
+ const {error}=await db.from('friend_requests').update({status}).eq('id',id).eq('receiver_id',currentUser.id).eq('status','pending');
+ if(error){alert('Could not update request: '+error.message);return}
+ await loadFriendRequests();if($('friendQuery').value.trim().length>=2)await searchPeople();
 }
-function focusSearch(){switchPage('chats');$('search').focus()}
-function filterChats(){const q=$('search').value.toLowerCase();document.querySelectorAll('#chatList .chat').forEach(c=>c.style.display=c.textContent.toLowerCase().includes(q)?'flex':'none')}
-function closeChat(){$('chatWindow').style.display='none'}
+$('friendQuery').addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();searchPeople()}});
 $('messageForm').addEventListener('submit',e=>{e.preventDefault();const input=$('messageInput'),value=input.value.trim();if(!value)return;const bubble=document.createElement('div');bubble.className='bubble mine';bubble.textContent=value;$('chatMessages').appendChild(bubble);input.value='';$('chatMessages').scrollTop=$('chatMessages').scrollHeight});
 db.auth.onAuthStateChange((event,session)=>{if(event==='SIGNED_OUT'){currentUser=null;profile=null;showScreen('loginScreen')}});
 syncSession();
