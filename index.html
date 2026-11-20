@@ -1,289 +1,2951 @@
 <!DOCTYPE html>
-<html lang="en">
+< lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#11142b">
 <title>CHATIVO</title>
+
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
 <style>
-:root{--bg:#0b0e20;--panel:#141832;--panel2:#1b2040;--line:#292f54;--text:#f5f6ff;--muted:#9da5c7;--blue:#6385ff;--purple:#9b65ff;--grad:linear-gradient(120deg,#557dff,#9b5cff);--shadow:0 18px 50px #0005}
-*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at 10% 0%,#24285a 0,transparent 38%),var(--bg);color:var(--text);font-family:Inter,system-ui,-apple-system,Segoe UI,Arial,sans-serif}button,input{font:inherit}button{cursor:pointer}.hidden{display:none!important}
-.auth{min-height:100dvh;display:grid;place-items:center;padding:24px}.auth-card{width:min(100%,430px);padding:30px 25px;border:1px solid #ffffff18;border-radius:28px;background:linear-gradient(145deg,#1c2144ed,#11152df2);box-shadow:var(--shadow);backdrop-filter:blur(18px)}
-.brand{display:flex;align-items:center;justify-content:center;gap:10px;font-size:30px;font-weight:900;letter-spacing:1.8px}.brand-mark{width:39px;height:39px;border-radius:14px;background:var(--grad);display:grid;place-items:center;box-shadow:0 8px 25px #6b71ff66}.brand-mark svg{width:23px}.tagline{text-align:center;color:var(--muted);font-size:13px;margin:10px 0 30px}.auth h2{font-size:25px;margin:0 0 7px}.sub{color:var(--muted);font-size:14px;margin:0 0 24px}.field{margin:15px 0}.field label{display:block;color:#cbd0ec;font-size:12px;font-weight:700;margin:0 0 8px}.field input{width:100%;padding:15px 14px;border:1px solid var(--line);border-radius:14px;background:#0d1127;color:white;outline:none}.field input:focus{border-color:var(--blue);box-shadow:0 0 0 3px #6385ff20}.primary{width:100%;padding:15px;border:0;border-radius:14px;background:var(--grad);color:white;font-weight:800;box-shadow:0 9px 25px #6a6eff40}.primary:disabled{opacity:.6}.switch{text-align:center;color:var(--muted);font-size:13px;margin-top:20px}.link{color:#a9baff;font-weight:800;cursor:pointer}.notice,.error{font-size:12px;line-height:1.5;margin-top:14px;text-align:center}.notice{color:var(--muted)}.error{color:#ff8d9c}.success{color:#6fe3c0}
-#appScreen{min-height:100dvh;padding-bottom:85px}.app-header{position:sticky;top:0;z-index:3;padding:18px 18px 0;background:#10142bf0;border-bottom:1px solid #ffffff12;backdrop-filter:blur(20px)}.topline{display:flex;align-items:center;justify-content:space-between;padding-bottom:17px}.logo{display:flex;align-items:center;gap:9px;font-size:23px;font-weight:950;letter-spacing:1.2px}.logo .brand-mark{width:32px;height:32px;border-radius:11px}.header-actions{display:flex;gap:10px}.icon-btn{width:44px;height:44px;border:1px solid #ffffff17;border-radius:15px;background:#ffffff08;color:#e9ebff;font-size:22px}.welcome{padding:2px 0 16px;color:var(--muted);font-size:13px}.welcome b{color:white}.tabs{display:flex;gap:25px;overflow:auto}.tab{padding:12px 4px 14px;color:#929bbd;font-weight:750;font-size:13px;letter-spacing:.5px;border-bottom:2px solid transparent;white-space:nowrap;cursor:pointer}.tab.active{color:white;border-color:#8a79ff}
-main{max-width:760px;margin:auto}.page{display:none}.page.active{display:block}.search-wrap{padding:18px}.search{display:flex;align-items:center;gap:10px;padding:14px 16px;border:1px solid #ffffff12;border-radius:16px;background:#171c38;color:#8e98bd}.search input{width:100%;border:0;outline:0;background:transparent;color:white}.section-title{padding:7px 19px 12px;color:#8791b8;font-size:11px;font-weight:850;letter-spacing:1.5px}.chat{display:flex;align-items:center;gap:13px;padding:14px 18px;border-bottom:1px solid #ffffff0d;cursor:pointer}.avatar{width:54px;height:54px;flex:none;border-radius:19px;display:grid;place-items:center;background:linear-gradient(145deg,#304a91,#593c89);font-size:23px;overflow:hidden}.info{flex:1;min-width:0}.name{font-size:15px;font-weight:800;margin-bottom:6px}.message{font-size:12px;color:#929bbd;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.time{font-size:10px;color:#8791b0}.empty{text-align:center;padding:45px 20px;color:var(--muted);font-size:13px}.fab{position:fixed;right:22px;bottom:99px;width:58px;height:58px;border:0;border-radius:20px;background:var(--grad);color:white;font-size:30px;box-shadow:0 12px 30px #6765ff66;z-index:4}
-.bottom-nav{position:fixed;z-index:4;bottom:0;left:0;right:0;display:flex;justify-content:space-around;padding:10px 8px calc(10px + env(safe-area-inset-bottom));background:#11152df2;border-top:1px solid #ffffff14;backdrop-filter:blur(20px)}.bottom-nav button{border:0;background:none;color:#818bad;font-size:11px;min-width:65px}.bottom-nav button span{display:block;font-size:21px;margin-bottom:4px}.bottom-nav button.active{color:#a9a0ff;font-weight:800}
-.profile-card{margin:20px;padding:25px;border:1px solid #ffffff14;border-radius:22px;background:linear-gradient(145deg,#20264b,#171b36);text-align:center}.profile-card .avatar{width:86px;height:86px;margin:0 auto 13px;border-radius:28px;font-size:34px}.profile-card h3{margin:0 0 5px}.profile-card p{color:var(--muted);font-size:13px}.setting{margin:0 16px;padding:17px;border-bottom:1px solid #ffffff10;color:#e8eaff;font-size:14px;display:flex;justify-content:space-between}.logout{color:#ff899b;cursor:pointer}
-.overlay{position:fixed;inset:0;z-index:20;background:#0b0e20;display:none;flex-direction:column}.overlay.open{display:flex}.overlay-head{display:flex;align-items:center;gap:12px;padding:16px;border-bottom:1px solid #ffffff14;background:#141832}.overlay-head button{border:0;background:none;color:white;font-size:26px}.overlay-head h2{font-size:18px;margin:0;flex:1}.overlay-body{overflow:auto;padding-bottom:30px}.friend-search{margin:16px;display:flex;gap:9px}.friend-search input{flex:1;min-width:0;padding:14px;border:1px solid var(--line);border-radius:14px;background:#171c38;color:white;outline:none}.friend-search button,.action-btn{border:0;border-radius:13px;padding:0 15px;background:var(--grad);color:white;font-weight:750}.person{display:flex;align-items:center;gap:12px;padding:13px 17px;border-bottom:1px solid #ffffff10}.person .avatar{width:47px;height:47px;border-radius:16px}.person .info{flex:1}.action-btn{padding:10px 13px;font-size:12px}.action-btn.secondary{background:#2a3156;color:#dce1ff}.action-btn:disabled{opacity:.65}.small-note{padding:10px 18px;color:var(--muted);font-size:12px}.chat-window{position:fixed;inset:0;z-index:30;background:#0b0e20;display:none;flex-direction:column}.chat-head{display:flex;align-items:center;gap:12px;padding:14px 16px;background:#171c39;border-bottom:1px solid #ffffff12}.chat-head button{border:0;background:none;color:white;font-size:25px}.chat-head .avatar{width:43px;height:43px;border-radius:15px}.chat-head small{display:block;color:#8f9ac0;margin-top:3px}.chat-messages{flex:1;overflow:auto;padding:18px}.bubble{width:fit-content;max-width:82%;padding:12px 15px;margin:0 0 11px;border:1px solid #ffffff12;border-radius:17px 17px 17px 5px;background:#202647;color:#f4f5ff;font-size:14px;overflow-wrap:anywhere;white-space:pre-wrap}.bubble.mine{margin-left:auto;background:linear-gradient(120deg,#4d6ee8,#7653d9);border:0;border-radius:17px 17px 5px 17px}.bubble-time{display:block;font-size:10px;opacity:.7;margin-top:5px;text-align:right}.chat-compose{display:flex;gap:9px;padding:12px;background:#151a34;border-top:1px solid #ffffff12}.chat-compose input{flex:1;min-width:0;border:1px solid #ffffff12;border-radius:22px;background:#0c1128;color:white;padding:13px 16px;outline:none}.chat-compose button{width:46px;border:0;border-radius:16px;background:var(--grad);color:white;font-size:19px}
-@media(min-width:700px){#appScreen{max-width:760px;margin:auto;border-left:1px solid #ffffff10;border-right:1px solid #ffffff10;min-height:100dvh}.app-header{border-radius:0 0 22px 22px}.bottom-nav{left:50%;right:auto;transform:translateX(-50%);width:min(100%,760px);border-radius:18px 18px 0 0}}
+:root {
+  --bg: #0b0e20;
+  --panel: #141832;
+  --panel2: #1b2142;
+  --primary: #7865ff;
+  --primary2: #5945e8;
+  --text: #ffffff;
+  --muted: #a5abc7;
+  --border: rgba(255,255,255,.09);
+  --danger: #ff526d;
+  --success: #35d39a;
+  --radius: 18px;
+}
 
-/* CHATIVO Stories */
-.story-strip{display:flex;gap:14px;overflow-x:auto;padding:17px 18px 20px;scrollbar-width:none}.story-strip::-webkit-scrollbar{display:none}.story-card{flex:0 0 78px;text-align:center;cursor:pointer}.story-ring{width:68px;height:68px;margin:0 auto 8px;padding:3px;border-radius:50%;background:var(--grad);position:relative}.story-ring.seen{background:#59617d}.story-face{width:100%;height:100%;border-radius:50%;border:3px solid #11152d;background:linear-gradient(145deg,#304a91,#593c89);display:grid;place-items:center;overflow:hidden;font-size:24px}.story-face img{width:100%;height:100%;object-fit:cover}.story-card small{display:block;color:#dfe2ff;font-size:11px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.story-add{position:relative}.story-plus{position:absolute;right:-1px;bottom:0;width:23px;height:23px;border-radius:50%;background:#6385ff;border:2px solid #11152d;color:white;display:grid;place-items:center;font-size:17px}.story-hint{padding:0 18px 12px;color:var(--muted);font-size:12px}.story-viewer{position:fixed;inset:0;z-index:60;background:#050713;display:none;align-items:center;justify-content:center;flex-direction:column}.story-viewer.open{display:flex}.story-viewer img{max-width:100%;max-height:76dvh;object-fit:contain}.story-viewer-top{position:absolute;top:0;left:0;right:0;padding:calc(14px + env(safe-area-inset-top)) 16px 14px;background:linear-gradient(#0009,transparent);display:flex;align-items:center;gap:12px}.story-viewer-top strong{flex:1}.story-viewer-top button,.story-close{border:0;background:#ffffff20;color:white;border-radius:50%;width:40px;height:40px;font-size:22px}.story-caption{padding:18px;color:white;text-align:center;max-width:600px}.story-progress{position:absolute;top:calc(8px + env(safe-area-inset-top));left:14px;right:14px;height:3px;background:#ffffff55;border-radius:9px}.story-progress span{display:block;height:100%;background:white;width:100%;border-radius:9px}.story-composer{padding:18px}.story-preview{width:100%;max-height:42dvh;object-fit:contain;border-radius:16px;background:#080b19;display:none;margin:12px 0}.story-composer input[type=text]{width:100%;padding:14px;border:1px solid var(--line);border-radius:14px;background:#0d1127;color:white;margin:12px 0}.story-composer input[type=file]{width:100%;color:var(--muted);padding:12px;background:#171c38;border-radius:13px}.story-status{font-size:12px;color:var(--muted);margin:10px 0}
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
 
+body {
+  min-height: 100vh;
+  background: var(--bg);
+  color: var(--text);
+  font-family: Arial, Helvetica, sans-serif;
+  overflow-x: hidden;
+}
+
+button, input, textarea {
+  font: inherit;
+}
+
+button {
+  cursor: pointer;
+  border: none;
+}
+
+input, textarea {
+  outline: none;
+}
+
+.hidden {
+  display: none !important;
+}
+
+/* COMMON */
+
+.app-container {
+  width: 100%;
+  max-width: 650px;
+  min-height: 100vh;
+  margin: auto;
+  background: var(--bg);
+  position: relative;
+}
+
+.top-header {
+  height: 68px;
+  padding: 0 18px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--panel);
+  border-bottom: 1px solid var(--border);
+  position: sticky;
+  top: 0;
+  z-index: 20;
+}
+
+.logo {
+  font-size: 25px;
+  font-weight: 800;
+  letter-spacing: 1px;
+  background: linear-gradient(90deg,#9c8cff,#5f8cff);
+  -webkit-background-clip: text;
+  color: transparent;
+}
+
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.icon-btn {
+  width: 42px;
+  height: 42px;
+  border-radius: 14px;
+  color: white;
+  background: var(--panel2);
+  font-size: 19px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.icon-btn:active,
+.primary-btn:active {
+  transform: scale(.96);
+}
+
+.page {
+  display: none;
+  padding: 18px;
+  padding-bottom: 100px;
+}
+
+.page.active {
+  display: block;
+}
+
+.section-title {
+  font-size: 20px;
+  font-weight: 700;
+  margin-bottom: 15px;
+}
+
+.muted {
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.primary-btn {
+  background: linear-gradient(135deg,var(--primary),var(--primary2));
+  color: white;
+  padding: 13px 18px;
+  border-radius: 13px;
+  font-weight: 700;
+}
+
+.secondary-btn {
+  background: var(--panel2);
+  color: white;
+  padding: 12px 16px;
+  border-radius: 12px;
+}
+
+.danger-btn {
+  background: rgba(255,82,109,.15);
+  color: var(--danger);
+  padding: 12px 16px;
+  border-radius: 12px;
+}
+
+/* AUTH */
+
+.auth-screen {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 22px;
+  background:
+    radial-gradient(circle at top left,rgba(120,101,255,.18),transparent 40%),
+    var(--bg);
+}
+
+.auth-card {
+  width: 100%;
+  max-width: 420px;
+  padding: 28px 22px;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 24px;
+  box-shadow: 0 15px 50px rgba(0,0,0,.25);
+}
+
+.auth-logo {
+  text-align: center;
+  font-size: 34px;
+  font-weight: 900;
+  letter-spacing: 2px;
+  color: #9585ff;
+  margin-bottom: 8px;
+}
+
+.auth-subtitle {
+  text-align: center;
+  color: var(--muted);
+  font-size: 13px;
+  margin-bottom: 25px;
+}
+
+.auth-title {
+  font-size: 22px;
+  margin-bottom: 7px;
+}
+
+.auth-description {
+  color: var(--muted);
+  font-size: 13px;
+  margin-bottom: 22px;
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+.form-group label {
+  display: block;
+  color: #d7d9eb;
+  font-size: 13px;
+  margin-bottom: 8px;
+}
+
+.form-input {
+  width: 100%;
+  height: 48px;
+  border-radius: 12px;
+  padding: 0 14px;
+  color: white;
+  background: #0e1229;
+  border: 1px solid var(--border);
+}
+
+.form-input:focus {
+  border-color: var(--primary);
+}
+
+.form-input::placeholder {
+  color: #727995;
+}
+
+.auth-submit {
+  width: 100%;
+  margin-top: 8px;
+}
+
+.auth-switch {
+  text-align: center;
+  margin-top: 20px;
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.auth-switch span {
+  color: #a99cff;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.auth-message {
+  margin-top: 12px;
+  font-size: 13px;
+  color: var(--danger);
+  text-align: center;
+}
+
+/* BOTTOM NAVIGATION */
+
+.bottom-nav {
+  position: fixed;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  max-width: 650px;
+  height: 72px;
+  padding: 7px 10px calc(7px + env(safe-area-inset-bottom));
+  background: rgba(20,24,50,.97);
+  backdrop-filter: blur(15px);
+  border-top: 1px solid var(--border);
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  z-index: 50;
+}
+
+.nav-btn {
+  flex: 1;
+  height: 55px;
+  background: transparent;
+  color: #858ba9;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  font-size: 11px;
+}
+
+.nav-btn .nav-icon {
+  font-size: 21px;
+}
+
+.nav-btn.active {
+  color: #a99cff;
+}
+
+.nav-btn.active .nav-icon {
+  filter: drop-shadow(0 0 7px rgba(120,101,255,.5));
+}
+
+/* SEARCH */
+
+.search-box {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 0 14px;
+  height: 48px;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  margin-bottom: 18px;
+}
+
+.search-box span {
+  font-size: 18px;
+  color: var(--muted);
+}
+
+.search-box input {
+  flex: 1;
+  min-width: 0;
+  color: white;
+  background: transparent;
+  border: none;
+  font-size: 14px;
+}
+
+.search-box input::placeholder {
+  color: #7c829f;
+}
+
+/* LIST ITEMS */
+
+.list-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 13px 10px;
+  border-bottom: 1px solid var(--border);
+  cursor: pointer;
+}
+
+.list-item:active {
+  background: rgba(255,255,255,.04);
+}
+
+.avatar {
+  width: 48px;
+  height: 48px;
+  min-width: 48px;
+  border-radius: 50%;
+  object-fit: cover;
+  background: linear-gradient(135deg,#7968ff,#394d9e);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 19px;
+  font-weight: 700;
+  overflow: hidden;
+}
+
+.avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.list-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.list-name {
+  font-size: 15px;
+  font-weight: 700;
+  margin-bottom: 5px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.list-preview {
+  color: var(--muted);
+  font-size: 12px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.empty-state {
+  text-align: center;
+  padding: 35px 15px;
+  color: var(--muted);
+  font-size: 14px;
+}
+
+.empty-state .empty-icon {
+  font-size: 38px;
+  margin-bottom: 12px;
+}
+
+/* OVERLAYS */
+
+.overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,.75);
+  z-index: 100;
+  align-items: center;
+  justify-content: center;
+  padding: 18px;
+}
+
+.overlay.open {
+  display: flex;
+}
+
+.modal {
+  width: 100%;
+  max-width: 440px;
+  max-height: 85vh;
+  overflow-y: auto;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 22px;
+  padding: 20px;
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.modal-title {
+  font-size: 19px;
+  font-weight: 700;
+}
+
+.close-btn {
+  width: 35px;
+  height: 35px;
+  border-radius: 10px;
+  background: var(--panel2);
+  color: white;
+  font-size: 20px;
+}
+
+/* CHAT */
+
+.chat-window {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 80;
+  background: var(--bg);
+  flex-direction: column;
+  max-width: 650px;
+  margin: auto;
+}
+
+.chat-window.open {
+  display: flex;
+}
+
+.chat-header {
+  height: 65px;
+  padding: 8px 12px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: var(--panel);
+  border-bottom: 1px solid var(--border);
+}
+
+.chat-header-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.chat-header-name {
+  font-weight: 700;
+  font-size: 15px;
+}
+
+.chat-header-status {
+  font-size: 11px;
+  color: var(--success);
+  margin-top: 4px;
+}
+
+.chat-messages {
+  flex: 1;
+  overflow-y: auto;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.message {
+  max-width: 78%;
+  padding: 11px 14px;
+  border-radius: 16px;
+  font-size: 14px;
+  line-height: 1.5;
+  overflow-wrap: anywhere;
+}
+
+.message.mine {
+  align-self: flex-end;
+  background: linear-gradient(135deg,#7665f5,#5546d5);
+  border-bottom-right-radius: 5px;
+}
+
+.message.theirs {
+  align-self: flex-start;
+  background: var(--panel2);
+  border-bottom-left-radius: 5px;
+}
+
+.message-time {
+  font-size: 10px;
+  color: rgba(255,255,255,.65);
+  margin-top: 5px;
+  text-align: right;
+}
+
+.chat-input-area {
+  padding: 10px 12px calc(10px + env(safe-area-inset-bottom));
+  background: var(--panel);
+  border-top: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  gap: 9px;
+}
+
+.chat-input {
+  flex: 1;
+  min-width: 0;
+  height: 45px;
+  padding: 0 14px;
+  border-radius: 25px;
+  border: 1px solid var(--border);
+  background: #0e1229;
+  color: white;
+}
+
+.send-btn {
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  background: var(--primary);
+  color: white;
+  font-size: 18px;
+}
+
+/* END PART 1 */
 </style>
 </head>
-<body>
-<div class="auth" id="loginScreen"><div class="auth-card">
- <div class="brand"><span class="brand-mark">✦</span> CHATIVO</div><div class="tagline">Your space. Your people. Your conversations.</div>
- <h2>Welcome back</h2><p class="sub">Sign in to continue chatting.</p>
- <form id="loginForm"><div class="field"><label>Email address</label><input id="loginEmail" type="email" placeholder="name@example.com" autocomplete="email" required></div><div class="field"><label>Password</label><input id="loginPassword" type="password" placeholder="Enter your password" autocomplete="current-password" required></div><div class="error" id="loginError"></div><button class="primary" id="loginButton">Sign in</button></form>
- <div class="switch"><span class="link" onclick="forgotPassword()">Forgot password?</span></div><div class="switch">New to CHATIVO? <span class="link" onclick="showScreen('registerScreen')">Create account</span></div><div class="notice">Secure account powered by Supabase</div>
-</div></div>
-<div class="auth hidden" id="registerScreen"><div class="auth-card">
- <div class="brand"><span class="brand-mark">✦</span> CHATIVO</div><div class="tagline">Meet your people, one message at a time.</div><h2>Create your account</h2><p class="sub">Join the CHATIVO community.</p>
- <form id="registerForm"><div class="field"><label>Full name</label><input id="regName" type="text" maxlength="50" placeholder="Your name" required></div><div class="field"><label>Email address</label><input id="regEmail" type="email" placeholder="name@example.com" autocomplete="email" required></div><div class="field"><label>Password</label><input id="regPassword" type="password" minlength="8" placeholder="At least 8 characters" autocomplete="new-password" required></div><div class="field"><label>Confirm password</label><input id="regConfirm" type="password" minlength="8" placeholder="Repeat your password" required></div><div class="error" id="regError"></div><button class="primary" id="registerButton">Create account</button></form>
- <div class="switch">Already have an account? <span class="link" onclick="showScreen('loginScreen')">Sign in</span></div>
-</div></div>
-<div class="auth hidden" id="setupScreen"><div class="auth-card"><div class="brand"><span class="brand-mark">✦</span> CHATIVO</div><h2 style="text-align:center;margin-top:25px">Your profile</h2><p class="sub" style="text-align:center">Choose how people see you on CHATIVO.</p><div class="field"><label>Display name</label><input id="displayName" maxlength="50" placeholder="Your display name"></div><div class="error" id="setupError"></div><button class="primary" onclick="finishSetup()">Continue to CHATIVO</button></div></div>
-<div id="appScreen" class="hidden">
- <header class="app-header"><div class="topline"><div class="logo"><span class="brand-mark">✦</span> CHATIVO</div><div class="header-actions"><button class="icon-btn" onclick="openFriendSearch()" aria-label="Find friends">⌕</button><button class="icon-btn" onclick="openSettings()" aria-label="Settings">⚙</button></div></div><div class="welcome">Good to see you, <b id="welcomeName">there</b></div><div class="tabs"><div class="tab active" onclick="switchPage('chats')">CHATS</div><div class="tab" onclick="switchPage('updates')">UPDATES</div><div class="tab" onclick="switchPage('calls')">CALLS</div></div></header>
- <main>
-  <section class="page active" id="chats"><div class="search-wrap"><div class="search">⌕ <input id="search" placeholder="Search conversations..." oninput="filterChats()"></div></div><div class="section-title">YOUR CONVERSATIONS</div><div id="chatList"><div class="empty">Your conversations will appear here when you connect with people.</div></div></section>
-  <section class="page" id="updates"><div class="section-title" style="padding-top:22px">STORIES & STATUS</div><div class="story-strip" id="storyStrip"><div class="story-card story-add" onclick="openStoryComposer()"><div class="story-ring"><div class="story-face">＋</div><span class="story-plus">＋</span></div><small>Your story</small></div></div><div class="story-hint">Share a photo with your CHATIVO friends. Stories disappear after 24 hours.</div><div class="section-title">RECENT STORIES</div><div id="storyList"><div class="empty">Loading stories...</div></div></section>
-  <section class="page" id="calls"><div class="section-title" style="padding-top:22px">RECENT CALLS</div><div class="empty">Your recent calls will appear here.</div></section>
-  <section class="page" id="settings"><div class="profile-card"><div class="avatar">✦</div><h3 id="settingsName">CHATIVO User</h3><p id="settingsEmail">user@email.com</p></div><div class="setting">Account security <span>›</span></div><div class="setting">Privacy <span>›</span></div><div class="setting">Notifications <span>›</span></div><div class="setting logout" onclick="logout()">Sign out <span>↗</span></div></section>
- </main>
- <nav class="bottom-nav"><button class="active" onclick="switchPage('chats')"><span>▣</span>Chats</button><button onclick="switchPage('updates')"><span>◉</span>Updates</button><button onclick="switchPage('calls')"><span>◖</span>Calls</button></nav>
- <button class="fab" id="fab" onclick="openFriendSearch()" aria-label="Find friends">＋</button>
+
+<>
+
+<!-- AUTH SCREEN -->
+<div id="authScreen" class="auth-screen">
+  <div class="auth-card">
+
+    <div class="auth-logo">CHATIVO</div>
+    <div class="auth-subtitle">Connect with your people</div>
+
+    <!-- LOGIN -->
+    <div id="loginForm">
+      <h2 class="auth-title">Welcome Back</h2>
+      <p class="auth-description">Login to continue to CHATIVO.</p>
+
+      <div class="form-group">
+        <label>Email Address</label>
+        <input
+          id="loginEmail"
+          class="form-input"
+          type="email"
+          placeholder="Enter your email"
+          autocomplete="email"
+        >
+      </div>
+
+      <div class="form-group">
+        <label>Password</label>
+        <input
+          id="loginPassword"
+          class="form-input"
+          type="password"
+          placeholder="Enter your password"
+          autocomplete="current-password"
+        >
+      </div>
+
+      <button class="primary-btn auth-submit" onclick="login()">
+        Login
+      </button>
+
+      <div class="auth-switch">
+        <span onclick="forgotPassword()">Forgot password?</span>
+      </div>
+
+      <div class="auth-switch">
+        Don't have an account?
+        <span onclick="showRegister()">Create account</span>
+      </div>
+
+      <div id="loginMessage" class="auth-message"></div>
+    </div>
+
+    <!-- REGISTER -->
+    <div id="registerForm" class="hidden">
+      <h2 class="auth-title">Create Account</h2>
+      <p class="auth-description">Join CHATIVO today.</p>
+
+      <div class="form-group">
+        <label>Your Name</label>
+        <input
+          id="registerName"
+          class="form-input"
+          type="text"
+          placeholder="Enter your name"
+          autocomplete="name"
+        >
+      </div>
+
+      <div class="form-group">
+        <label>Email Address</label>
+        <input
+          id="registerEmail"
+          class="form-input"
+          type="email"
+          placeholder="Enter your email"
+          autocomplete="email"
+        >
+      </div>
+
+      <div class="form-group">
+        <label>Password</label>
+        <input
+          id="registerPassword"
+          class="form-input"
+          type="password"
+          placeholder="Create a password"
+          autocomplete="new-password"
+        >
+      </div>
+
+      <button class="primary-btn auth-submit" onclick="register()">
+        Create Account
+      </button>
+
+      <div class="auth-switch">
+        Already have an account?
+        <span onclick="showLogin()">Login</span>
+      </div>
+
+      <div id="registerMessage" class="auth-message"></div>
+    </div>
+
+    <!-- PROFILE SETUP -->
+    <div id="profileSetup" class="hidden">
+      <h2 class="auth-title">Complete Profile</h2>
+      <p class="auth-description">Set up your CHATIVO profile.</p>
+
+      <div class="form-group">
+        <label>Display Name</label>
+        <input
+          id="setupName"
+          class="form-input"
+          type="text"
+          placeholder="Your display name"
+        >
+      </div>
+
+      <div class="form-group">
+        <label>Bio</label>
+        <input
+          id="setupBio"
+          class="form-input"
+          type="text"
+          placeholder="Write something about yourself"
+        >
+      </div>
+
+      <button class="primary-btn auth-submit" onclick="saveProfileSetup()">
+        Continue
+      </button>
+
+      <div id="setupMessage" class="auth-message"></div>
+    </div>
+
+  </div>
 </div>
-<div class="overlay" id="friendOverlay"><div class="overlay-head"><button onclick="closeFriendSearch()" aria-label="Back">‹</button><h2>Find friends</h2><button onclick="loadFriendRequests()" title="Refresh">↻</button></div><div class="overlay-body">
- <div class="friend-search"><input id="friendQuery" placeholder="Search by display name..." autocomplete="off"><button onclick="searchPeople()">Search</button></div>
- <div class="small-note" id="searchMessage">Enter a display name to find people on CHATIVO.</div><div id="searchResults"></div>
- <div class="section-title" style="padding-top:22px">MY FRIENDS</div><div id="friendList"><div class="empty">Open this page to load your friends.</div></div>
- <div class="section-title" style="padding-top:22px">FRIEND REQUESTS</div><div id="requestList"><div class="empty">Loading requests...</div></div>
-</div></div>
-<div class="overlay" id="storyComposer"><div class="overlay-head"><button onclick="closeStoryComposer()">‹</button><h2>Create story</h2></div><div class="overlay-body story-composer"><p class="sub">Choose a photo and add an optional caption.</p><input id="storyFile" type="file" accept="image/*" onchange="previewStoryImage(event)"><img id="storyPreview" class="story-preview" alt="Story preview"><input id="storyCaption" type="text" maxlength="180" placeholder="Write a caption..."><div id="storyUploadStatus" class="story-status"></div><button class="primary" id="storyPostButton" onclick="postStory()">Share story</button></div></div>
-<div class="story-viewer" id="storyViewer"><div class="story-progress"><span></span></div><div class="story-viewer-top"><strong id="storyViewerName">Story</strong><button onclick="closeStoryViewer()">×</button></div><img id="storyViewerImage" alt="Story"><div id="storyViewerCaption" class="story-caption"></div></div>
-<div class="chat-window" id="chatWindow"><div class="chat-head"><button onclick="closeChat()">‹</button><div class="avatar">✦</div><div><b id="chatTitle">Chat</b><small id="chatStatus">CHATIVO conversation</small></div></div><div class="chat-messages" id="chatMessages"><div class="empty">Loading messages...</div></div><form class="chat-compose" id="messageForm"><input id="messageInput" maxlength="10000" placeholder="Write a message..." autocomplete="off"><button aria-label="Send">➤</button></form></div>
+
+
+<!-- MAIN APP -->
+<div id="appScreen" class="app-container hidden">
+
+  <!-- HEADER -->
+  <header class="top-header">
+    <div class="logo">CHATIVO</div>
+
+    <div class="header-actions">
+      <button class="icon-btn" onclick="openFriendSearch()" title="Search">
+        🔍
+      </button>
+
+      <button class="icon-btn" onclick="switchPage('profile')" title="Profile">
+        👤
+      </button>
+    </div>
+  </header>
+
+
+  <!-- CHATS PAGE -->
+  <section id="chatsPage" class="page active">
+    <h2 class="section-title">Messages</h2>
+
+    <div class="search-box">
+      <span>🔍</span>
+      <input
+        id="chatSearch"
+        type="text"
+        placeholder="Search conversations..."
+        oninput="filterChats()"
+      >
+    </div>
+
+    <div id="chatList">
+      <div class="empty-state">
+        <div class="empty-icon">💬</div>
+        No conversations yet
+      </div>
+    </div>
+  </section>
+
+
+  <!-- FRIENDS PAGE -->
+  <section id="friendsPage" class="page">
+    <h2 class="section-title">My Friends</h2>
+
+    <div class="search-box">
+      <span>🔍</span>
+      <input
+        id="friendListSearch"
+        type="text"
+        placeholder="Search friends..."
+        oninput="filterFriends()"
+      >
+    </div>
+
+    <div id="friendsList">
+      <div class="empty-state">
+        <div class="empty-icon">👥</div>
+        Your friends will appear here
+      </div>
+    </div>
+
+    <button
+      class="primary-btn"
+      style="width:100%;margin-top:18px"
+      onclick="openFriendSearch()"
+    >
+      + Find Friends
+    </button>
+  </section>
+
+
+  <!-- REQUESTS PAGE -->
+  <section id="requestsPage" class="page">
+    <h2 class="section-title">Friend Requests</h2>
+
+    <div id="requestList">
+      <div class="empty-state">
+        <div class="empty-icon">📨</div>
+        No pending requests
+      </div>
+    </div>
+  </section>
+
+
+  <!-- STORIES PAGE -->
+  <section id="storiesPage" class="page">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:18px">
+      <h2 class="section-title" style="margin:0">Stories</h2>
+
+      <button class="primary-btn" onclick="openStoryComposer()">
+        + Add Story
+      </button>
+    </div>
+
+    <div id="storyList">
+      <div class="empty-state">
+        <div class="empty-icon">⭕</div>
+        No stories available
+      </div>
+    </div>
+  </section>
+
+
+  <!-- PROFILE PAGE -->
+  <section id="profilePage" class="page">
+    <h2 class="section-title">My Profile</h2>
+
+    <div class="auth-card" style="max-width:100%;text-align:center">
+
+      <div id="profileAvatar" class="avatar" style="width:85px;height:85px;margin:0 auto 15px;font-size:30px">
+        👤
+      </div>
+
+      <h2 id="profileName">Loading...</h2>
+      <p id="profileEmail" class="muted" style="margin-top:7px"></p>
+
+      <p id="profileBio" class="muted" style="margin-top:15px"></p>
+
+      <button
+        class="secondary-btn"
+        style="width:100%;margin-top:20px"
+        onclick="editProfile()"
+      >
+        Edit Profile
+      </button>
+
+      <button
+        class="danger-btn"
+        style="width:100%;margin-top:12px"
+        onclick="logout()"
+      >
+        Logout
+      </button>
+
+    </div>
+  </section>
+
+
+  <!-- BOTTOM NAV -->
+  <nav class="bottom-nav">
+
+    <button class="nav-btn active" data-page="chats" onclick="switchPage('chats')">
+      <span class="nav-icon">💬</span>
+      <span>Chats</span>
+    </button>
+
+    <button class="nav-btn" data-page="friends" onclick="switchPage('friends')">
+      <span class="nav-icon">👥</span>
+      <span>Friends</span>
+    </button>
+
+    <button class="nav-btn" data-page="requests" onclick="switchPage('requests')">
+      <span class="nav-icon">📨</span>
+      <span>Requests</span>
+    </button>
+
+    <button class="nav-btn" data-page="stories" onclick="switchPage('stories')">
+      <span class="nav-icon">⭕</span>
+      <span>Stories</span>
+    </button>
+
+    <button class="nav-btn" data-page="profile" onclick="switchPage('profile')">
+      <span class="nav-icon">👤</span>
+      <span>Profile</span>
+    </button>
+
+  </nav>
+
+</div>
+
+
+<!-- FRIEND SEARCH OVERLAY -->
+<div id="friendSearchOverlay" class="overlay">
+  <div class="modal">
+
+    <div class="modal-header">
+      <h3 class="modal-title">Find Friends</h3>
+      <button class="close-btn" onclick="closeFriendSearch()">×</button>
+    </div>
+
+    <div class="search-box">
+      <span>🔍</span>
+      <input
+        id="friendSearchInput"
+        type="text"
+        placeholder="Search by name..."
+        oninput="searchUsers()"
+      >
+    </div>
+
+    <div id="friendSearchResults">
+      <div class="empty-state">
+        Search for people on CHATIVO
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+<!-- STORY COMPOSER OVERLAY -->
+<div id="storyComposerOverlay" class="overlay">
+  <div class="modal">
+
+    <div class="modal-header">
+      <h3 class="modal-title">Create Story</h3>
+      <button class="close-btn" onclick="closeStoryComposer()">×</button>
+    </div>
+
+    <div class="form-group">
+      <label>Choose Image or Video</label>
+      <input
+        id="storyFile"
+        class="form-input"
+        type="file"
+        accept="image/*,video/*"
+        onchange="previewStory()"
+      >
+    </div>
+
+    <div id="storyPreview" class="hidden" style="margin:15px 0">
+      <img
+        id="storyPreviewImage"
+        style="width:100%;max-height:250px;object-fit:contain;border-radius:14px"
+        alt="Story preview"
+      >
+      <video
+        id="storyPreviewVideo"
+        controls
+        class="hidden"
+        style="width:100%;max-height:250px;border-radius:14px"
+      ></video>
+    </div>
+
+    <div class="form-group">
+      <label>Caption (Optional)</label>
+      <textarea
+        id="storyCaption"
+        class="form-input"
+        rows="3"
+        placeholder="Write a caption..."
+        style="height:auto;padding:12px;resize:vertical"
+      ></textarea>
+    </div>
+
+    <button
+      class="primary-btn"
+      style="width:100%"
+      onclick="uploadStory()"
+    >
+      Share Story
+    </button>
+
+    <div id="storyUploadMessage" class="auth-message"></div>
+
+  </div>
+</div>
+
+
+<!-- EDIT PROFILE OVERLAY -->
+<div id="editProfileOverlay" class="overlay">
+  <div class="modal">
+
+    <div class="modal-header">
+      <h3 class="modal-title">Edit Profile</h3>
+      <button class="close-btn" onclick="closeEditProfile()">×</button>
+    </div>
+
+    <div class="form-group">
+      <label>Display Name</label>
+      <input id="editName" class="form-input" type="text">
+    </div>
+
+    <div class="form-group">
+      <label>Bio</label>
+      <textarea
+        id="editBio"
+        class="form-input"
+        rows="3"
+        style="height:auto;padding:12px;resize:vertical"
+      ></textarea>
+    </div>
+
+    <button class="primary-btn" style="width:100%" onclick="updateProfile()">
+      Save Changes
+    </button>
+
+    <div id="editProfileMessage" class="auth-message"></div>
+
+  </div>
+</div>
+
+
+<!-- STORY VIEWER -->
+<div id="storyViewer" class="story-viewer">
+  <div class="story-viewer-header">
+    <div id="storyViewerUser">Story</div>
+    <button class="close-btn" onclick="closeStoryViewer()">×</button>
+  </div>
+
+  <div id="storyViewerContent" class="story-viewer-content"></div>
+
+  <div id="storyViewerCaption" class="story-viewer-caption"></div>
+
+  <div id="storyReactionBar" class="story-reaction-bar">
+    <button onclick="reactToStory('👍')">👍</button>
+    <button onclick="reactToStory('❤️')">❤️</button>
+    <button onclick="reactToStory('🥰')">🥰</button>
+    <button onclick="reactToStory('😭')">😭</button>
+    <button onclick="reactToStory('🤬')">🤬</button>
+  </div>
+</div>
+
+
+<!-- CHAT WINDOW -->
+<div id="chatWindow" class="chat-window">
+
+  <div class="chat-header">
+    <button class="icon-btn" onclick="closeChat()">←</button>
+
+    <div id="chatAvatar" class="avatar">👤</div>
+
+    <div class="chat-header-info">
+      <div id="chatHeaderName" class="chat-header-name">Chat</div>
+      <div class="chat-header-status">CHATIVO</div>
+    </div>
+  </div>
+
+  <div id="chatMessages" class="chat-messages">
+    <div class="empty-state">Loading messages...</div>
+  </div>
+
+  <div class="chat-input-area">
+    <input
+      id="messageInput"
+      class="chat-input"
+      type="text"
+      placeholder="Type a message..."
+      onkeydown="if(event.key==='Enter') sendMessage()"
+    >
+
+    <button class="send-btn" onclick="sendMessage()">➤</button>
+  </div>
+
+</div>
+
+
+<!-- PART 3 WILL CONTINUE HERE -->
+
 <script>
-const SUPABASE_URL='https://wmtbcwcaxlmznffyrtsy.supabase.co';
-const SUPABASE_PUBLISHABLE_KEY='sb_publishable_sUsu1vTb9ORMyut4qKzHxg_LfPMMoUc';
-const {createClient}=window.supabase;const db=createClient(SUPABASE_URL,SUPABASE_PUBLISHABLE_KEY);
-const $=id=>document.getElementById(id);
-let currentUser=null,profile=null,activeConversationId=null,activeFriendId=null,activeFriendName='',messageChannel=null,renderedMessageIds=new Set(),chatLoadToken=0;
-function showScreen(id){document.querySelectorAll('.auth').forEach(s=>s.classList.add('hidden'));$(id).classList.remove('hidden')}
-function showError(id,message,success=false){$(id).textContent=message;$(id).className=success?'notice success':'error'}
-async function loadProfile(user){const {data,error}=await db.from('profiles').select('id,display_name,avatar_url,bio').eq('id',user.id).maybeSingle();if(error)console.warn('Profile lookup:',error.message);profile=data||{id:user.id,display_name:user.user_metadata?.display_name||user.email?.split('@')[0]||'CHATIVO User'}}
-function showApp(){['loginScreen','registerScreen','setupScreen'].forEach(id=>$(id).classList.add('hidden'));$('appScreen').classList.remove('hidden');const name=profile?.display_name||currentUser?.user_metadata?.display_name||'CHATIVO User';$('welcomeName').textContent=name;$('settingsName').textContent=name;$('settingsEmail').textContent=currentUser?.email||'';loadChatList();loadStories()}
-async function syncSession(){const {data}=await db.auth.getSession();currentUser=data.session?.user||null;if(currentUser){await loadProfile(currentUser);showApp()}else showScreen('loginScreen')}
-$('registerForm').addEventListener('submit',async e=>{e.preventDefault();const name=$('regName').value.trim(),email=$('regEmail').value.trim().toLowerCase(),password=$('regPassword').value;if(password!==$('regConfirm').value){showError('regError','Passwords do not match.');return}if(password.length<8){showError('regError','Use at least 8 characters for your password.');return}const btn=$('registerButton');btn.disabled=true;btn.textContent='Creating account...';showError('regError','');const {data,error}=await db.auth.signUp({email,password,options:{data:{display_name:name},emailRedirectTo:location.origin+location.pathname}});btn.disabled=false;btn.textContent='Create account';if(error){showError('regError',error.message);return}if(data.session){currentUser=data.user;await loadProfile(currentUser);$('displayName').value=name;showScreen('setupScreen')}else{showError('regError','Account created. Check your email and confirm your address, then sign in.',true);$('registerForm').reset()}});
-$('loginForm').addEventListener('submit',async e=>{e.preventDefault();const btn=$('loginButton');btn.disabled=true;btn.textContent='Signing in...';showError('loginError','');const {data,error}=await db.auth.signInWithPassword({email:$('loginEmail').value.trim().toLowerCase(),password:$('loginPassword').value});btn.disabled=false;btn.textContent='Sign in';if(error){showError('loginError',error.message);return}currentUser=data.user;await loadProfile(currentUser);showApp()});
-async function forgotPassword(){const email=$('loginEmail').value.trim().toLowerCase();if(!email){showError('loginError','Enter your email address first.');return}const {error}=await db.auth.resetPasswordForEmail(email,{redirectTo:location.origin+location.pathname});showError('loginError',error?error.message:'If this email is registered, a password reset link will be sent.',!error)}
-async function finishSetup(){if(!currentUser)return;const name=$('displayName').value.trim();if(!name){showError('setupError','Please enter a display name.');return}const {error}=await db.from('profiles').update({display_name:name}).eq('id',currentUser.id);if(error){showError('setupError',error.message);return}profile={...profile,display_name:name};showApp()}
-async function logout(){if(!confirm('Sign out of CHATIVO?'))return;await closeChat();await db.auth.signOut();currentUser=null;profile=null;$('loginPassword').value='';showScreen('loginScreen')}
-function switchPage(id){document.querySelectorAll('#appScreen .page').forEach(p=>p.classList.remove('active'));$(id).classList.add('active');document.querySelectorAll('.tab').forEach((t,i)=>t.classList.toggle('active',['chats','updates','calls'][i]===id));document.querySelectorAll('.bottom-nav button').forEach((b,i)=>b.classList.toggle('active',['chats','updates','calls'][i]===id));$('fab').style.display=id==='chats'?'block':'none';if(id==='updates')loadStories()}
-function openSettings(){switchPage('settings')}
-function filterChats(){const q=$('search').value.toLowerCase();document.querySelectorAll('#chatList .chat').forEach(c=>c.style.display=c.textContent.toLowerCase().includes(q)?'flex':'none')}
-function safeText(value){return String(value??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
-function openFriendSearch(){$('friendOverlay').classList.add('open');$('friendQuery').value='';$('searchResults').innerHTML='';$('searchMessage').textContent='Enter a display name to find people on CHATIVO.';loadFriendRequests();loadFriends();setTimeout(()=>$('friendQuery').focus(),100)}
-function closeFriendSearch(){$('friendOverlay').classList.remove('open')}
-async function searchPeople(){
- const q=$('friendQuery').value.trim();$('searchResults').innerHTML='';if(q.length<2){$('searchMessage').textContent='Please enter at least 2 characters.';return}
- $('searchMessage').textContent='Searching...';
- const {data,error}=await db.from('profiles').select('id,display_name,avatar_url').ilike('display_name','%'+q+'%').neq('id',currentUser.id).limit(20);
- if(error){$('searchMessage').textContent='Search error: '+error.message;return}
- if(!data||!data.length){$('searchMessage').textContent='No users found. Make sure the other account has completed email verification and profile setup.';return}
- const ids=data.map(p=>p.id);const {data:sent,error:sentError}=await db.from('friend_requests').select('receiver_id,status').eq('sender_id',currentUser.id).in('receiver_id',ids);
- if(sentError){$('searchMessage').textContent='Could not check request status: '+sentError.message;return}
- const {data:received,error:receivedError}=await db.from('friend_requests').select('sender_id,status').eq('receiver_id',currentUser.id).in('sender_id',ids);
- if(receivedError){$('searchMessage').textContent='Could not check incoming requests: '+receivedError.message;return}
- $('searchMessage').textContent=data.length+' user(s) found';
- data.forEach(p=>{
-  const out=sent?.find(r=>r.receiver_id===p.id),inc=received?.find(r=>r.sender_id===p.id);
-  let action='<button class="action-btn" onclick="sendFriendRequest(\''+p.id+'\')">Add friend</button>';
-  if(out?.status==='pending')action='<button class="action-btn secondary" disabled>Request sent</button>';
-  if(out?.status==='accepted'||inc?.status==='accepted')action='<button class="action-btn secondary" disabled>Friends</button>';
-  if(inc?.status==='pending')action='<button class="action-btn" onclick="loadFriendRequests()">Respond below</button>';
-  $('searchResults').insertAdjacentHTML('beforeend','<div class="person"><div class="avatar">✦</div><div class="info"><div class="name">'+safeText(p.display_name||'CHATIVO User')+'</div><div class="message">CHATIVO member</div></div>'+action+'</div>');
- });
+// ==========================================
+// CHATIVO - SUPABASE CONNECTION
+// ==========================================
+
+const SUPABASE_URL = 'https://wmtbcwcaxlmznffyrtsy.supabase.co';
+
+const SUPABASE_KEY = 'sb_publishable_sUsu1vTb9ORMyut4qKzHxg_LfPMMoUc';
+
+const supabaseClient = window.supabase.createClient(
+  SUPABASE_URL,
+  SUPABASE_KEY
+);
+
+let currentUser = null;
+let currentProfile = null;
+let currentChatId = null;
+let currentChatUser = null;
+let currentStoryId = null;
+
+let friendsData = [];
+let chatsData = [];
+let requestsData = [];
+
+let messageSubscription = null;
+
+
+// ==========================================
+// COMMON HELPERS
+// ==========================================
+
+function $(id) {
+  return document.getElementById(id);
 }
-async function sendFriendRequest(receiverId){
- const {error}=await db.from('friend_requests').insert({sender_id:currentUser.id,receiver_id:receiverId});
- if(error){if(error.code==='23505')alert('A request already exists between these accounts.');else alert('Could not send request: '+error.message);return}
- alert('Friend request sent!');searchPeople();loadFriendRequests();
+
+function showMessage(id, message, success = false) {
+  const element = $(id);
+  if (!element) return;
+
+  element.textContent = message;
+  element.style.color = success ? '#35d39a' : '#ff526d';
 }
-async function getFriendIds(){
- const {data,error}=await db.from('friend_requests').select('sender_id,receiver_id').eq('status','accepted').or('sender_id.eq.'+currentUser.id+',receiver_id.eq.'+currentUser.id);
- if(error)throw error;
- return [...new Set((data||[]).map(r=>r.sender_id===currentUser.id?r.receiver_id:r.sender_id))];
+
+function escapeHTML(value) {
+  return String(value ?? '').replace(/[&<>"']/g, char => ({
+    '&': '&amp;',
+    '<': '&lt;',
+    '>': '&gt;',
+    '"': '&quot;',
+    "'": '&#039;'
+  })[char]);
 }
-async function loadFriends(){
- if(!currentUser)return;const box=$('friendList');box.innerHTML='<div class="small-note">Loading friends...</div>';
- try{
-  const friendIds=await getFriendIds();if(!friendIds.length){box.innerHTML='<div class="empty">You have no friends yet. Search above and send a friend request.</div>';return}
-  const {data:people,error}=await db.from('profiles').select('id,display_name').in('id',friendIds);
-  if(error)throw error;box.innerHTML='';
-  (people||[]).forEach(p=>{
-   const row=document.createElement('div');row.className='person';
-   const av=document.createElement('div');av.className='avatar';av.textContent='✦';
-   const info=document.createElement('div');info.className='info';
-   const name=document.createElement('div');name.className='name';name.textContent=p.display_name||'CHATIVO User';
-   const msg=document.createElement('div');msg.className='message';msg.textContent='Your CHATIVO friend';
-   info.append(name,msg);
-   const btn=document.createElement('button');btn.className='action-btn';btn.textContent='Message';btn.addEventListener('click',()=>startChat(p.id,p.display_name||'CHATIVO User'));
-   row.append(av,info,btn);box.appendChild(row);
-  });
-  if(!people?.length)box.innerHTML='<div class="empty">No friend profiles were found.</div>';
- }catch(error){box.innerHTML='<div class="small-note">Could not load friends: '+safeText(error.message)+'</div>'}
+
+function getInitial(name) {
+  return String(name || '?').trim().charAt(0).toUpperCase();
 }
-async function loadFriendRequests(){
- if(!currentUser)return;$('requestList').innerHTML='<div class="small-note">Loading requests...</div>';
- const {data,error}=await db.from('friend_requests').select('id,sender_id,receiver_id,status,created_at').eq('receiver_id',currentUser.id).eq('status','pending').order('created_at',{ascending:false});
- if(error){$('requestList').innerHTML='<div class="small-note">Request loading error: '+safeText(error.message)+'</div>';return}
- if(!data?.length){$('requestList').innerHTML='<div class="empty">No pending friend requests.</div>';return}
- const ids=data.map(r=>r.sender_id);const {data:people,error:peopleError}=await db.from('profiles').select('id,display_name').in('id',ids);
- if(peopleError){$('requestList').innerHTML='<div class="small-note">Could not load sender profiles: '+safeText(peopleError.message)+'</div>';return}
- $('requestList').innerHTML='';
- data.forEach(r=>{const p=people?.find(x=>x.id===r.sender_id);$('requestList').insertAdjacentHTML('beforeend','<div class="person"><div class="avatar">✦</div><div class="info"><div class="name">'+safeText(p?.display_name||'CHATIVO User')+'</div><div class="message">Wants to connect with you</div></div><button class="action-btn" onclick="respondRequest('+r.id+',\'accepted\')">Accept</button><button class="action-btn secondary" onclick="respondRequest('+r.id+',\'rejected\')">Decline</button></div>')});
-}
-async function respondRequest(id,status){
- const {error}=await db.from('friend_requests').update({status}).eq('id',id).eq('receiver_id',currentUser.id).eq('status','pending');
- if(error){alert('Could not update request: '+error.message);return}
- await loadFriendRequests();await loadFriends();if($('friendQuery').value.trim().length>=2)await searchPeople();
-}
-$('friendQuery').addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();searchPeople()}});
-function addMessageToView(message){
- if(!message||renderedMessageIds.has(message.id))return;renderedMessageIds.add(message.id);
- const empty=$('chatMessages').querySelector('.empty');if(empty)empty.remove();
- const mine=message.sender_id===currentUser.id;
- const bubble=document.createElement('div');bubble.className='bubble'+(mine?' mine':'');bubble.dataset.messageId=message.id;
- const content=document.createElement('div');content.textContent=message.content||'';bubble.appendChild(content);
- const time=document.createElement('span');time.className='bubble-time';time.textContent=new Date(message.created_at).toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'});bubble.appendChild(time);
- $('chatMessages').appendChild(bubble);$('chatMessages').scrollTop=$('chatMessages').scrollHeight;
-}
-async function findOrCreateConversation(friendId){
- // Find conversations in which the current user is a member, then check for the friend.
- const {data:mine,error:mineError}=await db.from('conversation_members').select('conversation_id').eq('user_id',currentUser.id);
- if(mineError)throw mineError;
- const myIds=[...new Set((mine||[]).map(x=>x.conversation_id))];
- if(myIds.length){
-  const {data:theirs,error:theirError}=await db.from('conversation_members').select('conversation_id').eq('user_id',friendId).in('conversation_id',myIds);
-  if(theirError)throw theirError;
-  if(theirs?.length){
-   const sharedIds=[...new Set(theirs.map(x=>x.conversation_id))];
-   const {data:convs,error:convError}=await db.from('conversations').select('id,type,created_at').in('id',sharedIds).eq('type','direct').order('created_at',{ascending:false}).limit(1);
-   if(convError)throw convError;if(convs?.length)return convs[0].id;
+
+function getAvatarHTML(profile, size = 48) {
+  const name = escapeHTML(profile?.display_name || 'User');
+  const avatar = profile?.avatar_url;
+
+  if (avatar) {
+    return `
+      <div class="avatar" style="width:${size}px;height:${size}px">
+        <img src="${escapeHTML(avatar)}" alt="${name}">
+      </div>
+    `;
   }
- }
- const {data:conversation,error:createError}=await db.from('conversations').insert({type:'direct',created_by:currentUser.id}).select('id').single();
- if(createError)throw createError;
- const {error:membersError}=await db.from('conversation_members').insert([
-  {conversation_id:conversation.id,user_id:currentUser.id,role:'member'},
-  {conversation_id:conversation.id,user_id:friendId,role:'member'}
- ]);
- if(membersError)throw membersError;
- return conversation.id;
+
+  return `
+    <div class="avatar" style="width:${size}px;height:${size}px">
+      ${getInitial(name)}
+    </div>
+  `;
 }
-async function startChat(friendId,friendName){
- if(!currentUser)return;
- const token=++chatLoadToken;activeFriendId=friendId;activeFriendName=friendName;activeConversationId=null;renderedMessageIds=new Set();
- $('chatTitle').textContent=friendName;$('chatStatus').textContent='Connecting...';$('chatMessages').innerHTML='<div class="empty">Opening conversation...</div>';$('chatWindow').style.display='flex';$('messageInput').disabled=true;
- try{
-  const conversationId=await findOrCreateConversation(friendId);if(token!==chatLoadToken)return;
-  activeConversationId=conversationId;$('chatStatus').textContent='CHATIVO conversation';
-  const {data:messages,error}=await db.from('messages').select('id,conversation_id,sender_id,content,message_type,created_at').eq('conversation_id',conversationId).order('created_at',{ascending:true}).limit(200);
-  if(error)throw error;
-  $('chatMessages').innerHTML='';(messages||[]).forEach(addMessageToView);
-  if(!messages?.length)$('chatMessages').innerHTML='<div class="empty">No messages yet. Say hello!</div>';
-  $('messageInput').disabled=false;$('messageInput').focus();
-  if(messageChannel){await db.removeChannel(messageChannel);messageChannel=null}
-  messageChannel=db.channel('chativo-messages-'+conversationId)
-   .on('postgres_changes',{event:'INSERT',schema:'public',table:'messages',filter:'conversation_id=eq.'+conversationId},payload=>{
-    if(activeConversationId===conversationId)addMessageToView(payload.new);
-   }).subscribe(status=>{if(status==='CHANNEL_ERROR')$('chatStatus').textContent='Live connection issue';});
-  await loadChatList();
- }catch(error){
-  if(token!==chatLoadToken)return;
-  $('chatMessages').innerHTML='<div class="empty">Could not open chat: '+safeText(error.message)+'</div>';$('chatStatus').textContent='Chat error';$('messageInput').disabled=true;
- }
+
+
+// ==========================================
+// AUTH SCREEN SWITCHING
+// ==========================================
+
+function showLogin() {
+  $('loginForm').classList.remove('hidden');
+  $('registerForm').classList.add('hidden');
+  $('profileSetup').classList.add('hidden');
+  $('loginMessage').textContent = '';
 }
-async function closeChat(){
- chatLoadToken++;activeConversationId=null;activeFriendId=null;
- if(messageChannel){await db.removeChannel(messageChannel);messageChannel=null}
- $('chatWindow').style.display='none';$('messageInput').disabled=false;
+
+function showRegister() {
+  $('loginForm').classList.add('hidden');
+  $('registerForm').classList.remove('hidden');
+  $('profileSetup').classList.add('hidden');
+  $('registerMessage').textContent = '';
 }
-$('messageForm').addEventListener('submit',async e=>{
- e.preventDefault();const input=$('messageInput'),value=input.value.trim();if(!value||!activeConversationId||!currentUser)return;
- const conversationId=activeConversationId;input.value='';input.disabled=true;
- const {data,error}=await db.from('messages').insert({conversation_id:conversationId,sender_id:currentUser.id,content:value,message_type:'text'}).select('id,conversation_id,sender_id,content,message_type,created_at').single();
- input.disabled=false;input.focus();
- if(error){input.value=value;alert('Could not send message: '+error.message);return}
- if(activeConversationId===conversationId)addMessageToView(data);
- loadChatList();
-});
-async function loadChatList(){
- if(!currentUser||!$('chatList'))return;const box=$('chatList');box.innerHTML='<div class="small-note">Loading conversations...</div>';
- try{
-  const {data:mine,error}=await db.from('conversation_members').select('conversation_id').eq('user_id',currentUser.id);
-  if(error)throw error;const ids=[...new Set((mine||[]).map(x=>x.conversation_id))];
-  if(!ids.length){box.innerHTML='<div class="empty">Your conversations will appear here when you connect with people.</div>';return}
-  const {data:members,error:memberError}=await db.from('conversation_members').select('conversation_id,user_id').in('conversation_id',ids);
-  if(memberError)throw memberError;
-  const otherIds=[...new Set((members||[]).filter(m=>m.user_id!==currentUser.id).map(m=>m.user_id))];
-  if(!otherIds.length){box.innerHTML='<div class="empty">No conversations yet.</div>';return}
-  const {data:people,error:peopleError}=await db.from('profiles').select('id,display_name').in('id',otherIds);if(peopleError)throw peopleError;
-  const {data:lastMessages,error:msgError}=await db.from('messages').select('conversation_id,content,created_at').in('conversation_id',ids).order('created_at',{ascending:false}).limit(100);if(msgError)throw msgError;
-  box.innerHTML='';
-  const used=new Set();
-  (members||[]).forEach(m=>{
-   if(m.user_id===currentUser.id||used.has(m.conversation_id))return;used.add(m.conversation_id);
-   const person=people?.find(p=>p.id===m.user_id);if(!person)return;
-   const last=lastMessages?.find(x=>x.conversation_id===m.conversation_id);
-   const row=document.createElement('div');row.className='chat';row.addEventListener('click',()=>startChat(person.id,person.display_name||'CHATIVO User'));
-   const av=document.createElement('div');av.className='avatar';av.textContent='✦';
-   const info=document.createElement('div');info.className='info';
-   const name=document.createElement('div');name.className='name';name.textContent=person.display_name||'CHATIVO User';
-   const preview=document.createElement('div');preview.className='message';preview.textContent=last?.content||'Start a conversation';
-   info.append(name,preview);row.append(av,info);box.appendChild(row);
+
+function showProfileSetup() {
+  $('loginForm').classList.add('hidden');
+  $('registerForm').classList.add('hidden');
+  $('profileSetup').classList.remove('hidden');
+}
+
+function showApp() {
+  $('authScreen').classList.add('hidden');
+  $('appScreen').classList.remove('hidden');
+}
+
+function showAuth() {
+  $('appScreen').classList.add('hidden');
+  $('authScreen').classList.remove('hidden');
+}
+
+
+// ==========================================
+// REGISTER
+// ==========================================
+
+async function register() {
+  const name = $('registerName').value.trim();
+  const email = $('registerEmail').value.trim();
+  const password = $('registerPassword').value;
+
+  if (!name || !email || !password) {
+    showMessage('registerMessage', 'Please fill in all fields.');
+    return;
+  }
+
+  if (password.length < 6) {
+    showMessage('registerMessage', 'Password must be at least 6 characters.');
+    return;
+  }
+
+  showMessage('registerMessage', 'Creating your account...', true);
+
+  try {
+    const { data, error } = await supabaseClient.auth.signUp({
+      email,
+      password,
+      options: {
+        data: {
+          display_name: name
+        }
+      }
+    });
+
+    if (error) throw error;
+
+    if (data.session) {
+      currentUser = data.user;
+      $('setupName').value = name;
+      showProfileSetup();
+      showMessage('setupMessage', 'Complete your profile.', true);
+    } else {
+      showMessage(
+        'registerMessage',
+        'Account created. Check your email to verify, then login.',
+        true
+      );
+    }
+
+  } catch (error) {
+    showMessage('registerMessage', error.message);
+  }
+}
+
+
+// ==========================================
+// LOGIN
+// ==========================================
+
+async function login() {
+  const email = $('loginEmail').value.trim();
+  const password = $('loginPassword').value;
+
+  if (!email || !password) {
+    showMessage('loginMessage', 'Enter your email and password.');
+    return;
+  }
+
+  showMessage('loginMessage', 'Logging in...', true);
+
+  try {
+    const { data, error } = await supabaseClient.auth.signInWithPassword({
+      email,
+      password
+    });
+
+    if (error) throw error;
+
+    currentUser = data.user;
+
+    await initializeApp();
+
+  } catch (error) {
+    showMessage('loginMessage', error.message);
+  }
+}
+
+
+// ==========================================
+// FORGOT PASSWORD
+// ==========================================
+
+async function forgotPassword() {
+  const email = $('loginEmail').value.trim();
+
+  if (!email) {
+    showMessage('loginMessage', 'Enter your email first.');
+    return;
+  }
+
+  try {
+    const { error } = await supabaseClient.auth.resetPasswordForEmail(email);
+
+    if (error) throw error;
+
+    showMessage(
+      'loginMessage',
+      'Password reset link sent. Check your email.',
+      true
+    );
+
+  } catch (error) {
+    showMessage('loginMessage', error.message);
+  }
+}
+
+
+// ==========================================
+// PROFILE SETUP
+// ==========================================
+
+async function saveProfileSetup() {
+  if (!currentUser) return;
+
+  const name = $('setupName').value.trim();
+  const bio = $('setupBio').value.trim();
+
+  if (!name) {
+    showMessage('setupMessage', 'Please enter your name.');
+    return;
+  }
+
+  try {
+    showMessage('setupMessage', 'Saving profile...', true);
+
+    const { error } = await supabaseClient
+      .from('profiles')
+      .upsert({
+        id: currentUser.id,
+        display_name: name,
+        bio: bio
+      }, {
+        onConflict: 'id'
+      });
+
+    if (error) throw error;
+
+    await initializeApp();
+
+  } catch (error) {
+    showMessage('setupMessage', error.message);
+  }
+}
+
+
+// ==========================================
+// LOAD PROFILE
+// ==========================================
+
+async function loadMyProfile() {
+  const { data, error } = await supabaseClient
+    .from('profiles')
+    .select('*')
+    .eq('id', currentUser.id)
+    .maybeSingle();
+
+  if (error) throw error;
+
+  currentProfile = data;
+
+  if (!currentProfile) {
+    $('setupName').value =
+      currentUser.user_metadata?.display_name || '';
+
+    showProfileSetup();
+    return false;
+  }
+
+  return true;
+}
+
+
+function renderMyProfile() {
+  if (!currentProfile) return;
+
+  $('profileName').textContent =
+    currentProfile.display_name || 'User';
+
+  $('profileEmail').textContent =
+    currentUser?.email || '';
+
+  $('profileBio').textContent =
+    currentProfile.bio || 'No bio added yet';
+
+  $('profileAvatar').innerHTML = currentProfile.avatar_url
+    ? `<img src="${escapeHTML(currentProfile.avatar_url)}" alt="Profile">`
+    : getInitial(currentProfile.display_name);
+}
+
+
+// ==========================================
+// EDIT PROFILE
+// ==========================================
+
+function editProfile() {
+  if (!currentProfile) return;
+
+  $('editName').value = currentProfile.display_name || '';
+  $('editBio').value = currentProfile.bio || '';
+
+  $('editProfileOverlay').classList.add('open');
+}
+
+function closeEditProfile() {
+  $('editProfileOverlay').classList.remove('open');
+}
+
+async function updateProfile() {
+  const name = $('editName').value.trim();
+  const bio = $('editBio').value.trim();
+
+  if (!name) {
+    showMessage('editProfileMessage', 'Name cannot be empty.');
+    return;
+  }
+
+  try {
+    const { error } = await supabaseClient
+      .from('profiles')
+      .update({
+        display_name: name,
+        bio: bio
+      })
+      .eq('id', currentUser.id);
+
+    if (error) throw error;
+
+    currentProfile.display_name = name;
+    currentProfile.bio = bio;
+
+    renderMyProfile();
+    closeEditProfile();
+
+  } catch (error) {
+    showMessage('editProfileMessage', error.message);
+  }
+}
+
+
+// ==========================================
+// NAVIGATION
+// ==========================================
+
+function switchPage(page) {
+  const pages = [
+    'chats',
+    'friends',
+    'requests',
+    'stories',
+    'profile'
+  ];
+
+  if (!pages.includes(page)) return;
+
+  pages.forEach(name => {
+    const section = $(name + 'Page');
+
+    if (section) {
+      section.classList.toggle('active', name === page);
+    }
   });
-  if(!box.children.length)box.innerHTML='<div class="empty">No conversations yet.</div>';
-  filterChats();
- }catch(error){box.innerHTML='<div class="small-note">Could not load conversations: '+safeText(error.message)+'</div>'}
+
+  document.querySelectorAll('.nav-btn').forEach(button => {
+    button.classList.toggle(
+      'active',
+      button.dataset.page === page
+    );
+  });
+
+  if (page === 'friends') loadFriends();
+  if (page === 'requests') loadFriendRequests();
+  if (page === 'stories') loadStories();
+  if (page === 'profile') renderMyProfile();
 }
 
-let storyRows=[],storyViewQueue=[],storyViewIndex=0;
-function openStoryComposer(){if(!currentUser)return;$('storyComposer').classList.add('open');$('storyUploadStatus').textContent='';$('storyCaption').value='';$('storyFile').value='';$('storyPreview').style.display='none';$('storyPreview').src=''}
-function closeStoryComposer(){$('storyComposer').classList.remove('open')}
-function previewStoryImage(event){const file=event.target.files?.[0];if(!file)return;if(!file.type.startsWith('image/')){alert('Please choose an image file.');event.target.value='';return}if(file.size>8*1024*1024){alert('Please choose an image smaller than 8 MB.');event.target.value='';return}const img=$('storyPreview');img.src=URL.createObjectURL(file);img.style.display='block'}
-async function postStory(){
- if(!currentUser)return;const file=$('storyFile').files?.[0];if(!file){$('storyUploadStatus').textContent='Choose a photo first.';return}
- const btn=$('storyPostButton');btn.disabled=true;btn.textContent='Uploading...';$('storyUploadStatus').textContent='Uploading your story...';
- try{
-  const ext=(file.name.split('.').pop()||'jpg').toLowerCase().replace(/[^a-z0-9]/g,'')||'jpg';const path=currentUser.id+'/'+crypto.randomUUID()+'.'+ext;
-  const {error:upErr}=await db.storage.from('story-media').upload(path,file,{contentType:file.type,upsert:false});if(upErr)throw upErr;
-  const {error:rowErr}=await db.from('stories').insert({user_id:currentUser.id,media_path:path,caption:$('storyCaption').value.trim()});
-  if(rowErr){await db.storage.from('story-media').remove([path]);throw rowErr}
-  closeStoryComposer();await loadStories();alert('Your story has been shared!');
- }catch(err){$('storyUploadStatus').textContent='Could not share story: '+err.message}
- finally{btn.disabled=false;btn.textContent='Share story'}
-}
-async function loadStories(){
- if(!currentUser||!$('storyList'))return;$('storyList').innerHTML='<div class="small-note">Loading stories...</div>';
- try{
-  const {data,error}=await db.from('stories').select('id,user_id,media_path,caption,created_at,expires_at').gt('expires_at',new Date().toISOString()).order('created_at',{ascending:false}).limit(100);if(error)throw error;
-  storyRows=data||[];const ids=[...new Set(storyRows.map(x=>x.user_id))];let people=[];
-  if(ids.length){const res=await db.from('profiles').select('id,display_name').in('id',ids);if(res.error)throw res.error;people=res.data||[]}
-  const strip=$('storyStrip');strip.innerHTML='';const own=document.createElement('div');own.className='story-card story-add';own.onclick=openStoryComposer;own.innerHTML='<div class="story-ring"><div class="story-face">＋</div><span class="story-plus">＋</span></div><small>Your story</small>';strip.appendChild(own);
-  const grouped=new Map();storyRows.forEach(st=>{if(!grouped.has(st.user_id))grouped.set(st.user_id,[]);grouped.get(st.user_id).push(st)});
-  const friendIds=await getFriendIds().catch(()=>[]);const visibleIds=[...grouped.keys()].filter(id=>id===currentUser.id||friendIds.includes(id));
-  for(const uid of visibleIds){if(uid===currentUser.id)continue;const group=grouped.get(uid);const person=people.find(p=>p.id===uid);const card=document.createElement('div');card.className='story-card';card.onclick=()=>openStoryGroup(uid);const ring=document.createElement('div');ring.className='story-ring';const face=document.createElement('div');face.className='story-face';face.textContent='✦';ring.appendChild(face);const label=document.createElement('small');label.textContent=person?.display_name||'CHATIVO User';card.append(ring,label);strip.appendChild(card)}
-  const ownStories=grouped.get(currentUser.id)||[];if(ownStories.length){own.querySelector('.story-face').textContent='✓';own.querySelector('small').textContent='Your story ('+ownStories.length+')'}
-  const list=$('storyList');list.innerHTML='';for(const uid of visibleIds){const group=grouped.get(uid);const person=people.find(p=>p.id===uid);const row=document.createElement('div');row.className='person';const av=document.createElement('div');av.className='avatar';av.textContent='◉';const info=document.createElement('div');info.className='info';const nm=document.createElement('div');nm.className='name';nm.textContent=uid===currentUser.id?'Your story':(person?.display_name||'CHATIVO User');const detail=document.createElement('div');detail.className='message';detail.textContent=group.length+' photo(s) · '+new Date(group[0].created_at).toLocaleString();info.append(nm,detail);const btn=document.createElement('button');btn.className='action-btn';btn.textContent='View';btn.onclick=()=>openStoryGroup(uid);row.append(av,info,btn);list.appendChild(row)}
-  if(!visibleIds.length)list.innerHTML='<div class="empty">No stories yet. Share your first story!</div>';
- }catch(err){$('storyList').innerHTML='<div class="empty">Could not load stories: '+safeText(err.message)+'</div>'}
-}
-async function openStoryGroup(uid){storyViewQueue=storyRows.filter(x=>x.user_id===uid).sort((a,b)=>new Date(a.created_at)-new Date(b.created_at));storyViewIndex=0;if(!storyViewQueue.length)return;await showStoryAtIndex()}
-async function showStoryAtIndex(){
- if(storyViewIndex>=storyViewQueue.length){closeStoryViewer();return}const st=storyViewQueue[storyViewIndex];const name=st.user_id===currentUser.id?(profile?.display_name||'You'):(await db.from('profiles').select('display_name').eq('id',st.user_id).maybeSingle()).data?.display_name||'CHATIVO User';
- const {data,error}=await db.storage.from('story-media').createSignedUrl(st.media_path,3600);if(error){alert('Could not open story: '+error.message);closeStoryViewer();return}
- $('storyViewerName').textContent=name+' · '+(storyViewIndex+1)+'/'+storyViewQueue.length;$('storyViewerImage').src=data.signedUrl;$('storyViewerCaption').textContent=st.caption||'';$('storyViewer').classList.add('open');
-}
-function closeStoryViewer(){$('storyViewer').classList.remove('open');$('storyViewerImage').src=''}
-$('storyViewer').addEventListener('click',e=>{if(e.target.id==='storyViewerImage'||e.target.closest('.story-viewer-top'))return;storyViewIndex++;showStoryAtIndex()});
 
-db.auth.onAuthStateChange((event,session)=>{if(event==='SIGNED_OUT'){currentUser=null;profile=null;closeChat();showScreen('loginScreen')}});
-syncSession();
+// ==========================================
+// FRIEND SEARCH OVERLAY
+// ==========================================
+
+function openFriendSearch() {
+  $('friendSearchOverlay').classList.add('open');
+  $('friendSearchInput').value = '';
+  $('friendSearchResults').innerHTML = `
+    <div class="empty-state">Search for people on CHATIVO</div>
+  `;
+  $('friendSearchInput').focus();
+}
+
+function closeFriendSearch() {
+  $('friendSearchOverlay').classList.remove('open');
+}
+
+
+// ==========================================
+// SEARCH USERS
+// ==========================================
+
+let searchDelay = null;
+
+function searchUsers() {
+  clearTimeout(searchDelay);
+
+  searchDelay = setTimeout(async () => {
+    const query = $('friendSearchInput').value.trim();
+
+    if (query.length < 2) {
+      $('friendSearchResults').innerHTML = `
+        <div class="empty-state">Type at least 2 characters</div>
+      `;
+      return;
+    }
+
+    $('friendSearchResults').innerHTML = `
+      <div class="empty-state">Searching...</div>
+    `;
+
+    try {
+      const { data, error } = await supabaseClient
+        .from('profiles')
+        .select('id, display_name, avatar_url, bio')
+        .ilike('display_name', `%${query}%`)
+        .neq('id', currentUser.id)
+        .limit(20);
+
+      if (error) throw error;
+
+      if (!data || data.length === 0) {
+        $('friendSearchResults').innerHTML = `
+          <div class="empty-state">No users found</div>
+        `;
+        return;
+      }
+
+      $('friendSearchResults').innerHTML = data.map(user => `
+        <div class="list-item">
+          ${getAvatarHTML(user)}
+          <div class="list-info">
+            <div class="list-name">${escapeHTML(user.display_name)}</div>
+            <div class="list-preview">${escapeHTML(user.bio || 'CHATIVO user')}</div>
+          </div>
+          <button
+            class="primary-btn"
+            onclick="sendFriendRequest('${user.id}')"
+          >
+            Add
+          </button>
+        </div>
+      `).join('');
+
+    } catch (error) {
+      $('friendSearchResults').innerHTML = `
+        <div class="empty-state">${escapeHTML(error.message)}</div>
+      `;
+    }
+
+  }, 400);
+}
+
+
+// ==========================================
+// SEND FRIEND REQUEST
+// ==========================================
+
+async function sendFriendRequest(receiverId) {
+  try {
+    const { error } = await supabaseClient
+      .from('friend_requests')
+      .insert({
+        sender_id: currentUser.id,
+        receiver_id: receiverId,
+        status: 'pending'
+      });
+
+    if (error) throw error;
+
+    alert('Friend request sent!');
+
+  } catch (error) {
+    alert(error.message);
+  }
+}
+
+
+// ==========================================
+// LOAD FRIEND REQUESTS
+// ==========================================
+
+async function loadFriendRequests() {
+  if (!currentUser) return;
+
+  $('requestList').innerHTML = `
+    <div class="empty-state">Loading requests...</div>
+  `;
+
+  try {
+    const { data, error } = await supabaseClient
+      .from('friend_requests')
+      .select('*')
+      .eq('receiver_id', currentUser.id)
+      .eq('status', 'pending');
+
+    if (error) throw error;
+
+    requestsData = data || [];
+
+    if (!requestsData.length) {
+      $('requestList').innerHTML = `
+        <div class="empty-state">
+          <div class="empty-icon">📨</div>
+          No pending requests
+        </div>
+      `;
+      return;
+    }
+
+    const senderIds = requestsData.map(item => item.sender_id);
+
+    const { data: profiles, error: profileError } =
+      await supabaseClient
+        .from('profiles')
+        .select('id, display_name, avatar_url, bio')
+        .in('id', senderIds);
+
+    if (profileError) throw profileError;
+
+    $('requestList').innerHTML = requestsData.map(request => {
+      const user = profiles.find(p => p.id === request.sender_id);
+
+      if (!user) return '';
+
+      return `
+        <div class="list-item">
+          ${getAvatarHTML(user)}
+          <div class="list-info">
+            <div class="list-name">${escapeHTML(user.display_name)}</div>
+            <div class="list-preview">Sent you a friend request</div>
+          </div>
+
+          <button
+            class="primary-btn"
+            onclick="acceptFriendRequest('${request.id}')"
+          >Accept</button>
+
+          <button
+            class="secondary-btn"
+            onclick="declineFriendRequest('${request.id}')"
+          >×</button>
+        </div>
+      `;
+    }).join('');
+
+  } catch (error) {
+    $('requestList').innerHTML = `
+      <div class="empty-state">${escapeHTML(error.message)}</div>
+    `;
+  }
+}
+
+
+// ==========================================
+// ACCEPT FRIEND REQUEST
+// ==========================================
+
+async function acceptFriendRequest(requestId) {
+  try {
+    const { error } = await supabaseClient
+      .from('friend_requests')
+      .update({ status: 'accepted' })
+      .eq('id', requestId)
+      .eq('receiver_id', currentUser.id);
+
+    if (error) throw error;
+
+    await loadFriendRequests();
+    await loadFriends();
+
+    alert('Friend request accepted!');
+
+  } catch (error) {
+    alert(error.message);
+  }
+}
+
+
+// ==========================================
+// DECLINE FRIEND REQUEST
+// ==========================================
+
+async function declineFriendRequest(requestId) {
+  try {
+    const { error } = await supabaseClient
+      .from('friend_requests')
+      .delete()
+      .eq('id', requestId)
+      .eq('receiver_id', currentUser.id);
+
+    if (error) throw error;
+
+    await loadFriendRequests();
+
+  } catch (error) {
+    alert(error.message);
+  }
+}
+
+
+// ==========================================
+// LOAD FRIENDS
+// ==========================================
+
+async function loadFriends() {
+  if (!currentUser) return;
+
+  $('friendsList').innerHTML = `
+    <div class="empty-state">Loading friends...</div>
+  `;
+
+  try {
+    const { data, error } = await supabaseClient
+      .from('friend_requests')
+      .select('*')
+      .eq('status', 'accepted')
+      .or(
+        `sender_id.eq.${currentUser.id},receiver_id.eq.${currentUser.id}`
+      );
+
+    if (error) throw error;
+
+    const friendIds = (data || []).map(item =>
+      item.sender_id === currentUser.id
+        ? item.receiver_id
+        : item.sender_id
+    );
+
+    if (!friendIds.length) {
+      friendsData = [];
+
+      $('friendsList').innerHTML = `
+        <div class="empty-state">
+          <div class="empty-icon">👥</div>
+          No friends yet
+        </div>
+      `;
+      return;
+    }
+
+    const { data: profiles, error: profileError } =
+      await supabaseClient
+        .from('profiles')
+        .select('id, display_name, avatar_url, bio')
+        .in('id', friendIds);
+
+    if (profileError) throw profileError;
+
+    friendsData = profiles || [];
+
+    renderFriends(friendsData);
+
+  } catch (error) {
+    $('friendsList').innerHTML = `
+      <div class="empty-state">${escapeHTML(error.message)}</div>
+    `;
+  }
+}
+
+
+// ==========================================
+// RENDER FRIENDS
+// ==========================================
+
+function renderFriends(list) {
+  if (!list.length) {
+    $('friendsList').innerHTML = `
+      <div class="empty-state">No matching friends found</div>
+    `;
+    return;
+  }
+
+  $('friendsList').innerHTML = list.map(friend => `
+    <div class="list-item" onclick="openChat('${friend.id}')">
+      ${getAvatarHTML(friend)}
+
+      <div class="list-info">
+        <div class="list-name">${escapeHTML(friend.display_name)}</div>
+        <div class="list-preview">${escapeHTML(friend.bio || 'CHATIVO friend')}</div>
+      </div>
+
+      <button class="icon-btn" onclick="event.stopPropagation();openChat('${friend.id}')">
+        💬
+      </button>
+    </div>
+  `).join('');
+}
+
+
+// ==========================================
+// FILTER FRIENDS
+// ==========================================
+
+function filterFriends() {
+  const query = $('friendListSearch').value.toLowerCase();
+
+  const filtered = friendsData.filter(friend =>
+    (friend.display_name || '').toLowerCase().includes(query)
+  );
+
+  renderFriends(filtered);
+}
+
+
+// ==========================================
+// CHAT LIST
+// ==========================================
+
+async function loadChats() {
+  if (!currentUser) return;
+
+  $('chatList').innerHTML = `
+    <div class="empty-state">Loading conversations...</div>
+  `;
+
+  try {
+    const { data: memberships, error } = await supabaseClient
+      .from('conversation_members')
+      .select('conversation_id')
+      .eq('user_id', currentUser.id);
+
+    if (error) throw error;
+
+    const conversationIds = (memberships || []).map(
+      item => item.conversation_id
+    );
+
+    if (!conversationIds.length) {
+      chatsData = [];
+      renderChats([]);
+      return;
+    }
+
+    const { data: conversations, error: conversationError } =
+      await supabaseClient
+        .from('conversations')
+        .select('*')
+        .in('id', conversationIds)
+        .order('created_at', { ascending: false });
+
+    if (conversationError) throw conversationError;
+
+    const { data: allMembers, error: membersError } =
+      await supabaseClient
+        .from('conversation_members')
+        .select('conversation_id,user_id')
+        .in('conversation_id', conversationIds);
+
+    if (membersError) throw membersError;
+
+    const otherIds = [...new Set(
+      (allMembers || [])
+        .filter(member => member.user_id !== currentUser.id)
+        .map(member => member.user_id)
+    )];
+
+    let profiles = [];
+
+    if (otherIds.length) {
+      const { data, error: profileError } = await supabaseClient
+        .from('profiles')
+        .select('id,display_name,avatar_url,bio')
+        .in('id', otherIds);
+
+      if (profileError) throw profileError;
+      profiles = data || [];
+    }
+
+    chatsData = (conversations || []).map(conversation => {
+      const member = allMembers.find(item =>
+        item.conversation_id === conversation.id &&
+        item.user_id !== currentUser.id
+      );
+
+      const user = profiles.find(profile =>
+        profile.id === member?.user_id
+      );
+
+      return {
+        ...conversation,
+        otherUser: user || null
+      };
+    }).filter(item => item.otherUser);
+
+    renderChats(chatsData);
+
+  } catch (error) {
+    $('chatList').innerHTML = `
+      <div class="empty-state">${escapeHTML(error.message)}</div>
+    `;
+  }
+}
+
+
+// ==========================================
+// RENDER CHAT LIST
+// ==========================================
+
+function renderChats(list) {
+  if (!list.length) {
+    $('chatList').innerHTML = `
+      <div class="empty-state">
+        <div class="empty-icon">💬</div>
+        No conversations yet
+        <p style="margin-top:8px">Add a friend to start chatting.</p>
+      </div>
+    `;
+    return;
+  }
+
+  $('chatList').innerHTML = list.map(chat => `
+    <div class="list-item" onclick="openChat('${chat.otherUser.id}')">
+
+      ${getAvatarHTML(chat.otherUser)}
+
+      <div class="list-info">
+        <div class="list-name">
+          ${escapeHTML(chat.otherUser.display_name)}
+        </div>
+
+        <div class="list-preview">
+          Tap to open conversation
+        </div>
+      </div>
+
+      <span style="color:#a99cff">›</span>
+    </div>
+  `).join('');
+}
+
+
+// ==========================================
+// FILTER CHATS
+// ==========================================
+
+function filterChats() {
+  const query = $('chatSearch').value.toLowerCase();
+
+  const filtered = chatsData.filter(chat =>
+    (chat.otherUser?.display_name || '')
+      .toLowerCase()
+      .includes(query)
+  );
+
+  renderChats(filtered);
+}
+
+
+// ==========================================
+// OPEN OR CREATE DIRECT CHAT
+// ==========================================
+
+async function openChat(friendId) {
+  if (!currentUser || !friendId) return;
+
+  try {
+    const friend = friendsData.find(item => item.id === friendId);
+
+    let otherUser = friend || null;
+
+    if (!otherUser) {
+      const { data, error } = await supabaseClient
+        .from('profiles')
+        .select('id,display_name,avatar_url,bio')
+        .eq('id', friendId)
+        .single();
+
+      if (error) throw error;
+      otherUser = data;
+    }
+
+    const { data: myMemberships, error: myError } =
+      await supabaseClient
+        .from('conversation_members')
+        .select('conversation_id')
+        .eq('user_id', currentUser.id);
+
+    if (myError) throw myError;
+
+    const myIds = (myMemberships || []).map(
+      item => item.conversation_id
+    );
+
+    let existingChat = null;
+
+    if (myIds.length) {
+      const { data: sharedMembers, error: sharedError } =
+        await supabaseClient
+          .from('conversation_members')
+          .select('conversation_id')
+          .eq('user_id', friendId)
+          .in('conversation_id', myIds);
+
+      if (sharedError) throw sharedError;
+
+      if (sharedMembers?.length) {
+        const { data: conversations, error: convError } =
+          await supabaseClient
+            .from('conversations')
+            .select('*')
+            .in(
+              'id',
+              sharedMembers.map(item => item.conversation_id)
+            );
+
+        if (convError) throw convError;
+
+        existingChat = conversations?.[0] || null;
+      }
+    }
+
+    if (!existingChat) {
+      const { data: newConversation, error: createError } =
+        await supabaseClient
+          .from('conversations')
+          .insert({
+            created_by: currentUser.id
+          })
+          .select()
+          .single();
+
+      if (createError) throw createError;
+
+      const { error: memberError } = await supabaseClient
+        .from('conversation_members')
+        .insert([
+          {
+            conversation_id: newConversation.id,
+            user_id: currentUser.id
+          },
+          {
+            conversation_id: newConversation.id,
+            user_id: friendId
+          }
+        ]);
+
+      if (memberError) throw memberError;
+
+      existingChat = newConversation;
+    }
+
+    currentChatId = existingChat.id;
+    currentChatUser = otherUser;
+
+    $('chatHeaderName').textContent =
+      otherUser.display_name || 'User';
+
+    $('chatAvatar').innerHTML = otherUser.avatar_url
+      ? `<img src="${escapeHTML(otherUser.avatar_url)}" alt="Avatar">`
+      : getInitial(otherUser.display_name);
+
+    $('chatWindow').classList.add('open');
+
+    await loadMessages();
+    subscribeToMessages();
+
+  } catch (error) {
+    alert('Could not open chat: ' + error.message);
+  }
+}
+
+
+// ==========================================
+// CLOSE CHAT
+// ==========================================
+
+function closeChat() {
+  $('chatWindow').classList.remove('open');
+
+  if (messageSubscription) {
+    supabaseClient.removeChannel(messageSubscription);
+    messageSubscription = null;
+  }
+
+  currentChatId = null;
+  currentChatUser = null;
+
+  loadChats();
+}
+
+
+// ==========================================
+// LOAD MESSAGES
+// ==========================================
+
+async function loadMessages() {
+  if (!currentChatId) return;
+
+  $('chatMessages').innerHTML = `
+    <div class="empty-state">Loading messages...</div>
+  `;
+
+  try {
+    const { data, error } = await supabaseClient
+      .from('messages')
+      .select('*')
+      .eq('conversation_id', currentChatId)
+      .order('created_at', { ascending: true });
+
+    if (error) throw error;
+
+    renderMessages(data || []);
+
+  } catch (error) {
+    $('chatMessages').innerHTML = `
+      <div class="empty-state">${escapeHTML(error.message)}</div>
+    `;
+  }
+}
+
+
+// ==========================================
+// RENDER MESSAGES
+// ==========================================
+
+function renderMessages(messages) {
+  if (!messages.length) {
+    $('chatMessages').innerHTML = `
+      <div class="empty-state">
+        <div class="empty-icon">👋</div>
+        Say hello and start chatting!
+      </div>
+    `;
+    return;
+  }
+
+  $('chatMessages').innerHTML = messages.map(message => {
+    const mine = message.sender_id === currentUser.id;
+
+    const time = message.created_at
+      ? new Date(message.created_at).toLocaleTimeString([], {
+          hour: '2-digit',
+          minute: '2-digit'
+        })
+      : '';
+
+    return `
+      <div class="message ${mine ? 'mine' : 'theirs'}">
+        ${escapeHTML(message.content || '')}
+        <div class="message-time">${time}</div>
+      </div>
+    `;
+  }).join('');
+
+  $('chatMessages').scrollTop =
+    $('chatMessages').scrollHeight;
+}
+
+
+// ==========================================
+// SEND MESSAGE
+// ==========================================
+
+async function sendMessage() {
+  const input = $('messageInput');
+  const content = input.value.trim();
+
+  if (!content || !currentChatId) return;
+
+  input.disabled = true;
+
+  try {
+    const { error } = await supabaseClient
+      .from('messages')
+      .insert({
+        conversation_id: currentChatId,
+        sender_id: currentUser.id,
+        content: content
+      });
+
+    if (error) throw error;
+
+    input.value = '';
+
+  } catch (error) {
+    alert('Message failed: ' + error.message);
+  } finally {
+    input.disabled = false;
+    input.focus();
+  }
+}
+
+
+// ==========================================
+// REALTIME MESSAGES
+// ==========================================
+
+function subscribeToMessages() {
+  if (!currentChatId) return;
+
+  if (messageSubscription) {
+    supabaseClient.removeChannel(messageSubscription);
+    messageSubscription = null;
+  }
+
+  const chatId = currentChatId;
+
+  messageSubscription = supabaseClient
+    .channel('chat-' + chatId)
+    .on(
+      'postgres_changes',
+      {
+        event: 'INSERT',
+        schema: 'public',
+        table: 'messages',
+        filter: 'conversation_id=eq.' + chatId
+      },
+      payload => {
+        if (currentChatId !== chatId) return;
+
+        const message = payload.new;
+
+        const existing = document.querySelector(
+          `[data-message-id="${message.id}"]`
+        );
+
+        if (existing) return;
+
+        appendRealtimeMessage(message);
+      }
+    )
+    .subscribe();
+}
+
+
+// ==========================================
+// APPEND REALTIME MESSAGE
+// ==========================================
+
+function appendRealtimeMessage(message) {
+  const container = $('chatMessages');
+
+  const empty = container.querySelector('.empty-state');
+  if (empty) empty.remove();
+
+  const mine = message.sender_id === currentUser.id;
+
+  const time = message.created_at
+    ? new Date(message.created_at).toLocaleTimeString([], {
+        hour: '2-digit',
+        minute: '2-digit'
+      })
+    : '';
+
+  const element = document.createElement('div');
+
+  element.className = 'message ' + (mine ? 'mine' : 'theirs');
+  element.dataset.messageId = message.id;
+
+  element.innerHTML = `
+    ${escapeHTML(message.content || '')}
+    <div class="message-time">${time}</div>
+  `;
+
+  container.appendChild(element);
+
+  container.scrollTop = container.scrollHeight;
+}
+
+
+
+// ==========================================
+// STORY VIEWER STYLES
+// ==========================================
+
+const storyStyles = document.createElement('style');
+
+storyStyles.textContent = `
+.story-viewer {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 150;
+  background: #080a16;
+  flex-direction: column;
+  padding: 15px;
+}
+
+.story-viewer.open {
+  display: flex;
+}
+
+.story-viewer-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 0 18px;
+  font-weight: 700;
+}
+
+.story-viewer-content {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.story-viewer-content img,
+.story-viewer-content video {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  border-radius: 14px;
+}
+
+.story-viewer-caption {
+  padding: 12px;
+  text-align: center;
+  color: white;
+}
+
+.story-reaction-bar {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  padding: 15px 0;
+}
+
+.story-reaction-bar button {
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  background: #1b2142;
+  font-size: 22px;
+}
+
+.story-card {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  overflow: hidden;
+  margin-bottom: 14px;
+}
+
+.story-card-media {
+  width: 100%;
+  height: 170px;
+  object-fit: cover;
+  background: #080a16;
+}
+
+.story-card-info {
+  padding: 12px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.story-card-name {
+  font-weight: 700;
+  font-size: 14px;
+}
+
+.story-card-caption {
+  font-size: 12px;
+  color: var(--muted);
+  margin-top: 4px;
+}
+
+.story-reaction-count {
+  color: var(--muted);
+  font-size: 12px;
+  padding: 0 12px 12px;
+}
+`;
+
+document.head.appendChild(storyStyles);
+
+
+// ==========================================
+// STORY PREVIEW
+// ==========================================
+
+function previewStory() {
+  const file = $('storyFile').files[0];
+
+  if (!file) {
+    $('storyPreview').classList.add('hidden');
+    return;
+  }
+
+  const previewURL = URL.createObjectURL(file);
+  const isVideo = file.type.startsWith('video/');
+
+  $('storyPreview').classList.remove('hidden');
+
+  $('storyPreviewImage').classList.toggle('hidden', isVideo);
+  $('storyPreviewVideo').classList.toggle('hidden', !isVideo);
+
+  if (isVideo) {
+    $('storyPreviewVideo').src = previewURL;
+  } else {
+    $('storyPreviewImage').src = previewURL;
+  }
+
+  $('storyUploadMessage').textContent = '';
+}
+
+
+// ==========================================
+// OPEN / CLOSE STORY COMPOSER
+// ==========================================
+
+function openStoryComposer() {
+  $('storyComposerOverlay').classList.add('open');
+  $('storyUploadMessage').textContent = '';
+}
+
+function closeStoryComposer() {
+  $('storyComposerOverlay').classList.remove('open');
+
+  $('storyFile').value = '';
+  $('storyCaption').value = '';
+
+  $('storyPreview').classList.add('hidden');
+
+  $('storyPreviewImage').src = '';
+  $('storyPreviewVideo').src = '';
+}
+
+
+// ==========================================
+// UPLOAD STORY
+// ==========================================
+
+async function uploadStory() {
+  if (!currentUser) return;
+
+  const file = $('storyFile').files[0];
+  const caption = $('storyCaption').value.trim();
+
+  if (!file) {
+    showMessage('storyUploadMessage', 'Please choose an image or video.');
+    return;
+  }
+
+  if (
+    !file.type.startsWith('image/') &&
+    !file.type.startsWith('video/')
+  ) {
+    showMessage('storyUploadMessage', 'Choose a valid image or video.');
+    return;
+  }
+
+  // Maximum upload size: 20 MB
+  if (file.size > 20 * 1024 * 1024) {
+    showMessage('storyUploadMessage', 'File must be smaller than 20 MB.');
+    return;
+  }
+
+  const isVideo = file.type.startsWith('video/');
+
+  const safeName = file.name.replace(/[^a-zA-Z0-9._-]/g, '_');
+
+  const filePath =
+    currentUser.id + '/' + Date.now() + '_' + safeName;
+
+  const uploadButton = document.querySelector(
+    '#storyComposerOverlay .primary-btn'
+  );
+
+  uploadButton.disabled = true;
+  uploadButton.textContent = 'Uploading...';
+
+  try {
+    const { error: uploadError } = await supabaseClient
+      .storage
+      .from('story-media')
+      .upload(filePath, file, {
+        cacheControl: '3600',
+        upsert: false,
+        contentType: file.type
+      });
+
+    if (uploadError) throw uploadError;
+
+    const { error: storyError } = await supabaseClient
+      .from('stories')
+      .insert({
+        user_id: currentUser.id,
+        story_type: isVideo ? 'video' : 'image',
+        content: caption || null,
+        media_path: filePath
+      });
+
+    if (storyError) {
+      await supabaseClient
+        .storage
+        .from('story-media')
+        .remove([filePath]);
+
+      throw storyError;
+    }
+
+    closeStoryComposer();
+
+    alert('Story uploaded successfully!');
+
+    await loadStories();
+
+  } catch (error) {
+    showMessage('storyUploadMessage', error.message);
+  } finally {
+    uploadButton.disabled = false;
+    uploadButton.textContent = 'Share Story';
+  }
+}
+
+
+// ==========================================
+// LOAD STORIES
+// ==========================================
+
+let storiesData = [];
+
+async function loadStories() {
+  if (!currentUser) return;
+
+  $('storyList').innerHTML = `
+    <div class="empty-state">Loading stories...</div>
+  `;
+
+  try {
+    const now = new Date().toISOString();
+
+    const { data: stories, error } = await supabaseClient
+      .from('stories')
+      .select('*')
+      .gt('expires_at', now)
+      .order('created_at', { ascending: false });
+
+    if (error) throw error;
+
+    if (!stories || !stories.length) {
+      storiesData = [];
+
+      $('storyList').innerHTML = `
+        <div class="empty-state">
+          <div class="empty-icon">⭕</div>
+          No stories available
+        </div>
+      `;
+      return;
+    }
+
+    const userIds = [...new Set(stories.map(story => story.user_id))];
+
+    const { data: profiles, error: profileError } =
+      await supabaseClient
+        .from('profiles')
+        .select('id,display_name,avatar_url')
+        .in('id', userIds);
+
+    if (profileError) throw profileError;
+
+    storiesData = await Promise.all(
+      stories.map(async story => {
+        const profile = (profiles || []).find(
+          item => item.id === story.user_id
+        );
+
+        let mediaURL = null;
+
+        if (story.media_path) {
+          const { data: signedData, error: signedError } =
+            await supabaseClient
+              .storage
+              .from('story-media')
+              .createSignedUrl(story.media_path, 3600);
+
+          if (!signedError) {
+            mediaURL = signedData?.signedUrl || null;
+          }
+        }
+
+        return {
+          ...story,
+          profile,
+          mediaURL
+        };
+      })
+    );
+
+    await loadStoryReactionCounts();
+    renderStories();
+
+  } catch (error) {
+    $('storyList').innerHTML = `
+      <div class="empty-state">${escapeHTML(error.message)}</div>
+    `;
+  }
+}
+
+
+// ==========================================
+// STORY REACTION COUNTS
+// ==========================================
+
+let storyReactionCounts = {};
+
+async function loadStoryReactionCounts() {
+  storyReactionCounts = {};
+
+  const ids = storiesData.map(story => story.id);
+
+  if (!ids.length) return;
+
+  const { data, error } = await supabaseClient
+    .from('story_reactions')
+    .select('story_id,reaction')
+    .in('story_id', ids);
+
+  if (error) {
+    console.error('Reaction count error:', error.message);
+    return;
+  }
+
+  (data || []).forEach(item => {
+    if (!storyReactionCounts[item.story_id]) {
+      storyReactionCounts[item.story_id] = {};
+    }
+
+    const reaction = item.reaction;
+
+    storyReactionCounts[item.story_id][reaction] =
+      (storyReactionCounts[item.story_id][reaction] || 0) + 1;
+  });
+}
+
+
+// ==========================================
+// RENDER STORIES
+// ==========================================
+
+function renderStories() {
+  if (!storiesData.length) {
+    $('storyList').innerHTML = `
+      <div class="empty-state">No stories available</div>
+    `;
+    return;
+  }
+
+  $('storyList').innerHTML = storiesData.map(story => {
+    const name = story.profile?.display_name || 'User';
+
+    const media = story.mediaURL
+      ? story.story_type === 'video'
+        ? `<video class="story-card-media" src="${escapeHTML(story.mediaURL)}" muted playsinline></video>`
+        : `<img class="story-card-media" src="${escapeHTML(story.mediaURL)}" alt="Story">`
+      : '';
+
+    const counts = storyReactionCounts[story.id] || {};
+
+    const totalReactions = Object.values(counts)
+      .reduce((sum, value) => sum + value, 0);
+
+    return `
+      <div class="story-card" onclick="openStory('${story.id}')">
+
+        ${media}
+
+        <div class="story-card-info">
+          ${getAvatarHTML(story.profile || {display_name: name}, 42)}
+
+          <div style="flex:1;min-width:0">
+            <div class="story-card-name">${escapeHTML(name)}</div>
+
+            <div class="story-card-caption">
+              ${escapeHTML(story.content || 'Shared a story')}
+            </div>
+          </div>
+
+          <span style="color:#a99cff">View ›</span>
+        </div>
+
+        <div class="story-reaction-count">
+          ❤️ ${totalReactions} reactions
+        </div>
+
+      </div>
+    `;
+  }).join('');
+}
+
+
+// ==========================================
+// OPEN STORY
+// ==========================================
+
+async function openStory(storyId) {
+  const story = storiesData.find(item => item.id === storyId);
+
+  if (!story) return;
+
+  currentStoryId = storyId;
+
+  $('storyViewerUser').textContent =
+    story.profile?.display_name || 'User';
+
+  $('storyViewerCaption').textContent =
+    story.content || '';
+
+  const content = $('storyViewerContent');
+
+  if (!story.mediaURL) {
+    content.innerHTML = `
+      <div class="empty-state">Story media is unavailable</div>
+    `;
+  } else if (story.story_type === 'video') {
+    content.innerHTML = `
+      <video
+        src="${escapeHTML(story.mediaURL)}"
+        controls
+        autoplay
+        playsinline
+      ></video>
+    `;
+  } else {
+    content.innerHTML = `
+      <img
+        src="${escapeHTML(story.mediaURL)}"
+        alt="Story"
+      >
+    `;
+  }
+
+  $('storyViewer').classList.add('open');
+
+  // Record story view for other users
+  if (story.user_id !== currentUser.id) {
+    const { error } = await supabaseClient
+      .from('story_views')
+      .upsert({
+        story_id: storyId,
+        viewer_id: currentUser.id
+      }, {
+        onConflict: 'story_id,viewer_id',
+        ignoreDuplicates: true
+      });
+
+    if (error) {
+      console.error('Story view error:', error.message);
+    }
+  }
+
+  await updateStoryReactionButtons();
+}
+
+
+// ==========================================
+// CLOSE STORY VIEWER
+// ==========================================
+
+function closeStoryViewer() {
+  $('storyViewer').classList.remove('open');
+
+  $('storyViewerContent').innerHTML = '';
+
+  currentStoryId = null;
+}
+
+
+// ==========================================
+// UPDATE REACTION BUTTON DISPLAY
+// ==========================================
+
+async function updateStoryReactionButtons() {
+  if (!currentStoryId) return;
+
+  const { data, error } = await supabaseClient
+    .from('story_reactions')
+    .select('reaction')
+    .eq('story_id', currentStoryId)
+    .eq('user_id', currentUser.id)
+    .maybeSingle();
+
+  if (error) {
+    console.error(error.message);
+    return;
+  }
+
+  const selected = data?.reaction || null;
+
+  document.querySelectorAll('.story-reaction-bar button').forEach(button => {
+    const reaction = button.textContent.trim();
+
+    button.style.background =
+      reaction === selected ? '#5945e8' : '#1b2142';
+
+    button.style.transform =
+      reaction === selected ? 'scale(1.12)' : 'scale(1)';
+  });
+}
+
+
+// ==========================================
+// REACT TO STORY
+// ==========================================
+
+async function reactToStory(reaction) {
+  if (!currentStoryId || !currentUser) return;
+
+  const allowedReactions = ['👍', '❤️', '🥰', '😭', '🤬'];
+
+  if (!allowedReactions.includes(reaction)) return;
+
+  try {
+    const { data: existing, error: findError } =
+      await supabaseClient
+        .from('story_reactions')
+        .select('id,reaction')
+        .eq('story_id', currentStoryId)
+        .eq('user_id', currentUser.id)
+        .maybeSingle();
+
+    if (findError) throw findError;
+
+    // Press the same reaction again to remove it
+    if (existing && existing.reaction === reaction) {
+      const { error } = await supabaseClient
+        .from('story_reactions')
+        .delete()
+        .eq('id', existing.id)
+        .eq('user_id', currentUser.id);
+
+      if (error) throw error;
+
+    } else if (existing) {
+      // Change existing reaction
+      const { error } = await supabaseClient
+        .from('story_reactions')
+        .update({ reaction })
+        .eq('id', existing.id)
+        .eq('user_id', currentUser.id);
+
+      if (error) throw error;
+
+    } else {
+      // Add new reaction
+      const { error } = await supabaseClient
+        .from('story_reactions')
+        .insert({
+          story_id: currentStoryId,
+          user_id: currentUser.id,
+          reaction
+        });
+
+      if (error) throw error;
+    }
+
+    await loadStoryReactionCounts();
+    renderStories();
+    await updateStoryReactionButtons();
+
+  } catch (error) {
+    alert('Reaction failed: ' + error.message);
+  }
+}
+
+
+// ==========================================
+// INITIALIZE APP
+// ==========================================
+
+async function initializeApp() {
+  if (!currentUser) return;
+
+  try {
+    const profileExists = await loadMyProfile();
+
+    if (!profileExists) return;
+
+    showApp();
+
+    renderMyProfile();
+
+    await Promise.all([
+      loadFriends(),
+      loadFriendRequests(),
+      loadChats(),
+      loadStories()
+    ]);
+
+    switchPage('chats');
+
+  } catch (error) {
+    alert('Could not load CHATIVO: ' + error.message);
+  }
+}
+
+
+// ==========================================
+// LOGOUT
+// ==========================================
+
+async function logout() {
+  if (messageSubscription) {
+    supabaseClient.removeChannel(messageSubscription);
+    messageSubscription = null;
+  }
+
+  const { error } = await supabaseClient.auth.signOut();
+
+  if (error) {
+    alert(error.message);
+    return;
+  }
+
+  currentUser = null;
+  currentProfile = null;
+  currentChatId = null;
+
+  showAuth();
+  showLogin();
+}
+
+
+// ==========================================
+// AUTH SESSION CHECK
+// ==========================================
+
+supabaseClient.auth.onAuthStateChange((event, session) => {
+  if (event === 'SIGNED_OUT') {
+    currentUser = null;
+    currentProfile = null;
+    showAuth();
+    showLogin();
+  }
+});
+
+
+// ==========================================
+// APP START
+// ==========================================
+
+async function startApp() {
+  try {
+    const { data, error } = await supabaseClient.auth.getSession();
+
+    if (error) throw error;
+
+    if (data.session?.user) {
+      currentUser = data.session.user;
+      await initializeApp();
+    } else {
+      showAuth();
+      showLogin();
+    }
+
+  } catch (error) {
+    console.error('CHATIVO startup error:', error.message);
+    showAuth();
+    showLogin();
+  }
+}
+
+startApp();
+
+
+// ==========================================
+// END CHATIVO
+// ==========================================
 </script>
 </body>
 </html>
