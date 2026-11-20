@@ -46,6 +46,7 @@ main{max-width:760px;margin:auto}.page{display:none}.page.active{display:block}.
 <div class="overlay" id="friendOverlay"><div class="overlay-head"><button onclick="closeFriendSearch()" aria-label="Back">‹</button><h2>Find friends</h2><button onclick="loadFriendRequests()" title="Refresh">↻</button></div><div class="overlay-body">
  <div class="friend-search"><input id="friendQuery" placeholder="Search by display name..." autocomplete="off"><button onclick="searchPeople()">Search</button></div>
  <div class="small-note" id="searchMessage">Enter a display name to find people on CHATIVO.</div><div id="searchResults"></div>
+ <div class="section-title" style="padding-top:22px">MY FRIENDS</div><div id="friendList"><div class="empty">Loading friends...</div></div>
  <div class="section-title" style="padding-top:22px">FRIEND REQUESTS</div><div id="requestList"><div class="empty">Loading requests...</div></div>
 </div></div>
 <div class="chat-window" id="chatWindow"><div class="chat-head"><button onclick="closeChat()">‹</button><div class="avatar">✦</div><div><b id="chatTitle">Chat</b><small>CHATIVO conversation</small></div></div><div class="chat-messages" id="chatMessages"></div><form class="chat-compose" id="messageForm"><input id="messageInput" placeholder="Write a message..." autocomplete="off"><button aria-label="Send">➤</button></form></div>
@@ -70,7 +71,7 @@ function focusSearch(){openFriendSearch()}
 function filterChats(){const q=$('search').value.toLowerCase();document.querySelectorAll('#chatList .chat').forEach(c=>c.style.display=c.textContent.toLowerCase().includes(q)?'flex':'none')}
 function closeChat(){$('chatWindow').style.display='none'}
 function safeText(value){return String(value??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
-function openFriendSearch(){$('friendOverlay').classList.add('open');$('friendQuery').value='';$('searchResults').innerHTML='';$('searchMessage').textContent='Enter a display name to find people on CHATIVO.';loadFriendRequests();setTimeout(()=>$('friendQuery').focus(),100)}
+function openFriendSearch(){$('friendOverlay').classList.add('open');$('friendQuery').value='';$('searchResults').innerHTML='';$('searchMessage').textContent='Enter a display name to find people on CHATIVO.';loadFriendRequests();loadFriends();setTimeout(()=>$('friendQuery').focus(),100)}
 function closeFriendSearch(){$('friendOverlay').classList.remove('open')}
 async function searchPeople(){
  const q=$('friendQuery').value.trim();$('searchResults').innerHTML='';if(q.length<2){$('searchMessage').textContent='Please enter at least 2 characters.';return}
@@ -97,6 +98,16 @@ async function sendFriendRequest(receiverId){
  if(error){if(error.code==='23505')alert('A request already exists between these accounts.');else alert('Could not send request: '+error.message);return}
  alert('Friend request sent!');searchPeople();loadFriendRequests();
 }
+async function loadFriends(){
+ if(!currentUser)return;const box=$('friendList');box.innerHTML='<div class="small-note">Loading friends...</div>';
+ const {data,error}=await db.from('friend_requests').select('sender_id,receiver_id').eq('status','accepted').or('sender_id.eq.'+currentUser.id+',receiver_id.eq.'+currentUser.id);
+ if(error){box.innerHTML='<div class="small-note">Could not load friends: '+safeText(error.message)+'</div>';return}
+ const ids=[...new Set((data||[]).map(r=>r.sender_id===currentUser.id?r.receiver_id:r.sender_id))];
+ if(!ids.length){box.innerHTML='<div class="empty">You have no friends yet. Search for people above and send a request.</div>';return}
+ const {data:people,error:peopleError}=await db.from('profiles').select('id,display_name').in('id',ids);
+ if(peopleError){box.innerHTML='<div class="small-note">Could not load friend profiles: '+safeText(peopleError.message)+'</div>';return}
+ box.innerHTML='';(people||[]).forEach(p=>box.insertAdjacentHTML('beforeend','<div class="person"><div class="avatar">✦</div><div class="info"><div class="name">'+safeText(p.display_name||'CHATIVO User')+'</div><div class="message">Your CHATIVO friend</div></div><button class="action-btn secondary" disabled>Friend</button></div>'));
+}
 async function loadFriendRequests(){
  if(!currentUser)return;$('requestList').innerHTML='<div class="small-note">Loading requests...</div>';
  const {data,error}=await db.from('friend_requests').select('id,sender_id,receiver_id,status,created_at').eq('receiver_id',currentUser.id).eq('status','pending').order('created_at',{ascending:false});
@@ -110,7 +121,7 @@ async function loadFriendRequests(){
 async function respondRequest(id,status){
  const {error}=await db.from('friend_requests').update({status}).eq('id',id).eq('receiver_id',currentUser.id).eq('status','pending');
  if(error){alert('Could not update request: '+error.message);return}
- await loadFriendRequests();if($('friendQuery').value.trim().length>=2)await searchPeople();
+ await loadFriendRequests();await loadFriends();if($('friendQuery').value.trim().length>=2)await searchPeople();
 }
 $('friendQuery').addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();searchPeople()}});
 $('messageForm').addEventListener('submit',e=>{e.preventDefault();const input=$('messageInput'),value=input.value.trim();if(!value)return;const bubble=document.createElement('div');bubble.className='bubble mine';bubble.textContent=value;$('chatMessages').appendChild(bubble);input.value='';$('chatMessages').scrollTop=$('chatMessages').scrollHeight});
